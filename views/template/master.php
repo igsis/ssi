@@ -63,7 +63,7 @@ else:
     ?>
     <div class="wrapper">
         <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-dark navbar-success">
             <?php $template->navbar(); ?>
         </nav>
         <!-- /.navbar -->
@@ -75,7 +75,7 @@ else:
         <!-- /.content-wrapper -->
 
         <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <aside class="main-sidebar sidebar-light-olive elevation-4">
             <?php include $template->sidebar(); ?>
         </aside>
 
