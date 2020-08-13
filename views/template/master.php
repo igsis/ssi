@@ -36,7 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 </head>
 <!--<body class="hold-transition login-page">-->
-<body class="hold-transition sidebar-mini">
+<body class="hold-transition sidebar-mini accent-success">
 <?php
 
 $view = $template->exibirViewController();
