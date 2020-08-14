@@ -48,24 +48,30 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s']);
                         <?php endif; ?>
                         <div class="card-body">
                             <div class="row">
-                                <div class="form-group col-md">
-                                    <label for="telefone">Telefone: *</label>
-                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario['telefones'] ?? "" ?>" maxlength="15">
+                                <div class="col-12 col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Contato: *</label>
+                                        <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario['contato'] ?? '' ?>" required>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md">
-                                    <label for="email">E-mail: *</label>
-                                    <input type="email" id="email" name="email" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario['email'] ?? '' ?>" required>
+                                <div class="col-12 col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">E-mail: *</label>
+                                        <input type="email" id="email" name="email" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario['email'] ?? '' ?>" required>
+                                    </div>
                                 </div>
-                                <div class="form-group col-md">
-                                    <label for="contato">Contato: *</label>
-                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario['contato'] ?? '' ?>" required>
+                                <div class="col-12 col-md-4 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="">Telefone: *</label>
+                                        <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario['telefones'] ?? "" ?>" maxlength="15">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md">
+                                <div class="col-12">
                                     <div class="form-group">
-                                        <label for="categoria">Categoria: *</label>
-                                        <select class="form-control" name="categoria_id" id="categoria_id" required>
+                                        <label>Categorias: *</label>
+                                        <select class="form-control select2bs4" style="width: 100%;">
                                             <option value="">Selecione uma opção...</option>
                                             <?php
                                             $chamadoObj->geraOpcao("categorias");
