@@ -46,18 +46,16 @@ elseif ($view == 'login'):
     require_once "./views/modulos/inicio/login.php";
 elseif ($view == 'cadastro'):
     require_once "./views/modulos/inicio/cadastro.php";
-elseif ($view == 'fomento_edital'):
-    require_once "./views/modulos/inicio/fomento_edital.php";
 elseif ($view == 'recupera_senha'):
     require_once "./views/modulos/inicio/recupera_senha.php";
 elseif($view == 'resete_senha'):
     require_once "./views/modulos/inicio/resete_senha.php";
 else:
-    session_start(['name' => 'cpc']);
+    session_start(['name' => 'ssi']);
     require_once "./controllers/UsuarioController.php";
     $usuario = new UsuarioController();
 
-    if (!isset($_SESSION['usuario_id_c'])) {
+    if (!isset($_SESSION['usuario_id_s'])) {
         $usuario->forcarFimSessao();
     }
     ?>

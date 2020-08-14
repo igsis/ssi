@@ -72,9 +72,9 @@ class PessoaFisicaController extends PessoaFisicaModel
                 }
             }
 
-            if (isset($_SESSION['modulo_c'])) {
-                if ($_SESSION['modulo_c'] == 6 || $_SESSION['modulo_c'] == 7) { //formação ou jovem monitor
-                    $_SESSION['origem_id_c'] = MainModel::encryption($id);
+            if (isset($_SESSION['modulo_s'])) {
+                if ($_SESSION['modulo_s'] == 6 || $_SESSION['modulo_s'] == 7) { //formação ou jovem monitor
+                    $_SESSION['origem_id_s'] = MainModel::encryption($id);
                 }
             }
 
@@ -213,9 +213,9 @@ class PessoaFisicaController extends PessoaFisicaModel
             }
 
 
-            if (isset($_SESSION['modulo_c'])) {
-                if ($_SESSION['modulo_c'] == 6 || $_SESSION['modulo_c'] == 7) { //formação ou jovem monitor
-                    $_SESSION['origem_id_c'] = $id;
+            if (isset($_SESSION['modulo_s'])) {
+                if ($_SESSION['modulo_s'] == 6 || $_SESSION['modulo_s'] == 7) { //formação ou jovem monitor
+                    $_SESSION['origem_id_s'] = $id;
                 }
             }
 
