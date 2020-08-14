@@ -30,6 +30,7 @@ class ViewsModel
             'atracao_cadastro',
             'atracao_lista',
             'cadastro',
+            'chamado_cadastro',
             'complemento_oficina_cadastro',
             'demais_anexos',
             'edita',

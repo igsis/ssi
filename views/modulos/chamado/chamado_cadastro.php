@@ -34,7 +34,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s']);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
+                    <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
                         <input type="hidden" name="usuario_id" value="<?= $usuario->id ?>">
                         <input type="hidden" name="administrador_id" value="<?= $usuario->administrador_id ?>">

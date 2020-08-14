@@ -115,6 +115,8 @@ else:
 <script src="<?= SERVERURL ?>views/plugins/datatables/dataTables.bootstrap4.js"></script>
 <!-- date-range-picker -->
 <script src="<?= SERVERURL ?>views/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Select2 -->
+<script src="<?= SERVERURL ?>views/plugins/select2/js/select2.full.min.js"></script>
 
 <script>
     $(document).ready(function (){
