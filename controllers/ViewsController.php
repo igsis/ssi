@@ -36,6 +36,8 @@ class ViewsController extends ViewsModel
     }
 
     public function exibirMenuController() {
+        $nivelAcesso = $_SESSION['nivel_acesso_s'];
+
         if (isset($_GET['views'])) {
             $url = explode("/", $_GET['views']);
 

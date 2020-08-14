@@ -5,15 +5,9 @@ class ViewsModel
 {
     protected function verificaModulo ($mod) {
         $modulos = [
-            "eventos",
-            "formacao",
+            "administrador",
+            "chamado",
             "inicio",
-            "jovemMonitor",
-            "oficina",
-            "pessoaFisica",
-            "pessoaJurídica",
-            "agendao",
-            "fomentos",
         ];
 
         if (in_array($mod, $modulos)) {
