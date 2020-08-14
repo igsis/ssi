@@ -1,12 +1,11 @@
 <?php
-    $view = new ViewsController();
+$view = new ViewsController();
+$nomeUser = explode(' ', $_SESSION['nome_s'])[0];
 
-    $nomeUser = explode(' ', $_SESSION['nome_s'])[0];
-
+$telaInicial = $_SESSION['nivel_acesso_s'] == 1 ? SERVERURL."chamado" : SERVERURL."administrador"
 ?>
 <!-- Brand Logo -->
-<!-- TODO: Encontrar forma para que o link abaixo retorne ao módulo correto -->
-<a href="<?= SERVERURL ?>fomentos" class="brand-link navbar-success">
+<a href="<?= $telaInicial ?>" class="brand-link navbar-success">
     <img src="<?= SERVERURL ?>views/dist/img/logo_ssi.png" alt="SSI Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light"><?= NOMESIS ?></span>
 </a>
