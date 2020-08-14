@@ -29,6 +29,7 @@ class UsuarioController extends UsuarioModel
             $_SESSION['login_s'] = $usuario['usuario'];
             $_SESSION['usuario_id_s'] = $usuario['id'];
             $_SESSION['nome_s'] = $usuario['nome'];
+            $_SESSION['nivel_acesso_s'] = $usuario['nivel_acesso_id'];
 
             MainModel::gravarLog('Fez Login');
 

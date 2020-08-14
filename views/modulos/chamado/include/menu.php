@@ -1,8 +1,8 @@
-<!--<li class="nav-item has-treeview menu-open">
+<li class="nav-item has-treeview menu-open">
     <a href="#" class="nav-link active">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
-            Starter Pages
+            Menu Chamado
             <i class="right fas fa-angle-left"></i>
         </p>
     </a>
@@ -20,28 +20,12 @@
             </a>
         </li>
     </ul>
-</li>-->
-<li class="nav-item">
-    <a href="<?= SERVERURL ?>inicio" class="nav-link">
-        <i class="nav-icon fas fa-home"></i>
-        <p>
-            Início
-        </p>
-    </a>
-</li>
-<li class="nav-item">
-    <a href="<?= SERVERURL ?>administrador" class="nav-link">
-        <i class="nav-icon fas fa-home"></i>
-        <p>
-            Ambiente Administrador
-        </p>
-    </a>
 </li>
 <li class="nav-item">
     <a href="<?= SERVERURL ?>chamado" class="nav-link">
         <i class="nav-icon fas fa-home"></i>
         <p>
-            Ambiente Chamados
+            Início
         </p>
     </a>
 </li>
