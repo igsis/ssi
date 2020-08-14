@@ -29,3 +29,19 @@
         </p>
     </a>
 </li>
+<li class="nav-item">
+    <a href="<?= SERVERURL ?>administrador" class="nav-link">
+        <i class="nav-icon fas fa-home"></i>
+        <p>
+            Ambiente Administrador
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= SERVERURL ?>chamado" class="nav-link">
+        <i class="nav-icon fas fa-home"></i>
+        <p>
+            Ambiente Chamados
+        </p>
+    </a>
+</li>
