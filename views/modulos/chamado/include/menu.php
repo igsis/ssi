@@ -1,31 +1,32 @@
-<li class="nav-item has-treeview menu-open">
-    <a href="#" class="nav-link active">
-        <i class="nav-icon fas fa-tachometer-alt"></i>
-        <p>
-            Menu Chamado
-            <i class="right fas fa-angle-left"></i>
-        </p>
-    </a>
-    <ul class="nav nav-treeview">
-        <li class="nav-item">
-            <a href="#" class="nav-link active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Active Page</p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Inactive Page</p>
-            </a>
-        </li>
-    </ul>
-</li>
 <li class="nav-item">
     <a href="<?= SERVERURL ?>chamado" class="nav-link">
         <i class="nav-icon fas fa-home"></i>
         <p>
             Início
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= SERVERURL ?>chamado/chamado_cadastro" class="nav-link">
+        <i class="fas fa-plus nav-icon"></i>
+        <p>
+            Novo
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= SERVERURL ?>chamado/chamado_lista" class="nav-link">
+        <i class="fas fa-list-ol nav-icon"></i>
+        <p>
+            Lista
+        </p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= SERVERURL ?>chamado/chamado_pesquisa" class="nav-link">
+        <i class="fas fa-search nav-icon"></i>
+        <p>
+            Busca
         </p>
     </a>
 </li>

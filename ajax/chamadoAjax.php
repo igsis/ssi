@@ -7,11 +7,9 @@ if (isset($_POST['_method'])) {
     $insChamado = new ChamadoController();
 
     if ($_POST['_method'] == "cadastrar") {
-        echo $insChamado->insereChamado($_POST['pagina']);
+        echo $insChamado->insereChamado();
     } elseif ($_POST['_method'] == "editar") {
-        echo $insChamado->editaChamado($_POST['id'], $_POST['pagina']);
-    } elseif ($_POST['_method'] == "remover"){
-        echo $insChamado->removeChamado($_POST['pagina']);
+        echo $insChamado->editaChamado($_POST['id']);
     }
 
 } else {
