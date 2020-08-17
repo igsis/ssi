@@ -35,9 +35,10 @@ class LocalModel extends MainModel
                 LEFT JOIN instituicoes AS ins ON ad.instituicao_id = ins.id
                 LEFT JOIN locais AS lo ON ins.id = lo.instituicao_id
                 LEFT JOIN usuarios AS us ON lo.id = us.local_id
-                WHERE lo.id = :local";
+                WHERE lo.id = :local OR us.id = :usuario";
         $statement = $pdo->prepare($sql);
         $statement->bindParam(":local", $dados['local']);
+        $statement->bindParam(":usuario", $dados['usuario']);
         $statement->execute();
         return $statement;
     }

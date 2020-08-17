@@ -9,5 +9,9 @@ if ($pedidoAjax) {
 
 class LocalController extends LocalModel
 {
-
+    public function retornaAdministrador($usuario='',$local='')
+    {
+        $adm = LocalModel::getAdministrador(["usuario"=>$usuario,"local"=>$local]);
+        return $adm;
+    }
 }

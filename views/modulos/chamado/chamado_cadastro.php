@@ -1,6 +1,7 @@
 <?php
 require_once "./controllers/ChamadoController.php";
 require_once "./controllers/UsuarioController.php";
+require_once "./controllers/LocalController.php";
 
 $id = !empty($_GET['id']) ? $_GET['id'] : false;
 
@@ -9,6 +10,10 @@ $chamado = $chamadoObj->recuperaChamado($id);
 
 $usuarioObj = new UsuarioController();
 $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
+
+$localObj = new LocalController();
+$admin = $localObj->retornaAdministrador('',$usuario->local_id)->fetchObject();
+
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -37,7 +42,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject(
                     <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
                         <input type="hidden" name="usuario_id" value="<?= $usuario->id ?>">
-<!--                        <input type="hidden" name="administrador_id" value="--><?//= $usuario->administrador_id ?><!--">-->
+                        <input type="hidden" name="administrador_id" value="<?= $admin->administrador_id ?>">
                         <input type="hidden" name="prioridade_id" value="1">
                         <input type="hidden" name="local_id" value="<?= $usuario->local_id ?>">
                         <?php if (!$id): ?>
