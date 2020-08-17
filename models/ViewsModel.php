@@ -25,6 +25,9 @@ class ViewsModel
         $whitelist = [
             'inicio',
             'cadastro',
+            'chamado_cadastro',
+            'complemento_oficina_cadastro',
+            'demais_anexos',
             'edita',
             'index',
             'login',

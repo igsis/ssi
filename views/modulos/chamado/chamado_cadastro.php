@@ -1,14 +1,19 @@
 <?php
 require_once "./controllers/ChamadoController.php";
 require_once "./controllers/UsuarioController.php";
+require_once "./controllers/LocalController.php";
 
-$id = isset($_GET['id']) ? $_GET['id'] : null;
+$id = !empty($_GET['id']) ? $_GET['id'] : false;
 
 $chamadoObj = new ChamadoController();
 $chamado = $chamadoObj->recuperaChamado($id);
 
 $usuarioObj = new UsuarioController();
 $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
+
+$localObj = new LocalController();
+$admin = $localObj->retornaAdministrador('',$usuario->local_id)->fetchObject();
+
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -28,16 +33,16 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject(
         <div class="row">
             <div class="col-md-12">
                 <!-- Horizontal Form -->
-                <div class="card card-green">
+                <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
+                    <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
                         <input type="hidden" name="usuario_id" value="<?= $usuario->id ?>">
-<!--                        <input type="hidden" name="administrador_id" value="--><?//= $usuario->administrador_id ?><!--">-->
+                        <input type="hidden" name="administrador_id" value="<?= $admin->administrador_id ?>">
                         <input type="hidden" name="prioridade_id" value="1">
                         <input type="hidden" name="local_id" value="<?= $usuario->local_id ?>">
                         <?php if (!$id): ?>
@@ -50,7 +55,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject(
                             <div class="row">
                                 <div class="form-group col-md">
                                     <label for="telefone">Telefone: *</label>
-                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario->telefone ?? "" ?>" maxlength="15">
+                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario->telefones ?? "" ?>" maxlength="15">
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="email">E-mail: *</label>
@@ -58,14 +63,14 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject(
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="contato">Contato: *</label>
-                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario->nome ?? '' ?>" required>
+                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario->contato ?? '' ?>" required>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md">
+                                <div class="col-12">
                                     <div class="form-group">
-                                        <label for="categoria">Categoria: *</label>
-                                        <select class="form-control" name="categoria_id" id="categoria_id" required>
+                                        <label>Categorias: *</label>
+                                        <select class="form-control select2bs4" style="width: 100%;">
                                             <option value="">Selecione uma opção...</option>
                                             <?php
                                             $chamadoObj->geraOpcao("categorias");
@@ -78,7 +83,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject(
                                 <div class="col-md">
                                     <div class="form-group">
                                         <label for="descricao">Descrição: *</label>
-                                        <textarea name="descricao" id="descricao" class="form-control" rows="3" required><?=($chamado) ? $chamado->descricao : ""?></textarea>
+                                        <textarea name="descricao" id="descricao" class="form-control" rows="3" required><?= ($chamado) ? $chamado->descricao : ""?></textarea>
                                     </div>
                                 </div>
                             </div>
