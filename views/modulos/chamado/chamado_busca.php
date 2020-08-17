@@ -34,7 +34,7 @@ $usuarioObj = new UsuarioController();
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="formulario-ajax" method="POST" role="form">
+                    <form action="<?= SERVERURL ?>chamado/chamado_lista" method="GET" role="form">
                         <div class="card-body">
                             <div class="card-body">
                                 <div class="row">
@@ -105,7 +105,6 @@ $usuarioObj = new UsuarioController();
                                 Buscar
                             </button>
                         </div>
-                        <div class="resposta-ajax"></div>
                     </form>
                 </div>
                 <!-- /.card -->
