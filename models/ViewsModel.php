@@ -23,42 +23,21 @@ class ViewsModel
 
     protected function exibirViewModel($view, $modulo = "") {
         $whitelist = [
-            'anexos',
-            'anexos_lider',
-            'anexos_proponente',
-            'arquivos_com_prod',
-            'atracao_cadastro',
-            'atracao_lista',
+            'inicio',
             'cadastro',
             'chamado_cadastro',
             'complemento_oficina_cadastro',
             'demais_anexos',
             'edita',
-            'evento_cadastro',
-            'evento_lista',
-            'finalizar',
-            'fomento_edital',
-            'informacoes_complementares_cadastro',
-            'inicio',
-            'lider',
-            'lider_cadastro',
+            'index',
             'login',
             'logout',
-            'pf_cadastro',
-            'pj_cadastro',
-            'produtor_cadastro',
-            'programa',
-            'projeto_cadastro',
-            'projeto_lista',
-            'proponentePj',
-            'proponentePf',
-            'proponente_lista',
-            'representante',
-            'representante_cadastro',
             'recupera_senha',
             'resete_senha',
-            'nucleo_artistico_lista',
-            'nucleo_artistico_cadastro'
+            'chamado_cadastro',
+            'nota_cadastro',
+            'chamado_lista',
+            'chamado_pesquisa'
         ];
         if (self::verificaModulo($modulo)) {
             if (in_array($view, $whitelist)) {
