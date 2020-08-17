@@ -5,7 +5,7 @@ require_once "./controllers/UsuarioController.php";
 $id = !empty($_GET['id']) ? $_GET['id'] : false;
 
 $chamadoObj = new ChamadoController();
-$chamado = $chamadoObj->recuperaChamado($id)->fetchObject();
+$chamado = $chamadoObj->recuperaChamado($id);
 
 $usuarioObj = new UsuarioController();
 $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
@@ -37,7 +37,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject(
                     <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
                         <input type="hidden" name="usuario_id" value="<?= $usuario->id ?>">
-                        <input type="hidden" name="administrador_id" value="<?= $usuario->administrador_id ?>">
+<!--                        <input type="hidden" name="administrador_id" value="--><?//= $usuario->administrador_id ?><!--">-->
                         <input type="hidden" name="prioridade_id" value="1">
                         <input type="hidden" name="local_id" value="<?= $usuario->local_id ?>">
                         <?php if (!$id): ?>
@@ -50,15 +50,15 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject(
                             <div class="row">
                                 <div class="form-group col-md">
                                     <label for="telefone">Telefone: *</label>
-                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario['telefones'] ?? "" ?>" maxlength="15">
+                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario->telefones ?? "" ?>" maxlength="15">
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="email">E-mail: *</label>
-                                    <input type="email" id="email" name="email" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario['email'] ?? '' ?>" required>
+                                    <input type="email" id="email" name="email" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario->email ?? '' ?>" required>
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="contato">Contato: *</label>
-                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario['contato'] ?? '' ?>" required>
+                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario->contato ?? '' ?>" required>
                                 </div>
                             </div>
                             <div class="row">
@@ -78,7 +78,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject(
                                 <div class="col-md">
                                     <div class="form-group">
                                         <label for="descricao">Descrição: *</label>
-                                        <textarea name="descricao" id="descricao" class="form-control" rows="3" required><?= !empty($chamado) ? $chamado->descricao : ""?></textarea>
+                                        <textarea name="descricao" id="descricao" class="form-control" rows="3" required><?= ($chamado) ? $chamado->descricao : ""?></textarea>
                                     </div>
                                 </div>
                             </div>
