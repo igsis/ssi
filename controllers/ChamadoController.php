@@ -7,7 +7,7 @@ if ($pedidoAjax) {
 
 class ChamadoController extends MainModel
 {
-    public function insereChamado($post){
+    public function insereChamado(){
         /* executa limpeza nos campos */
         $dados = [];
         unset($_POST['_method']);
@@ -42,12 +42,13 @@ class ChamadoController extends MainModel
     }
 
     /* edita */
-    public function editaChamado($id,$pagina){
+    public function editaChamado($id){
         $idDecryp = MainModel::decryption($id);
 
         unset($_POST['_method']);
         unset($_POST['id']);
 
+        $dados = [];
         foreach ($_POST as $campo => $post) {
             $dados[$campo] = MainModel::limparString($post);
         }
@@ -59,7 +60,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Chamado Legal',
                 'texto' => 'Chamado Legal editado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . $pagina . '/chamado_cadastro&id=' . $id . '&id=' . MainModel::encryption($id)
+                'location' => SERVERURL . '/chamado_cadastro&id=' . $id . '&id=' . MainModel::encryption($id)
             ];
         }
         else {
@@ -68,15 +69,27 @@ class ChamadoController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.$pagina.'/chamado_cadastro&id='.$id.'&id='.MainModel::encryption($id)
+                'location' => SERVERURL.'/chamado_cadastro&id='.$id.'&id='.MainModel::encryption($id)
             ];
         }
         return MainModel::sweetAlert($alerta);
     }
 
+    public function listaChamadoUsuario($idUsuario)
+    {
+        $idUsuario = MainModel::decryption($idUsuario);
+        return MainModel::consultaSimples("SELECT * FROM chamados WHERE usuario_id = '$idUsuario' ORDER BY prioridade_id, id")->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function listaChamadoAdministrador($idAdministrador)
+    {
+        $idAdministrador = MainModel::decryption($idAdministrador);
+        return MainModel::consultaSimples("SELECT * FROM chamados WHERE administrador_id = '$idAdministrador'")->fetchAll(PDO::FETCH_OBJ);
+    }
+
     public function recuperaChamado($id) {
         $id = MainModel::decryption($id);
-        $chamado = DbModel::getInfo('chamados',$id);
+        $chamado = DbModel::getInfo('chamados',$id)->fetchObject();
         return $chamado;
     }
 }

@@ -8,7 +8,7 @@ $chamadoObj = new ChamadoController();
 $chamado = $chamadoObj->recuperaChamado($id);
 
 $usuarioObj = new UsuarioController();
-$usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s']);
+$usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -28,7 +28,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s']);
         <div class="row">
             <div class="col-md-12">
                 <!-- Horizontal Form -->
-                <div class="card card-info">
+                <div class="card card-green">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
                     </div>
@@ -37,7 +37,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s']);
                     <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
                         <input type="hidden" name="usuario_id" value="<?= $usuario->id ?>">
-                        <input type="hidden" name="administrador_id" value="<?= $usuario->administrador_id ?>">
+<!--                        <input type="hidden" name="administrador_id" value="--><?//= $usuario->administrador_id ?><!--">-->
                         <input type="hidden" name="prioridade_id" value="1">
                         <input type="hidden" name="local_id" value="<?= $usuario->local_id ?>">
                         <?php if (!$id): ?>
@@ -50,15 +50,15 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s']);
                             <div class="row">
                                 <div class="form-group col-md">
                                     <label for="telefone">Telefone: *</label>
-                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario['telefones'] ?? "" ?>" maxlength="15">
+                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario->telefone ?? "" ?>" maxlength="15">
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="email">E-mail: *</label>
-                                    <input type="email" id="email" name="email" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario['email'] ?? '' ?>" required>
+                                    <input type="email" id="email" name="email" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario->email ?? '' ?>" required>
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="contato">Contato: *</label>
-                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario['contato'] ?? '' ?>" required>
+                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario->nome ?? '' ?>" required>
                                 </div>
                             </div>
                             <div class="row">
@@ -86,7 +86,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s']);
                         <div class="resposta-ajax"></div>
                         <!-- /.card-body -->
                         <div class="card-footer">
-                            <button type="submit" class="btn btn-info float-right">Gravar</button>
+                            <button type="submit" class="btn btn-success float-right">Gravar</button>
                         </div>
                         <!-- /.card-footer -->
                         <div class="resposta-ajax"></div>
