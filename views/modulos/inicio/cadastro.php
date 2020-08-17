@@ -9,7 +9,7 @@ $objUsuario = new UsuarioController();
     <div class="card">
         <div class="card-header bg-dark">
             <a href="<?= SERVERURL ?>inicio" class="brand-link">
-                <img src="<?= SERVERURL ?>views/dist/img/SisContratLogo.png" alt="SisContrat Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <img src="<?= SERVERURL ?>views/dist/img/logo_ssi.png" alt="SisContrat Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light"><?= NOMESIS ?></span>
             </a>
         </div>
@@ -19,42 +19,22 @@ $objUsuario = new UsuarioController();
                 <input type="hidden" name="_method" value="insereNovoUsuario">
 
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col">
                         <label for="nome">Nome Completo* </label>
-                        <input type="text" id="nome" name="nome_completo" class="form-control" required>
+                        <input type="text" id="nome" name="nome" class="form-control" required>
                         <div class="invalid-feedback">
                             <strong>Insira seu Nome Completo</strong>
                         </div>
                     </div>
+                </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="tipo">Você é um funcionário? * </label> <br>
-                        <label><input type="radio" name="jovem_monitor" id="jovem_monitor" value="0" required> Sim</label>&nbsp;&nbsp;
-                        <label><input type="radio" name="jovem_monitor" id="jovem_monitor" value="1"> Não</label>
-                    </div>
-
-                    <div class="form-group col-md-4">
-                        <label for="rf_usuario">RF/RG* </label>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="rf_usuario">RF* </label>
                         <input type="text" id="rgrf_usuario" name="rf_rg" class="form-control" required>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-4">
-                        <label for="instituicao">Instituição *</label>
-                        <select class="form-control" name="instituicao" id="instituicao" required>
-                            <option value="">Selecione uma opção...</option>
-                            <?php
-                            $objUsuario->geraOpcao("instituicoes");
-                            ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="local">Local *</label>
-                        <select class="form-control" id="local" name="local">
-                            <!-- Populando pelo js -->
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
+
+                    <div class="form-group col">
                         <label for="rf_usuario">Usuário* </label>
                         <div id='resposta'></div>
                         <input type="text" id="usuario" name="usuario" class="form-control" maxlength="7" required readonly>
@@ -63,33 +43,47 @@ $objUsuario = new UsuarioController();
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col">
+                        <label for="instituicao">Instituição *</label>
+                        <select class="form-control" name="instituicao" id="instituicao" required>
+                            <option value="">Selecione uma opção...</option>
+                            <?php
+                            $objUsuario->geraOpcao("instituicoes");
+                            ?>
+                        </select>
+                    </div>
+                    <div class="form-group col">
+                        <label for="local">Local *</label>
+                        <select class="form-control" id="local" name="local_id">
+                            <!-- Populando pelo js -->
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
                         <label for="email">E-mail *</label>
                         <input type="email" class="form-control" name="email" placeholder="Email" required id="email">
                         <div class="invalid-feedback">
                             <strong>Email já cadastrado</strong>
                         </div>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col">
                         <label for="tel_usuario">Telefone* </label>
                         <input type="text" id="tel_usuario" name="telefone" class="form-control" onkeyup="mascara( this, mtel );" required maxlength="15">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="perfil">Código* </label> <br>
-                        <input type="text" name="perfil" id="perfil" class="form-control" maxlength="9" minlength="9" required>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col">
                         <label>Insira sua senha *</label>
                         <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
                         <div class="invalid-feedback">
                             <strong>Insira sua Senha</strong>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col">
                         <label>Confirme sua senha *</label>
                         <input type="password" class="form-control" id="senha2" name="senha2" placeholder="Confirme sua Senha" required>
                         <div class="invalid-feedback">
@@ -181,61 +175,11 @@ $objUsuario = new UsuarioController();
         document.querySelector("[name='usuario']").value = usuario;
     }
 
-
-    function geraUsuarioRg() {
-
-        // pega o valor que esta escrito no RG
-        let usuarioRg = document.querySelector("#rgrf_usuario").value;
-
-        // tira os pontos do valor, ficando apenas os numeros
-        usuarioRg = usuarioRg.replace(/[^0-9]/g, '');
-        usuarioRg = parseInt(usuarioRg);
-
-        // adiciona o x antes do rg
-        usuarioRg = "x" + usuarioRg;
-
-        // limita o rg a apenas o d + 6 primeiros numeros do rf
-        let usuario = usuarioRg.substr(0, 7);
-
-        // passa o valor para o input
-        document.querySelector("[name='usuario']").value = usuario;
-
-    }
-
-    $("input[name='jovem_monitor']").change(function () {
-        $('#rgrf_usuario').attr("disabled", false);
-
-        let jovemMonitor = document.getElementsByName("jovem_monitor");
-
-        for (i = 0; i < jovemMonitor.length; i++) {
-            if (jovemMonitor[i].checked) {
-                let escolhido = jovemMonitor[i].value;
-
-                if (escolhido == 1) {
-                    $('#rgrf_usuario').val('');
-                    $('#rgrf_usuario').focus();
-                    $('#rgrf_usuario').unmask();
-                    $('#rgrf_usuario').attr('maxlength', '');
-                    $('#rgrf_usuario').keypress(function (event) {
-                        geraUsuarioRg();
-                    });
-                    $('#rgrf_usuario').blur(function (event) {
-                        geraUsuarioRg();
-                    });
-
-                } else if (escolhido == 0) {
-                    $('#rgrf_usuario').val('');
-                    $('#rgrf_usuario').focus();
-                    $('#rgrf_usuario').mask('000.000.0');
-                    $('#rgrf_usuario').keypress(function (event) {
-                        geraUsuarioRf();
-                    });
-                    $('#rgrf_usuario').blur(function (event) {
-                        geraUsuarioRf();
-                    });
-                }
-            }
-        }
+    $( document ).ready(function() {
+        $('#rgrf_usuario').mask('000.000.0');
+        $('#rgrf_usuario').keypress(function (event) {
+            geraUsuarioRf();
+        });
     });
 
     const url_local = '<?= $url_local ?>';
@@ -251,7 +195,7 @@ $objUsuario = new UsuarioController();
                 $('#local').append('<option value="">Selecione uma opção...</option>');
 
                 for (const local of locais) {
-                    $('#local').append(`<option value='${local.id}'>${local.local}</option>`).focus();
+                    $('#local').append(`<option value='${local.id}'>${local.nome}</option>`).focus();
 
                 }
 
