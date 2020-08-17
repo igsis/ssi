@@ -21,14 +21,3 @@ if(isset($_GET['instituicao_id']) || isset($_POST['instituicao_id'])){
 
     print_r($locais);
 }
-
-if(isset($_GET['espaco_id'])){
-    $id = $_GET['espaco_id'];
-
-    $sql = "SELECT id   , espaco FROM espacos WHERE local_id = '$id' AND publicado = 1 order by espaco";
-    $res = $db->consultaSimples($sql)->fetchAll();
-
-    $locais = json_encode($res);
-
-    print_r($locais);
-}
