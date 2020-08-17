@@ -26,6 +26,7 @@ class ViewsModel
             'inicio',
             'cadastro',
             'chamado_cadastro',
+            'chamado_lista',
             'complemento_oficina_cadastro',
             'demais_anexos',
             'edita',

@@ -36,7 +36,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Select2 -->
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-
+    <style>
+        a.btn, a.btn:hover{
+            color: #fff;
+        }
+    </style>
 </head>
 <!--<body class="hold-transition login-page">-->
 <body class="hold-transition sidebar-mini accent-success">
@@ -110,9 +114,13 @@ else:
 <script src="<?= SERVERURL ?>views/dist/js/adminlte.min.js"></script>
 <!-- Outros Scripts -->
 <script src="<?= SERVERURL ?>views/dist/js/main.js"></script>
+<script src="<?= SERVERURL ?>views/plugins/jquery-mask/jquery.mask.js"></script>
 <!-- DataTables -->
-<script src="<?= SERVERURL ?>views/plugins/datatables/jquery.dataTables.js"></script>
-<script src="<?= SERVERURL ?>views/plugins/datatables/dataTables.bootstrap4.js"></script>
+<!-- DataTables -->
+<script src="<?= SERVERURL ?>views/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= SERVERURL ?>views/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?= SERVERURL ?>views/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?= SERVERURL ?>views/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <!-- date-range-picker -->
 <script src="<?= SERVERURL ?>views/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Select2 -->
@@ -121,12 +129,17 @@ else:
 <script>
     $(document).ready(function (){
         //Initialize Select2 Elements
-        $('.select2').select2()
+        $('.select2').select2();
 
         //Initialize Select2 Elements
         $('.select2bs4').select2({
             theme: 'bootstrap4'
-        })
+        });
+
+        $("#listagem").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+        });
     });
 </script>
 

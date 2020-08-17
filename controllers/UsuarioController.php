@@ -57,11 +57,12 @@ class UsuarioController extends UsuarioModel
         return header("Location: ".SERVERURL);
     }
 
-    public function insereUsuario($dados) {
+    public function insereUsuario() {
         $erro = false;
         $dados = [];
+        $camposIgnorados = ["senha2", "_method", "rf_rg", "instituicao"];
         foreach ($_POST as $campo => $post) {
-            if (($campo != "senha2") && ($campo != "_method")) {
+            if (!in_array($campo, $camposIgnorados)) {
                 $dados[$campo] = MainModel::limparString($post);
             }
         }
@@ -96,7 +97,7 @@ class UsuarioController extends UsuarioModel
                 $alerta = [
                     'alerta' => 'sucesso',
                     'titulo' => 'Usuário Cadastrado!',
-                    'texto' => 'Usuário cadastrado com Sucesso!',
+                    'texto' => "Usuário cadastrado com Sucesso! Seu usuário é <b>{$dados['usuario']}</b>",
                     'tipo' => 'success',
                     'location' => SERVERURL
                 ];
