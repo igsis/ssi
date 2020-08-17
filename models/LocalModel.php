@@ -7,21 +7,21 @@ if ($pedidoAjax) {
 
 class LocalModel extends MainModel
 {
-    protected function getLocal($dado) {
+    protected function getLocal($dados) {
         $pdo = parent::connection();
         $sql = "SELECT * FROM locais WHERE id = :id";
         $statement = $pdo->prepare($sql);
-        $statement->bindParam(":id", $dado['']);
+        $statement->bindParam(":id", $dados['id']);
         $statement->execute();
         return $statement;
     }
 
-    protected function getInstituicao($dados) {
+    protected function getLocalInstituicao($dados) {
         $pdo = parent::connection();
         $sql = "SELECT *
                 FROM instituicoes AS ins 
                 LEFT JOIN locais AS lo ON ins.id = lo.instituicao_id
-                WHERE lo.id = 1";
+                WHERE lo.id = :id OR ins.id = :id";
         $statement = $pdo->prepare($sql);
         $statement->bindParam(":id", $dados['id']);
         $statement->execute();
