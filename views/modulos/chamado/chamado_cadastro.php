@@ -28,7 +28,7 @@ $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s']);
         <div class="row">
             <div class="col-md-12">
                 <!-- Horizontal Form -->
-                <div class="card card-info">
+                <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
                     </div>
