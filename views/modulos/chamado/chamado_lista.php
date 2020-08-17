@@ -28,7 +28,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
-                        <a href=<?= SERVERURL ?>chamado/chamado_cadastro" class="btn btn-outline-success float-right">
+                        <a href=<?= SERVERURL ?>chamado/chamado_cadastro" class="btn btn-success float-right">
                             <i class="fas fa-plus"></i>
                             Adicionar
                         </a>
@@ -59,7 +59,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                                 <td>08/02/18 - 11:27:32</td>
                                 <td>Aberto</td>
                                 <td>
-                                    <a class="btn btn-app bg-success">
+                                    <a class="btn btn-app bg-primary">
                                         <i class="fas fa-folder-open"></i> Carregar
                                     </a>
                                 </td>

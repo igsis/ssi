@@ -36,10 +36,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Select2 -->
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-
+    <style>
+        a.btn, a.btn:hover{
+            color: #fff;
+        }
+    </style>
 </head>
 <!--<body class="hold-transition login-page">-->
-<body class="hold-transition sidebar-mini ">
+<body class="hold-transition sidebar-mini accent-success">
 <?php
 
 $view = $template->exibirViewController();
