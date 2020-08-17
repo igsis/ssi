@@ -1,8 +1,9 @@
 <?php
+$url_local = SERVERURL.'api/locais_espacos.php';
 $id = $_SESSION['usuario_id_s'];
 require_once "./controllers/UsuarioController.php";
-$insUsuario = new UsuarioController();
-$usuario = $insUsuario->recuperaUsuario($id)->fetch();
+$UsuarioObj = new UsuarioController();
+$usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -47,6 +48,24 @@ $usuario = $insUsuario->recuperaUsuario($id)->fetch();
                                 <div class="form-group col-md-4">
                                     <label for="telefone">Telefone: *</label>
                                     <input type="text" data-mask="(00) 00000-0000" class="form-control" id="telefone" name="telefone" maxlength="15" onkeyup="mascara( this, mtel );" value="<?=$usuario['telefone']?>" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="instituicao">Instituição *</label>
+                                    <select class="form-control" name="instituicao" id="instituicao" required>
+                                        <option value="">Selecione uma opção...</option>
+                                        <?php
+                                        $UsuarioObj->geraOpcao("instituicoes");
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group col">
+                                    <label for="local">Local *</label>
+                                    <select class="form-control" id="local" name="local">
+                                        <!-- Populando pelo js -->
+                                    </select>
                                 </div>
                             </div>
 
@@ -105,3 +124,36 @@ $usuario = $insUsuario->recuperaUsuario($id)->fetch();
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
+
+<script>
+    const url_local = '<?= $url_local ?>';
+
+    let instituicao = document.querySelector('#instituicao');
+
+    instituicao.addEventListener('change', async e => {
+        let idInstituicao = $('#instituicao option:checked').val();
+        fetch(`${url_local}?instituicao_id=${idInstituicao}`)
+            .then(response => response.json())
+            .then(locais => {
+                $('#local option').remove();
+                $('#local').append('<option value="">Selecione uma opção...</option>');
+
+                for (const local of locais) {
+                    $('#local').append(`<option value='${local.id}'>${local.nome}</option>`).focus();
+
+                }
+
+                if (idInstituicao == 1){
+                    let locais = document.querySelector('#local');
+                    locais.value = 2;
+                    $('#local').attr('readonly', true);
+                    $('#local').on('mousedown', function(e) {
+                        e.preventDefault();
+                    });
+                } else {
+                    $('#local').unbind('mousedown');
+                    $('#local').removeAttr('readonly');
+                }
+            })
+    });
+</script>

@@ -8,7 +8,7 @@ if (isset($_POST['_method'])) {
 
     if ($_POST['_method'] == "insereNovoUsuario"){
         if (isset($_POST['nome']) && (isset($_POST['senha']))) {
-            echo $insUsuario->insereUsuario($_POST);
+            echo $insUsuario->insereUsuario();
         }
     }
     elseif ($_POST['_method'] == "editaUsuario"){
