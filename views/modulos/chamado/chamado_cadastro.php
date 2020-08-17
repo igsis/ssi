@@ -12,7 +12,7 @@ $usuarioObj = new UsuarioController();
 $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
 
 $localObj = new LocalController();
-$admin = $localObj->retornaAdministrador('',$usuario->local_id)->fetchObject();
+$admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
 
 ?>
 <!-- Content Header (Page header) -->
