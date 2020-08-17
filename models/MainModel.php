@@ -197,10 +197,8 @@ class MainModel extends DbModel
      * <p><strong>FALSE</strong> por padrão. Quando <strong>TRUE</strong>, busca valores onde a coluna <i>publicado</i> seja 1</p>
      * @param bool $orderPorId
      * <p><strong>FALSE</strong> por padrão. Quando <strong>TRUE</strong>, organiza os valores por id</p>
-     * @param bool $fomento
-     * <p><strong>FALSE</strong> por padrão. Quando <strong>TRUE</strong>, exibe as opções que contem a coluno fomento = 1</p>
      */
-    public function geraOpcao($tabela, $selected = "", $publicado = false, $orderPorId = false, $fomento = false) {
+    public function geraOpcao($tabela, $selected = "", $publicado = false, $orderPorId = false) {
 //        $sql = "SELECT * FROM $tabela $publicado ORDER BY $order";
         $sql = "SELECT * FROM $tabela";
         $order = $orderPorId ? 1 : 2;
@@ -209,9 +207,6 @@ class MainModel extends DbModel
 
         if ($publicado) {
             $where[] = "publicado = 1";
-        }
-        if ($fomento) {
-            $where[] = "fomentos = 1";
         }
 
         if (count($where) > 0) {
