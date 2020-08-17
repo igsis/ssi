@@ -116,11 +116,9 @@ else:
 <script src="<?= SERVERURL ?>views/dist/js/main.js"></script>
 <script src="<?= SERVERURL ?>views/plugins/jquery-mask/jquery.mask.js"></script>
 <!-- DataTables -->
-<!-- DataTables -->
 <script src="<?= SERVERURL ?>views/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= SERVERURL ?>views/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="<?= SERVERURL ?>views/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="<?= SERVERURL ?>views/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?= SERVERURL ?>views/dist/js/main.js"></script>
 <!-- date-range-picker -->
 <script src="<?= SERVERURL ?>views/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Select2 -->
