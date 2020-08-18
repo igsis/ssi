@@ -114,7 +114,6 @@ else:
 <script src="<?= SERVERURL ?>views/dist/js/adminlte.min.js"></script>
 <script src="<?= SERVERURL ?>views/plugins/jquery-mask/jquery.mask.js"></script>
 <!-- DataTables -->
-<!-- DataTables -->
 <script src="<?= SERVERURL ?>views/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="<?= SERVERURL ?>views/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <!-- Outros Scripts -->
