@@ -14,7 +14,7 @@ header('Content-Type: application/json');
 if(isset($_GET['instituicao_id']) || isset($_POST['instituicao_id'])){
     $id = $_GET['instituicao_id'] ?? $_POST['instituicao_id'];
 
-    $sql = "SELECT id, nome FROM locais WHERE instituicao_id = '$id' AND publicado = 1 order by nome";
+    $sql = "SELECT id, local FROM locais WHERE instituicao_id = '$id' AND publicado = 1 order by local";
     $res = $db->consultaSimples($sql)->fetchAll();
 
     $locais = json_encode($res);
