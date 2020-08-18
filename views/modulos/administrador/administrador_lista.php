@@ -52,9 +52,14 @@ $admins = $administradorObj->listaAdmins();
                                         <td><?=$admin->telefone?></td>
                                         <td>Instituição Teste</td>
                                         <td>
-                                            <button type="button" class="btn btn-sm bg-gradient-danger">
-                                                Remover Administrador
-                                            </button>
+                                            <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                                                <input type="hidden" name="_method" value="removeAdmin">
+                                                <input type="hidden" name="usuario_id" value="<?= $administradorObj->encryption($admin->id) ?>">
+                                                <button type="submit" class="form-control btn btn-sm bg-gradient-danger">
+                                                    Remover Administrador
+                                                </button>
+                                                <div class="resposta-ajax"></div>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -96,7 +101,7 @@ $admins = $administradorObj->listaAdmins();
                         <select class="form-control select2bs4" name="usuario_id" id="novoAdm">
                             <option value="">Selecione...</option>
                             <?php foreach ($usuarios as $usuario): ?>
-                                <option value="<?= $usuario->id ?>"><?= $usuario->nome ?></option>
+                                <option value="<?= $administradorObj->encryption($usuario->id) ?>"><?= $usuario->nome ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
