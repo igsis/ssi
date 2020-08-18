@@ -10,7 +10,9 @@ class ChamadoController extends MainModel
     public function insereChamado(){
         /* executa limpeza nos campos */
         $dados = [];
+        $pagina = $_POST['pagina'];
         unset($_POST['_method']);
+        unset($_POST['pagina']);
         foreach ($_POST as $campo => $post) {
             $dados[$campo] = MainModel::limparString($post);
         }
@@ -25,7 +27,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Chamado',
                 'texto' => 'Chamado cadastrado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . '/chamado_cadastro&id=' . MainModel::encryption($id) . '&id=' . MainModel::encryption($id)
+                'location' => SERVERURL . $pagina . '/nota_cadastro&id=' . MainModel::encryption($id) . '&id=' . MainModel::encryption($id)
             ];
         }
         else {
@@ -34,7 +36,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL . '/chamado_cadastro'
+                'location' => SERVERURL . $pagina. '/chamado_cadastro'
             ];
         }
         /* ./cadastro */
@@ -60,7 +62,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Chamado Legal',
                 'texto' => 'Chamado Legal editado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . '/chamado_cadastro&id=' . $id . '&id=' . MainModel::encryption($id)
+                'location' => SERVERURL . 'administrador/chamado_cadastro&id=' . $id . '&id=' . MainModel::encryption($id)
             ];
         }
         else {
@@ -69,7 +71,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'/chamado_cadastro&id='.$id.'&id='.MainModel::encryption($id)
+                'location' => SERVERURL.'administrador/chamado_cadastro&id='.$id.'&id='.MainModel::encryption($id)
             ];
         }
         return MainModel::sweetAlert($alerta);
