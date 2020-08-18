@@ -38,14 +38,14 @@ $chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
                         <table id="tabela" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <td>Chamado nº</td>
-                                <td>Local</td>
-                                <td>Contato</td>
-                                <td>Categoria</td>
-                                <td>Descrição</td>
-                                <td>Data abertura</td>
-                                <td>Status</td>
-                                <td></td>
+                                <th>Nº</th>
+                                <th>Local</th>
+                                <th>Contato</th>
+                                <th>Categoria</th>
+                                <th>Descrição</th>
+                                <th>Data abertura</th>
+                                <th>Status</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -55,7 +55,7 @@ $chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
                                 <td><?= $chamados->local ?></td>
                                 <td><?= $chamados->contato ?></td>
                                 <td><?= $chamados->categoria ?></td>
-                                <td><?= $chamados->descricao ?></td>
+                                <td><?= mb_strimwidth($chamados->descricao,'0', '25', '...') ?></td>
                                 <td><?= date('d/m/Y', strtotime($chamados->data_abertura)) ?></td>
                                 <td><?= $chamados->status ?></td>
                                 <td>
@@ -68,14 +68,14 @@ $chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td>Chamado nº</td>
-                                <td>Local</td>
-                                <td>Contato</td>
-                                <td>Categoria</td>
-                                <td>Descrição</td>
-                                <td>Data abertura</td>
-                                <td>Status</td>
-                                <td></td>
+                                <th>Nº</th>
+                                <th>Local</th>
+                                <th>Contato</th>
+                                <th>Categoria</th>
+                                <th>Descrição</th>
+                                <th>Data abertura</th>
+                                <th>Status</th>
+                                <th></th>
                             </tr>
                             </tfoot>
                         </table>
