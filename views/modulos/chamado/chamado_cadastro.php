@@ -73,7 +73,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                                         <select class="form-control select2bs4" style="width: 100%;">
                                             <option value="">Selecione uma opção...</option>
                                             <?php
-                                            $chamadoObj->geraOpcao("categorias",$chamado->categorias_id ?? null,true);
+                                            $chamadoObj->geraOpcao("categorias",$chamado->categoria_id ?? null,true);
                                             ?>
                                         </select>
                                     </div>
