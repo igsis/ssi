@@ -44,7 +44,6 @@ else{
                         </a>
                     </div>
                     <!-- /.card-header -->
-                    <!-- form start -->
                     <div class="card-body">
                         <table id="tabela" class="table table-bordered table-striped">
                             <thead>
