@@ -48,7 +48,7 @@ $nota = $notaObj->listaNota($id);
                         </div>
                         <div class="row">
                             <div class="col-md">
-                                <b>Local:</b> <?= $chamado->nome ?>
+                                <b>Local:</b> <?= $chamado->local ?>
                             </div>
                             <div class="col-md">
                                 <b>Telefone:</b> <?= $chamado->telefone ?>
@@ -70,7 +70,7 @@ $nota = $notaObj->listaNota($id);
                                 <div class="col-md">
                                     <b>Notas</b>
                                     <?php foreach ($nota AS $notas): ?>
-                                        <p><b><?= date('d/m/Y', strtotime($notas->data)) ?></b> <?= $notas->nota ?></p>
+                                        <p><b><?= date('d/m/Y H:i:s', strtotime($notas->data)) ?></b> <?= $notas->nota ?></p>
                                     <?php endforeach; ?>
                                 </div>
                             </div>
@@ -90,7 +90,13 @@ $nota = $notaObj->listaNota($id);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="save">
+                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/notaAjax.php" role="form" data-form="save">
+                        <input type="hidden" name="_method" value="cadastrar">
+                        <input type="hidden" name="pagina" value="chamado">
+                        <input type="hidden" name="chamado_id" value="<?= $chamado->id ?>">
+                        <input type="hidden" name="usuario_id" value="<?= $_SESSION['usuario_id_s'] ?>">
+                        <input type="hidden" name="privada" value="0">
+                        <input type="hidden" name="data" value="<?= date('Y-m-d H:i:s') ?>">
                         <div class="card-body">
                             <div class="row">
                                 <div class="form-group col-md">

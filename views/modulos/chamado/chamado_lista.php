@@ -49,17 +49,17 @@ $chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($chamado AS $ch):?>
+                            <?php foreach ($chamado AS $chamados):?>
                             <tr>
-                                <td><?= $ch->id ?></td>
-                                <td><?= $ch->nome ?></td>
-                                <td><?= $ch->contato ?></td>
-                                <td><?= $ch->categoria ?></td>
-                                <td><?= $ch->descricao ?></td>
-                                <td><?= date('d/m/Y', strtotime($ch->data_abertura)) ?></td>
-                                <td><?= $ch->status ?></td>
+                                <td><?= $chamados->id ?></td>
+                                <td><?= $chamados->local ?></td>
+                                <td><?= $chamados->contato ?></td>
+                                <td><?= $chamados->categoria ?></td>
+                                <td><?= $chamados->descricao ?></td>
+                                <td><?= date('d/m/Y', strtotime($chamados->data_abertura)) ?></td>
+                                <td><?= $chamados->status ?></td>
                                 <td>
-                                    <a href="nota_cadastro&id=<?= MainModel::encryption($ch->id) ?>" class="btn btn-sm bg-primary">
+                                    <a href="nota_cadastro&id=<?= MainModel::encryption($chamados->id) ?>" class="btn btn-sm bg-primary">
                                         <i class="fas fa-folder-open"></i> Carregar
                                     </a>
                                 </td>

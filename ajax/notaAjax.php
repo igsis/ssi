@@ -4,10 +4,10 @@ require_once "../config/configGeral.php";
 
 if (isset($_POST['_method'])) {
     require_once "../controllers/NotaController.php";
-    $insNota = new NotaController();
+    $notaObj = new NotaController();
 
     if ($_POST['_method'] == "cadastrar") {
-        echo $insNota->insereNota();
+        echo $notaObj->insereNota();
     }
 
 } else {
