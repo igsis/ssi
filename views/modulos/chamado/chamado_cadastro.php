@@ -45,6 +45,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                         <input type="hidden" name="administrador_id" value="<?= $admin->administrador_id ?>">
                         <input type="hidden" name="prioridade_id" value="1">
                         <input type="hidden" name="local_id" value="<?= $usuario->local_id ?>">
+                        <input type="hidden" name="status_id" value="1">
                         <?php if (!$id): ?>
                             <input type="hidden" name="data_abertura" value="<?= date('Y-m-d H:i:s') ?>">
                         <?php endif; ?>
@@ -70,7 +71,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Categorias: *</label>
-                                        <select class="form-control select2bs4" style="width: 100%;">
+                                        <select class="form-control select2bs4" style="width: 100%;" name="categoria_id">
                                             <option value="">Selecione uma opção...</option>
                                             <?php
                                             $chamadoObj->geraOpcao("categorias",$chamado->categoria_id ?? null,true);
