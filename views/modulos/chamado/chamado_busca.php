@@ -129,7 +129,7 @@ $javascript = '
         let descricao = document.querySelector("#descricao").value;
         let solucao = document.querySelector("#solucao").value;
         
-        let url = `'.SERVERURL.'chamado/chamado_lista&chamado=${nChamado}&usuario=${usuario}&categoria${categoria}&status=${status}${descricao}&${solucao}`;
+        let url = `'.SERVERURL.'chamado/chamado_lista&id=${nChamado}&usuario_id=${usuario}&categoria_id=${categoria}&status_id=${status}&descricao=${descricao}&solucao=${solucao}&busca=1`;
         
         window.location.href = url;
     })
