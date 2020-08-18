@@ -19,10 +19,41 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- Horizontal Form -->
-                <div class="card card-info">
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Lista de Funcionario</h3>
+                        <a href="<?= SERVERURL ?>administrador/funcionario_cadastro" class="btn btn-success float-right">
+                            <i class="fas fa-plus"></i>
+                            Adicionar
+                        </a>
+                    </div>
                     <!-- /.card-header -->
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <table id="tabela" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Nº</th>
+                                        <th>Nome</th>
+                                        <th>Cargo</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
 
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Nº</th>
+                                        <th>Nome</th>
+                                        <th>Cargo</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -33,13 +64,3 @@
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
-<?php
- $javascript = "
-    <script type='application/javascript'>
-        $(document).ready(function () {
-            $('.nav-link').removeClass('active');
-            $('#chamado_inicio').addClass('active');
-        });
-    </script>
- ";
-?>
