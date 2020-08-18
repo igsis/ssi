@@ -2,7 +2,18 @@
 require_once "./controllers/ChamadoController.php";
 
 $chamadoObj = new ChamadoController();
-$chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
+if (isset($_GET['busca'])){
+    $filtros = [];
+    foreach ($_GET as $key => $filtro){
+        if ($key != 'busca' && $key != 'views' && $filtro != ''){
+            $filtros[$key] = $filtro;
+        }
+    }
+    $chamado = $chamadoObj->buscaChamadoAdministrador($filtros);
+}
+else{
+    $chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
+}
 ?>
 
 <!-- Content Header (Page header) -->

@@ -7,7 +7,8 @@ if ($pedidoAjax) {
 
 class ChamadoController extends MainModel
 {
-    public function insereChamado(){
+    public function insereChamado()
+    {
         /* executa limpeza nos campos */
         $dados = [];
         $pagina = $_POST['pagina'];
@@ -29,14 +30,13 @@ class ChamadoController extends MainModel
                 'tipo' => 'success',
                 'location' => SERVERURL . $pagina . '/nota_cadastro&id=' . MainModel::encryption($id) . '&id=' . MainModel::encryption($id)
             ];
-        }
-        else {
+        } else {
             $alerta = [
                 'alerta' => 'simples',
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL . $pagina. '/chamado_cadastro'
+                'location' => SERVERURL . $pagina . '/chamado_cadastro'
             ];
         }
         /* ./cadastro */
@@ -44,7 +44,8 @@ class ChamadoController extends MainModel
     }
 
     /* edita */
-    public function editaChamado($id){
+    public function editaChamado($id)
+    {
         $idDecryp = MainModel::decryption($id);
 
         unset($_POST['_method']);
@@ -64,14 +65,13 @@ class ChamadoController extends MainModel
                 'tipo' => 'success',
                 'location' => SERVERURL . 'administrador/chamado_cadastro&id=' . $id . '&id=' . MainModel::encryption($id)
             ];
-        }
-        else {
+        } else {
             $alerta = [
                 'alerta' => 'simples',
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/chamado_cadastro&id='.$id.'&id='.MainModel::encryption($id)
+                'location' => SERVERURL . 'administrador/chamado_cadastro&id=' . $id . '&id=' . MainModel::encryption($id)
             ];
         }
         return MainModel::sweetAlert($alerta);
@@ -94,7 +94,31 @@ class ChamadoController extends MainModel
         return MainModel::consultaSimples("SELECT * FROM chamados WHERE administrador_id = '$idAdministrador'")->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function recuperaChamado($id) {
+    public function buscaChamadoAdministrador($dados)
+    {
+        $where = '';
+        foreach ($dados as $key => $dado) {
+            if ($key != 'descricao' && $key != 'solucao') {
+                $where .= " {$key} = {$dado}";
+            }
+            else{
+                $where .= " {$key} LIKE '%{$dado}%'";
+            }
+        }
+
+        $query = "SELECT ch.*, c.categoria, l.local, cs.status FROM chamados ch 
+                    INNER JOIN categorias c on ch.categoria_id = c.id
+                    INNER JOIN locais l on ch.local_id = l.id
+                    INNER JOIN chamado_status cs on ch.status_id = cs.id    
+                WHERE {$where} ORDER BY prioridade_id, id";
+
+        $chamados = DbModel::consultaSimples($query)->fetchAll(PDO::FETCH_OBJ);
+
+        return $chamados;
+    }
+
+    public function recuperaChamado($id)
+    {
         $id = MainModel::decryption($id);
         $chamado = DbModel::consultaSimples("
             SELECT ch.*, c.categoria, l.local, cs.status FROM chamados ch 
