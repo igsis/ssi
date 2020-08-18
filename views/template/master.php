@@ -135,6 +135,6 @@ else:
         });
     });
 </script>
-
+<?= (isset($javascript)) ? $javascript : ''; ?>
 </body>
 </html>

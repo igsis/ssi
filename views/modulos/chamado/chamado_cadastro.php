@@ -1,12 +1,8 @@
 <?php
-require_once "./controllers/ChamadoController.php";
 require_once "./controllers/UsuarioController.php";
 require_once "./controllers/LocalController.php";
 
 $id = !empty($_GET['id']) ? $_GET['id'] : false;
-
-$chamadoObj = new ChamadoController();
-$chamado = $chamadoObj->recuperaChamado($id);
 
 $usuarioObj = new UsuarioController();
 $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
@@ -41,6 +37,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                     <!-- form start -->
                     <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
+                        <input type="hidden" name="pagina" value="chamado">
                         <input type="hidden" name="usuario_id" value="<?= $usuario->id ?>">
                         <input type="hidden" name="administrador_id" value="<?= $admin->administrador_id ?>">
                         <input type="hidden" name="prioridade_id" value="1">
@@ -74,7 +71,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                                         <select class="form-control select2bs4" style="width: 100%;" name="categoria_id">
                                             <option value="">Selecione uma opção...</option>
                                             <?php
-                                            $chamadoObj->geraOpcao("categorias",$chamado->categoria_id ?? null,true);
+                                            $usuarioObj->geraOpcao("categorias","",true);
                                             ?>
                                         </select>
                                     </div>
@@ -84,7 +81,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                                 <div class="col-md">
                                     <div class="form-group">
                                         <label for="descricao">Descrição: *</label>
-                                        <textarea name="descricao" id="descricao" class="form-control" rows="3" required><?= ($chamado) ? $chamado->descricao : ""?></textarea>
+                                        <textarea name="descricao" id="descricao" class="form-control" rows="3" required></textarea>
                                     </div>
                                 </div>
                             </div>

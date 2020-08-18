@@ -11,7 +11,10 @@ class NotaController extends MainModel
     {
         /* executa limpeza nos campos */
         $dados = [];
+        $idChamado = $_POST['chamado_id'];
+        $pagina = $_POST['pagina'];
         unset($_POST['_method']);
+        unset($_POST['pagina']);
         foreach ($_POST as $campo => $post) {
             $dados[$campo] = MainModel::limparString($post);
         }
@@ -26,7 +29,7 @@ class NotaController extends MainModel
                 'titulo' => 'Notas',
                 'texto' => 'Nota cadastrada com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . '/nota_cadastro&id=' . MainModel::encryption($id) . '&id=' . MainModel::encryption($id)
+                'location' => SERVERURL . $pagina . '/nota_cadastro&id=' . MainModel::encryption($idChamado)
             ];
         }
         else {
@@ -35,7 +38,7 @@ class NotaController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL . '/nota_cadastro'
+                'location' => SERVERURL . $pagina . 'chamado/nota_cadastro&id=' . MainModel::encryption($idChamado)
             ];
         }
         /* ./cadastro */
