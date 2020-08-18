@@ -179,4 +179,9 @@ class UsuarioController extends UsuarioModel
     public function recuperaEmail($email){
         return UsuarioModel::getExisteEmail($email);;
     }
+
+    public function listaUsuarios()
+    {
+        return DbModel::consultaSimples("SELECT * FROM usuarios WHERE publicado = 1 AND nivel_acesso_id = 1")->fetchAll(PDO::FETCH_OBJ);
+    }
 }
