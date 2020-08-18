@@ -1,14 +1,12 @@
 <?php
-require_once "./controllers/UsuarioController.php";
-require_once "./controllers/LocalController.php";
+require_once "./controllers/FuncionarioController.php";
 
 $id = !empty($_GET['id']) ? $_GET['id'] : false;
 
-$usuarioObj = new UsuarioController();
-$usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
-
-$localObj = new LocalController();
-$admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
+if ($id){
+    $funcionarioObj = new FuncionarioController();
+    $funcionario = $funcionarioObj->recuperaFuncionario($id);
+}
 
 ?>
 <!-- Content Header (Page header) -->
@@ -16,7 +14,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Cadastro de chamado</h1>
+                <h1 class="m-0 text-dark">Cadastro de Funcionario</h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -35,54 +33,20 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
+                    <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/funcionarioAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
-                        <input type="hidden" name="pagina" value="chamado">
-                        <input type="hidden" name="usuario_id" value="<?= $usuario->id ?>">
-                        <input type="hidden" name="administrador_id" value="<?= $admin->administrador_id ?>">
-                        <input type="hidden" name="prioridade_id" value="1">
-                        <input type="hidden" name="local_id" value="<?= $usuario->local_id ?>">
-                        <input type="hidden" name="status_id" value="1">
-                        <?php if (!$id): ?>
-                            <input type="hidden" name="data_abertura" value="<?= date('Y-m-d H:i:s') ?>">
-                        <?php endif; ?>
                         <?php if ($id): ?>
-                            <input type="hidden" name="id" id="id" value="<?= $id ?>">
+                            <input type="hidden" name="id" id="id" value="<?= $funcionarioObj->encryption($id) ?>">
                         <?php endif; ?>
                         <div class="card-body">
                             <div class="row">
-                                <div class="form-group col-md">
-                                    <label for="telefone">Telefone: *</label>
-                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario->telefone ?? "" ?>" maxlength="15">
+                                <div class="col-12 col-md-6 col-sm-12">
+                                    <label for="nome">Nome Completo: *</label>
+                                    <input type="text" class="form-control" maxlength="120" name="nome" value="<?= isset($funcionario) ? $funcionario->nome : '' ?>">
                                 </div>
-                                <div class="form-group col-md">
-                                    <label for="email">E-mail: *</label>
-                                    <input type="email" id="email" name="email" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario->email ?? '' ?>" required>
-                                </div>
-                                <div class="form-group col-md">
-                                    <label for="contato">Contato: *</label>
-                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o nome do contato no local" value="<?= $usuario->contato ?? '' ?>" required>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label>Categorias: *</label>
-                                        <select class="form-control select2bs4" style="width: 100%;" name="categoria_id">
-                                            <option value="">Selecione uma opção...</option>
-                                            <?php
-                                            $usuarioObj->geraOpcao("categorias","",true);
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md">
-                                    <div class="form-group">
-                                        <label for="descricao">Descrição: *</label>
-                                        <textarea name="descricao" id="descricao" class="form-control" rows="3" required></textarea>
-                                    </div>
+                                <div class="col-12 col-md-6 col-sm-12">
+                                    <label for="nome">Cargo: *</label>
+                                    <input type="text" class="form-control" maxlength="45" name="cargo" value="<?= isset($funcionario) ? $funcionario->cargo : '' ?>">
                                 </div>
                             </div>
                         </div>

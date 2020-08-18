@@ -1,5 +1,11 @@
 <?php
 
+require_once "./controllers/FuncionarioController.php";
+
+$funcionarioObj =  new FuncionarioController();
+
+$funcionarios = $funcionarioObj->listarFuncionario();
+
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -37,11 +43,25 @@
                                         <th>Nº</th>
                                         <th>Nome</th>
                                         <th>Cargo</th>
-                                        <th>Ações</th>
+                                        <th width="20%">Ações</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-
+                                    <?php
+                                        foreach ($funcionarios as $funcionario){
+                                    ?>
+                                            <tr>
+                                                <td><?= $funcionario->id ?></td>
+                                                <td><?= $funcionario->nome ?></td>
+                                                <td><?= $funcionario->cargo ?></td>
+                                                <td>
+                                                    <a href="<?= SERVERURL ?>administrador/funcionario_cadastro&id=<?= $funcionario->id ?>" class="btn btn-primary">Editar</a>
+                                                    <a href="<?= SERVERURL ?>administrador/funcionario_apaga&id=<?= $funcionario->id ?>" class="btn btn-danger">Remover</a>
+                                                </td>
+                                            </tr>
+                                    <?php
+                                        }
+                                    ?>
                                     </tbody>
                                     <tfoot>
                                     <tr>
