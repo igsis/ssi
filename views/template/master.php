@@ -32,7 +32,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     <!-- jQuery -->
     <script src="<?= SERVERURL ?>views/plugins/jquery/jquery.min.js"></script>
-    <link rel="shortcut icon" href="<?= SERVERURL ?>views/dist/img/AdminLTELogo.png" />
+    <link rel="shortcut icon" href="<?= SERVERURL ?>views/dist/img/logo_ssi.png" />
     <!-- Select2 -->
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/select2/css/select2.min.css">
     <link rel="stylesheet" href="<?= SERVERURL ?>views/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
@@ -122,15 +122,16 @@ else:
 <script src="<?= SERVERURL ?>views/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Select2 -->
 <script src="<?= SERVERURL ?>views/plugins/select2/js/select2.full.min.js"></script>
+<script src="<?= SERVERURL ?>views/plugins/select2/js/i18n/pt-BR.js" type="text/javascript"></script>
 
 <script>
     $(document).ready(function (){
         //Initialize Select2 Elements
         $('.select2').select2();
 
-        //Initialize Select2 Elements
         $('.select2bs4').select2({
-            theme: 'bootstrap4'
+            theme: 'bootstrap4',
+            language: 'pt-BR'
         });
     });
 </script>
