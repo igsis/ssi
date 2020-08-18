@@ -5,8 +5,10 @@ require_once "./controllers/UsuarioController.php";
 $id = isset($_GET['id']) ? $_GET['id'] : null;
 
 $chamadoObj = new ChamadoController();
-
 $usuarioObj = new UsuarioController();
+
+$usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
+$nivelAcesso = $usuario->nivel_acesso_id;
 
 ?>
     <!-- Content Header (Page header) -->
@@ -40,24 +42,31 @@ $usuarioObj = new UsuarioController();
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="row">
-                                                <div class="col-12 col-md-6 col-sm-12">
+                                                <div class="col-12 col-md-<?= $nivelAcesso == 2? '6' : '12'?> col-sm-12">
                                                     <div class="form-group">
                                                         <label>Chamado Nº:</label>
                                                         <input type="text" class="form-control" name="nChamado"
                                                                id="nChamado" placeholder="Digite número do chamado">
                                                     </div>
                                                 </div>
-                                                <div class="col-12 col-md-6 col-sm-12">
-                                                    <div class="form-group">
-                                                        <label>Usuário:</label>
-                                                        <select class="select2bs4 form-control" style="width: 100%;" id="usuario" name="usuario">
-                                                            <option value="">Selecione um usuário</option>
-                                                            <?php
-                                                            $usuarioObj->geraOpcao("usuarios");
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                                <?php
+                                                    if ($nivelAcesso == 2){
+                                                        $usuarioId = "&usuario_id=".$usuario->id;
+                                                      ?>
+                                                        <div class="col-12 col-md-6 col-sm-12">
+                                                            <div class="form-group">
+                                                                <label>Usuário:</label>
+                                                                <select class="select2bs4 form-control" style="width: 100%;" id="usuario" name="usuario">
+                                                                    <option value="">Selecione um usuário</option>
+                                                                    <?php
+                                                                    $usuarioObj->geraOpcao("usuarios");
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    <?php
+                                                    }
+                                                ?>
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 col-md-8 col-sm-12">
@@ -117,19 +126,20 @@ $usuarioObj = new UsuarioController();
         </div><!-- /.container-fluid -->
     </div>
 <?php
+$url = SERVERURL."chamado/chamado_lista&";
+$usuario = isset($usuarioId) ? "document.querySelector('#usuario').value" : $usuarioId;
 $javascript = '
-<script>
-    
+<script>    
     document.querySelector("#btnSubmit").addEventListener("click",function (event){
         event.preventDefault();
         let nChamado = document.querySelector("#nChamado").value;
-        let usuario = document.querySelector("#usuario").value;
+        let usuario = '. $usuario .';
         let categoria = document.querySelector("#categoria").value;
         let status = document.querySelector("#status").value;
         let descricao = document.querySelector("#descricao").value;
         let solucao = document.querySelector("#solucao").value;
         
-        let url = `'.SERVERURL.'chamado/chamado_lista&id=${nChamado}&usuario_id=${usuario}&categoria_id=${categoria}&status_id=${status}&descricao=${descricao}&solucao=${solucao}&busca=1`;
+        let url = `'.$url.'id=${nChamado}&usuario_id=${usuario}&categoria_id=${categoria}&status_id=${status}&descricao=${descricao}&solucao=${solucao}&busca=1`;
         
         window.location.href = url;
     })

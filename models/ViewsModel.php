@@ -41,6 +41,7 @@ class ViewsModel
             'chamado_lista',
             'chamado_pesquisa',
             'administrador_lista',
+            'funcionarios',
             'categoria_lista',
             'instituicao_lista',
             'local_lista',
