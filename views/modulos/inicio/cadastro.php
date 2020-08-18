@@ -195,7 +195,7 @@ $objUsuario = new UsuarioController();
                 $('#local').append('<option value="">Selecione uma opção...</option>');
 
                 for (const local of locais) {
-                    $('#local').append(`<option value='${local.id}'>${local.nome}</option>`).focus();
+                    $('#local').append(`<option value='${local.id}'>${local.local}</option>`).focus();
 
                 }
 

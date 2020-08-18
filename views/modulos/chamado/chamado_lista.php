@@ -1,9 +1,8 @@
 <?php
 require_once "./controllers/ChamadoController.php";
-require_once "./controllers/UsuarioController.php";
 
-$id = isset($_GET['id']) ? $_GET['id'] : null;
-
+$chamadoObj = new ChamadoController();
+$chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
 ?>
 
 <!-- Content Header (Page header) -->
@@ -28,7 +27,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
-                        <a href=<?= SERVERURL ?>chamado/chamado_cadastro" class="btn btn-success float-right">
+                        <a href="<?= SERVERURL ?>chamado/chamado_cadastro" class="btn btn-success float-right">
                             <i class="fas fa-plus"></i>
                             Adicionar
                         </a>
@@ -39,40 +38,42 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                         <table id="listagem" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <td>Chamado Nº</td>
+                                <td>Chamado nº</td>
                                 <td>Local</td>
                                 <td>Contato</td>
                                 <td>Categoria</td>
                                 <td>Descrição</td>
-                                <td>Data Abertura</td>
+                                <td>Data abertura</td>
                                 <td>Status</td>
                                 <td></td>
                             </tr>
                             </thead>
                             <tbody>
+                            <?php foreach ($chamado AS $ch):?>
                             <tr>
-                                <td>3</td>
-                                <td>Teatro-Parque Flávio Império</td>
-                                <td>Ed Robson/Adesilio</td>
-                                <td>Manutenção de Equipamentos</td>
-                                <td>Ar Condicionado Central Q...</td>
-                                <td>08/02/18 - 11:27:32</td>
-                                <td>Aberto</td>
+                                <td><?= $ch->id ?></td>
+                                <td><?= $ch->nome ?></td>
+                                <td><?= $ch->contato ?></td>
+                                <td><?= $ch->categoria ?></td>
+                                <td><?= $ch->descricao ?></td>
+                                <td><?= date('d/m/Y', strtotime($ch->data_abertura)) ?></td>
+                                <td><?= $ch->status ?></td>
                                 <td>
-                                    <a class="btn btn-app bg-primary">
+                                    <a href="nota_cadastro&id=<?= MainModel::encryption($ch->id) ?>" class="btn btn-sm bg-primary">
                                         <i class="fas fa-folder-open"></i> Carregar
                                     </a>
                                 </td>
                             </tr>
+                            <?php endforeach; ?>
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td>Chamado Nº</td>
+                                <td>Chamado nº</td>
                                 <td>Local</td>
                                 <td>Contato</td>
                                 <td>Categoria</td>
                                 <td>Descrição</td>
-                                <td>Data Abertura</td>
+                                <td>Data abertura</td>
                                 <td>Status</td>
                                 <td></td>
                             </tr>
