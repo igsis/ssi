@@ -10,7 +10,7 @@ $admins = $administradorObj->listaAdmins();
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1 class="m-0 text-dark">Administradores</h1>
+                <h1 class="m-0 text-dark"></h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -40,6 +40,7 @@ $admins = $administradorObj->listaAdmins();
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Telefone</th>
+                                <th>Instituição(ões)</th>
                                 <th width="15%">Ações</th>
                             </tr>
                             </thead>
@@ -49,10 +50,16 @@ $admins = $administradorObj->listaAdmins();
                                         <td><?=$admin->nome?></td>
                                         <td><?=$admin->email?></td>
                                         <td><?=$admin->telefone?></td>
+                                        <td>Instituição Teste</td>
                                         <td>
-                                            <button type="button" class="btn btn-sm bg-gradient-danger">
-                                                Remover Administrador
-                                            </button>
+                                            <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                                                <input type="hidden" name="_method" value="removeAdmin">
+                                                <input type="hidden" name="usuario_id" value="<?= $administradorObj->encryption($admin->id) ?>">
+                                                <button type="submit" class="form-control btn btn-sm bg-gradient-danger">
+                                                    Remover Administrador
+                                                </button>
+                                                <div class="resposta-ajax"></div>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -63,6 +70,7 @@ $admins = $administradorObj->listaAdmins();
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Telefone</th>
+                                <th>Instituição(ões)</th>
                                 <th width="15%">Ações</th>
                             </tr>
                             </tfoot>
@@ -80,24 +88,30 @@ $admins = $administradorObj->listaAdmins();
 <div class="modal fade" id="adicionar-adm" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Adicionar novo Administrador</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <select class="form-control" name="novoAdm" id="novoAdm">
-                    <option value="">Selecione...</option>
-                    <?php foreach ($usuarios as $usuario): ?>
-                        <option value="<?=$usuario->id?>"><?=$usuario->nome?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+            <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                <input type="hidden" name="_method" value="insereAdmin">
+                <div class="modal-header">
+                    <h4 class="modal-title">Adicionar novo Administrador</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select class="form-control select2bs4" name="usuario_id" id="novoAdm">
+                            <option value="">Selecione...</option>
+                            <?php foreach ($usuarios as $usuario): ?>
+                                <option value="<?= $administradorObj->encryption($usuario->id) ?>"><?= $usuario->nome ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+                <div class="resposta-ajax"></div>
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>

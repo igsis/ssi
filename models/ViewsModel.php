@@ -40,7 +40,10 @@ class ViewsModel
             'nota_cadastro',
             'chamado_lista',
             'chamado_pesquisa',
-            'administradores'
+            'administrador_lista',
+            'categoria_lista',
+            'instituicao_lista',
+            'local_lista',
         ];
         if (self::verificaModulo($modulo)) {
             if (in_array($view, $whitelist)) {

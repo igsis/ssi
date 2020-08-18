@@ -58,3 +58,5 @@ $telaInicial = $_SESSION['nivel_acesso_s'] == 1 ? SERVERURL."chamado" : SERVERUR
     <!-- /.sidebar-menu -->
 </div>
 <!-- /.sidebar -->
+
+<?= $view->retornaMenuAtivo() ?>
