@@ -15,6 +15,14 @@
     </a>
 </li>
 <li class="nav-item">
+    <a href="<?= SERVERURL ?>administrador/funcionarios" class="nav-link">
+        <i class="nav-icon fas fa-circle"></i>
+        <p>
+            Gerenciar Funcionarios
+        </p>adm
+    </a>
+</li>
+<li class="nav-item">
     <a href="<?= SERVERURL ?>administrador" class="nav-link">
         <i class="nav-icon fas fa-circle"></i>
         <p>
