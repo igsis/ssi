@@ -7,7 +7,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="<?= SERVERURL ?>administrador/administradores" class="nav-link">
+    <a href="<?= SERVERURL ?>administrador/administradores" class="nav-link" id="administradores">
         <i class="nav-icon fas fa-circle"></i>
         <p>
             Gerenciar Administradores
@@ -27,6 +27,13 @@
         <i class="nav-icon fas fa-circle"></i>
         <p>
             Gerenciar Locais
+        </p>
+    </a>
+</li><li class="nav-item">
+    <a href="<?= SERVERURL ?>administrador" class="nav-link">
+        <i class="nav-icon fas fa-circle"></i>
+        <p>
+            Gerenciar Categorias
         </p>
     </a>
 </li>
