@@ -46,7 +46,8 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                                         <td><?=$instituicao->instituicao?></td>
                                         <td>
                                                 <button type="button" class="form-control btn btn-sm bg-gradient-primary"
-                                                data-instituicao="<?=$instituicao->instituicao?>" onclick="modalEdicao.bind(this)()">
+                                                    data-id="<?=$instituicao->id?>" data-instituicao="<?=$instituicao->instituicao?>"
+                                                    onclick="modalEdicao.bind(this)()">
                                                     Editar
                                                 </button>
                                             </form>
@@ -91,7 +92,7 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-success">Adicionar</button>
+                    <button type="submit" class="btn btn-success" id="btnSalvar">Adicionar</button>
                 </div>
                 <div class="resposta-ajax"></div>
             </form>
@@ -106,15 +107,23 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
 $javascript = <<<JAVASCRIPT
 <script>
     let modalInstituicao = $('#add-instituicao');
-    let estadoInicial = modalInstituicao.clone();
+    var estadoInicial = "";
 
     function modalEdicao() {
         let titulo = $('.modal-title');
-        let instituicao = $('#instituicao');
+        let btnSalvar = $('#btnSalvar');
+        let cpoInstituicao = $('#instituicao');
+        let nomeInstituicao = $(this).data('instituicao');
         
-        titulo.text('Editar instituição: ' + $(this).data('instituicao'));
+        titulo.text('Editar instituição: ' + nomeInstituicao);
+        cpoInstituicao.val(nomeInstituicao);
+        btnSalvar.text('Editar');
         $('#add-instituicao').modal('show');
     }
+    
+    $(document).ready(function () {
+        estadoInicial = modalInstituicao.clone();
+    })
     
     modalInstituicao.on('hidden.bs.modal', function () {
         modalInstituicao.replaceWith(estadoInicial);
