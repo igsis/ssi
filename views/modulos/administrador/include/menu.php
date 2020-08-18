@@ -15,7 +15,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="<?= SERVERURL ?>administrador" class="nav-link">
+    <a href="<?= SERVERURL ?>administrador/instituicao_lista" class="nav-link" id="instituicao_lista">
         <i class="nav-icon fas fa-circle"></i>
         <p>
             Gerenciar Instituições

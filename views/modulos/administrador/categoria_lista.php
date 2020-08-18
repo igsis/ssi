@@ -118,9 +118,3 @@ $admins = $administradorObj->listaAdmins();
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<script type="application/javascript">
-    $(document).ready(function () {
-        $('.nav-link').removeClass('active');
-        $('#chamado_inicio').addClass('active');
-    })
-</script>

@@ -36,8 +36,7 @@ class AdministradorController extends UsuarioController
                 'tipo' => 'success',
                 'location' => SERVERURL.'administrador/administrador_lista'
             ];
-        }
-        else{
+        } else {
             $alerta = [
                 'alerta' => 'simples',
                 'titulo' => 'Erro!',
@@ -46,6 +45,32 @@ class AdministradorController extends UsuarioController
                 'location' => SERVERURL.'administrador/administrador_lista'
             ];
         }
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function insereInstituicao()
+    {
+        $dado['instituicao'] = MainModel::limparString($_POST['instituicao']);
+
+        $insert = DbModel::insert('instituicoes', $dado);
+        if ($insert) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Instituição Cadastrada!',
+                'texto' => "Instituição <b>{$dado['instituicao']}</b> cadastrada!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        }
+
         return MainModel::sweetAlert($alerta);
     }
 }

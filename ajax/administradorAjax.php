@@ -14,6 +14,10 @@ if (isset($_POST['_method'])) {
         case 'removeAdmin':
             echo $administradorObj->nivelAcesso(1);
             break;
+
+        case 'insereInstituicao':
+            echo $administradorObj->insereInstituicao();
+            break;
     }
 } else {
     include_once "../config/destroySession.php";
