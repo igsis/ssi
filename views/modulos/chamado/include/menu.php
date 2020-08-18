@@ -23,7 +23,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="<?= SERVERURL ?>chamado/chamado_pesquisa" class="nav-link">
+    <a href="<?= SERVERURL ?>chamado/chamado_busca" class="nav-link">
         <i class="fas fa-search nav-icon"></i>
         <p>
             Busca

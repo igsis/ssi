@@ -25,7 +25,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Chamado',
                 'texto' => 'Chamado cadastrado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . '/chamado_cadastro&id=' . MainModel::encryption($id) . '&id=' . MainModel::encryption($id)
+                'location' => SERVERURL . '/chamado/nota_cadastro&id=' . MainModel::encryption($id) . '&id=' . MainModel::encryption($id)
             ];
         }
         else {
@@ -34,7 +34,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL . '/chamado_cadastro'
+                'location' => SERVERURL . 'chamado/chamado_cadastro'
             ];
         }
         /* ./cadastro */

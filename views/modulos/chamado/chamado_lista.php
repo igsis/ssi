@@ -35,7 +35,7 @@ $chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
                     <!-- /.card-header -->
                     <!-- form start -->
                     <div class="card-body">
-                        <table id="listagem" class="table table-bordered table-striped">
+                        <table id="tabela" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <td>Chamado nº</td>

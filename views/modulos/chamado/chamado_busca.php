@@ -4,6 +4,10 @@ require_once "./controllers/UsuarioController.php";
 
 $id = isset($_GET['id']) ? $_GET['id'] : null;
 
+$chamadoObj = new ChamadoController();
+
+$usuarioObj = new UsuarioController();
+
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -24,35 +28,32 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
         <div class="row">
             <div class="col-md-12">
                 <!-- Horizontal Form -->
-                <div class="card card-info">
+                <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="formulario-ajax" method="POST" role="form">
+                    <form action="<?= SERVERURL ?>chamado/chamado_lista" method="GET" role="form">
                         <div class="card-body">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="row">
-                                            <div class="col-12 col-md-4 col-sm-12">
+                                            <div class="col-12 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label>Chamado Nº:</label>
                                                     <input type="text" class="form-control" name="nChamado" placeholder="Digite número do chamado">
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-8 col-sm-12">
+                                            <div class="col-12 col-md-6 col-sm-12">
                                                 <div class="form-group">
                                                     <label>Usuário:</label>
-                                                    <select class="select2bs4 form-control" multiple="multiple" data-placeholder="Selecione um usuário" style="width: 100%;">
-                                                        <option>Qwerty da Silva</option>
-                                                        <option>Qwerty dos Santos</option>
-                                                        <option>Qwerty Menezes</option>
-                                                        <option>Qwerty Sirqueira</option>
-                                                        <option>Qwerty Oliveira</option>
-                                                        <option>Qwerty Lourenço</option>
-                                                        <option>Qwerty Cavalcante</option>
+                                                    <select class="select2bs4 form-control" style="width: 100%;">
+                                                        <option>Selecione um usuário</option>
+                                                        <?php
+                                                            $usuarioObj->geraOpcao("usuarios");
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -62,14 +63,10 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                                                 <div class="form-group">
                                                     <label>Categorias:</label>
                                                     <select class="form-control select2bs4" style="width: 100%;">
-                                                        <option></option>
-                                                        <option>Alabama</option>
-                                                        <option>Alaska</option>
-                                                        <option>California</option>
-                                                        <option>Delaware</option>
-                                                        <option>Tennessee</option>
-                                                        <option>Texas</option>
-                                                        <option>Washington</option>
+                                                        <option>Selecione um categoria</option>
+                                                        <?php
+                                                            $chamadoObj->geraOpcao("categorias");
+                                                        ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -108,7 +105,6 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
                                 Buscar
                             </button>
                         </div>
-                        <div class="resposta-ajax"></div>
                     </form>
                 </div>
                 <!-- /.card -->
