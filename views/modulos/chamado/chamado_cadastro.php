@@ -55,7 +55,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                             <div class="row">
                                 <div class="form-group col-md">
                                     <label for="telefone">Telefone: *</label>
-                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario->telefones ?? "" ?>" maxlength="15">
+                                    <input type="text" id="telefone" name="telefone" onkeyup="mascara( this, mtel );"  class="form-control" placeholder="Digite o telefone" required value="<?= $usuario->telefone ?? "" ?>" maxlength="15">
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="email">E-mail: *</label>
@@ -63,7 +63,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                                 </div>
                                 <div class="form-group col-md">
                                     <label for="contato">Contato: *</label>
-                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o E-mail" value="<?= $usuario->contato ?? '' ?>" required>
+                                    <input type="text" id="contato" name="contato" class="form-control" maxlength="120" placeholder="Digite o nome do contato no local" value="<?= $usuario->contato ?? '' ?>" required>
                                 </div>
                             </div>
                             <div class="row">
@@ -73,7 +73,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                                         <select class="form-control select2bs4" style="width: 100%;">
                                             <option value="">Selecione uma opção...</option>
                                             <?php
-                                            $chamadoObj->geraOpcao("categorias");
+                                            $chamadoObj->geraOpcao("categorias",$chamado->categorias_id ?? null,true);
                                             ?>
                                         </select>
                                     </div>
