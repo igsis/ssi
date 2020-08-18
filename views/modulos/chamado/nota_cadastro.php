@@ -12,7 +12,7 @@ $chamado = $chamadoObj->recuperaChamado($id);
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Chamado ID</h1>
+                <h1 class="m-0 text-dark">Chamado ID <?= $chamado->id ?></h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -33,6 +33,11 @@ $chamado = $chamadoObj->recuperaChamado($id);
                     <!-- form start -->
                     <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="save">
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-md">
+                                    <b>Status:</b> <?= $chamado->status ?? null ?>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="form-group col-md">
                                     <label for="nota">Nota: *</label>
