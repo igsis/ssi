@@ -16,7 +16,7 @@ $chamado = $chamadoObj->recuperaChamado($id);
 
 require_once "../controllers/LocalController.php";
 $localObj = new LocalController();
-$local = $localObj->recuperaLocal($chamado->local_id);
+$local = $localObj->recuperaLocal($chamado->local_id)->fetchObject();
 
 class PDF extends FPDF
 {
@@ -25,7 +25,7 @@ class PDF extends FPDF
     {
        // Move to the right
        $this->Cell(80);
-       $this->Image('img/logo_smc.jpg',170,6);
+       $this->Image('img/logo_cultura.jpg',170,10);
        // Line break
        $this->Ln(20);
     }
@@ -96,29 +96,29 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
-$pdf->Cell(15,$l,utf8_decode('Número:'),0,0,'L');
+$pdf->Cell(16,$l,utf8_decode('Número:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
 $pdf->Cell(20,$l,utf8_decode("$chamado->id"),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(10,$l,utf8_decode('Data:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(5,$l,utf8_decode(date('d/m/Y', strtotime($chamado->data_abertura))),0,0,'L');
+$pdf->Cell(5,$l,utf8_decode(date('d/m/Y H:i:s', strtotime($chamado->data_abertura))),0,0,'L');
 
 $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
-$pdf->Cell(28,$l,utf8_decode('Solicitação do:'),0,0,'L');
+$pdf->Cell(12,$l,utf8_decode('Local:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(50,$l,utf8_decode($local->local),0,0,'L');
+$pdf->Cell(50,$l,utf8_decode($chamado->local),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(18,$l,utf8_decode('Endereço:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(40,$l,utf8_decode($local->logradouro),0,0,'L');
+$pdf->Cell(65,$l,utf8_decode($local->logradouro),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(45,$l,utf8_decode($chamado->telefone),0,1,'L');
+$pdf->Cell(35,$l,utf8_decode($chamado->telefone),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
@@ -189,7 +189,7 @@ $pdf->Cell(25,$l,utf8_decode('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
 
 $pdf->SetXY( $x , 155 );// SetXY - DEFINE O X (largura) E O Y (altura) NA PÁGINA
 
-$pdf->Image('img/logo_smc.jpg',170,152);
+$pdf->Image('img/logo_cultura.jpg',170,156);
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
@@ -207,29 +207,29 @@ $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
-$pdf->Cell(15,$l,utf8_decode('Número:'),0,0,'L');
+$pdf->Cell(16,$l,utf8_decode('Número:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
 $pdf->Cell(20,$l,utf8_decode("$chamado->id"),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(10,$l,utf8_decode('Data:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(5,$l,utf8_decode(date('d/m/Y', strtotime($chamado->data_abertura))),0,0,'L');
+$pdf->Cell(5,$l,utf8_decode(date('d/m/Y H:i:s', strtotime($chamado->data_abertura))),0,0,'L');
 
 $pdf->Ln();
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
-$pdf->Cell(28,$l,utf8_decode('Solicitação do:'),0,0,'L');
+$pdf->Cell(12,$l,utf8_decode('Local:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(50,$l,utf8_decode($local->local),0,0,'L');
+$pdf->Cell(50,$l,utf8_decode($chamado->local),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(18,$l,utf8_decode('Endereço:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(40,$l,utf8_decode($local->logradouro),0,0,'L');
+$pdf->Cell(65,$l,utf8_decode($local->logradouro),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(45,$l,utf8_decode($chamado->telefone),0,1,'L');
+$pdf->Cell(35,$l,utf8_decode($chamado->telefone),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
