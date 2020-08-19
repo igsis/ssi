@@ -85,13 +85,18 @@ class ChamadoController extends MainModel
                 INNER JOIN categorias c on ch.categoria_id = c.id
                 INNER JOIN locais l on ch.local_id = l.id
                 INNER JOIN chamado_status cs on ch.status_id = cs.id    
-            WHERE usuario_id = '$idUsuario' ORDER BY prioridade_id, id")->fetchAll(PDO::FETCH_OBJ);
+            WHERE usuario_id = '$idUsuario' ORDER BY status_id, id")->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function listaChamadoAdministrador($idAdministrador)
     {
-        $idAdministrador = MainModel::decryption($idAdministrador);
-        return MainModel::consultaSimples("SELECT * FROM chamados WHERE administrador_id = '$idAdministrador'")->fetchAll(PDO::FETCH_OBJ);
+        //$idAdministrador = MainModel::decryption($idAdministrador);
+        return MainModel::consultaSimples("
+            SELECT ch.*, c.categoria, l.local, cs.status FROM chamados ch 
+                INNER JOIN categorias c on ch.categoria_id = c.id
+                INNER JOIN locais l on ch.local_id = l.id
+                INNER JOIN chamado_status cs on ch.status_id = cs.id
+            WHERE ch.administrador_id = '$idAdministrador'")->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function buscaChamadoAdministrador($dados)

@@ -12,7 +12,7 @@ if (isset($_GET['busca'])){
     $chamado = $chamadoObj->buscaChamadoAdministrador($filtros);
 }
 else{
-    $chamado = $chamadoObj->listaChamadoUsuario($_SESSION['usuario_id_s']);
+    $chamado = $chamadoObj->listaChamadoAdministrador($_SESSION['usuario_id_s']);
 }
 ?>
 
@@ -38,7 +38,7 @@ else{
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
-                        <a href="<?= SERVERURL ?>chamado/chamado_cadastro" class="btn btn-success float-right">
+                        <a href="<?= SERVERURL ?>administrador/chamado_cadastro" class="btn btn-success float-right">
                             <i class="fas fa-plus"></i>
                             Adicionar
                         </a>
