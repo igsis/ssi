@@ -48,6 +48,6 @@ class NotaController extends MainModel
     public function listaNota($idChamado)
     {
         $idChamado = MainModel::decryption($idChamado);
-        return MainModel::consultaSimples("SELECT * FROM notas WHERE chamado_id = '$idChamado'")->fetchAll(PDO::FETCH_OBJ);
+        return MainModel::consultaSimples("SELECT n.*, u.nome FROM notas n INNER JOIN usuarios u on n.usuario_id = u.id WHERE chamado_id = '$idChamado'")->fetchAll(PDO::FETCH_OBJ);
     }
 }
