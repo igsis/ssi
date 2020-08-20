@@ -18,6 +18,10 @@ if (isset($_POST['_method'])) {
         case 'insereInstituicao':
             echo $administradorObj->insereInstituicao();
             break;
+
+        case 'editaInstituicao':
+            echo $administradorObj->editaInstituicao();
+            break;
     }
 } else {
     include_once "../config/destroySession.php";

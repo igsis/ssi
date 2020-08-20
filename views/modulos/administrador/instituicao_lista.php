@@ -46,7 +46,7 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                                         <td><?=$instituicao->instituicao?></td>
                                         <td>
                                                 <button type="button" class="form-control btn btn-sm bg-gradient-primary"
-                                                    data-id="<?=$instituicao->id?>" data-instituicao="<?=$instituicao->instituicao?>"
+                                                    data-id="<?=$instituicaoObj->encryption($instituicao->id)?>" data-instituicao="<?=$instituicao->instituicao?>"
                                                     onclick="modalEdicao.bind(this)()">
                                                     Editar
                                                 </button>
@@ -73,6 +73,7 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
+<!-- Modal Cadastro -->
 <div class="modal fade" id="add-instituicao" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -87,7 +88,7 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="instituicao">Instituição: *</label>
-                        <input type="text" name="instituicao" class="form-control" id="instituicao" required>
+                        <input type="text" name="instituicao" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
@@ -101,34 +102,54 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
+<!-- /.Modal Cadastro -->
+<!-- Modal Edição -->
+<div class="modal fade" id="edita-instituicao" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="formulario-ajax" data-form="update" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                <input type="hidden" name="_method" id="_method" value="editaInstituicao">
+                <div class="modal-header">
+                    <h4 class="modal-title titulo-edicao"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="instituicao">Instituição: *</label>
+                        <input type="text" name="instituicao" class="form-control" id="instituicao" required>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <input type="hidden" name="instituicao_id" id="instituicao_id">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success" id="btnSalvar">Editar</button>
+                </div>
+                <div class="resposta-ajax"></div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.Modal Edição -->
 
 <?php
 $javascript = <<<JAVASCRIPT
 <script>
-    let modalInstituicao = $('#add-instituicao');
-    var estadoInicial = "";
-
     function modalEdicao() {
-        let titulo = $('.modal-title');
-        let btnSalvar = $('#btnSalvar');
+        let titulo = $('.titulo-edicao');
         let cpoInstituicao = $('#instituicao');
+        let cpoInstituicaoId = $('#instituicao_id');
         let nomeInstituicao = $(this).data('instituicao');
+        let instituicao_id = $(this).data('id');
         
         titulo.text('Editar instituição: ' + nomeInstituicao);
         cpoInstituicao.val(nomeInstituicao);
-        btnSalvar.text('Editar');
-        $('#add-instituicao').modal('show');
+        cpoInstituicaoId.val(instituicao_id);
+        $('#edita-instituicao').modal('show');
     }
-    
-    $(document).ready(function () {
-        estadoInicial = modalInstituicao.clone();
-    })
-    
-    modalInstituicao.on('hidden.bs.modal', function () {
-        modalInstituicao.replaceWith(estadoInicial);
-    });
 </script>
 JAVASCRIPT;
-
 ?>

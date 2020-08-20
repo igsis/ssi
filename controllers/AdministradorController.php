@@ -73,4 +73,31 @@ class AdministradorController extends UsuarioController
 
         return MainModel::sweetAlert($alerta);
     }
+    public function editaInstituicao()
+    {
+        $dado['instituicao'] = MainModel::limparString($_POST['instituicao']);
+        $instituicao_id = MainModel::limparString($_POST['instituicao_id']);
+        $instituicao_id = MainModel::decryption($instituicao_id);
+
+        $update = DbModel::update('instituicoes', $dado, $instituicao_id);
+        if ($update) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Instituição Editada!',
+                'texto' => "Instituição <b>{$dado['instituicao']}</b> Editada!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
 }
