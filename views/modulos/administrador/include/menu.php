@@ -19,7 +19,7 @@
         <i class="nav-icon fas fa-circle"></i>
         <p>
             Gerenciar Funcionarios
-        </p>adm
+        </p>
     </a>
 </li>
 <li class="nav-item">
