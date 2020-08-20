@@ -6,7 +6,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
 
 $chamadoObj = new ChamadoController();
 $chamado = $chamadoObj->recuperaChamado($id);
-$funcionario = $chamadoObj->recuperaFuncionarioChamado($id)->fetchAll(PDO::FETCH_OBJ);
+$funcionario = $chamadoObj->listaFuncionarioChamado($id);
 
 $notaObj = new NotaController();
 $nota = $notaObj->listaNota($id);
@@ -129,7 +129,7 @@ $nota = $notaObj->listaNota($id);
                                             </form>
                                         </td>
                                         <td>
-                                            <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&funcionario=<?= $chamadoObj->encryption($funcionarios->id) ?>" class="btn btn-sm btn-primary float-right" target="_blank"><i class="fas fa-print"></i> Gerar O.S.</a>
+                                            <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&chfunc=<?= $chamadoObj->encryption($funcionarios->id) ?>" class="btn btn-sm btn-primary float-right" target="_blank"><i class="fas fa-print"></i> Gerar O.S.</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
