@@ -111,19 +111,25 @@ $nota = $notaObj->listaNota($id);
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md">
-                                <table class="table">
+                                <table class="table table-striped">
                                 <?php foreach ($funcionario AS $funcionarios): ?>
                                     <tr>
                                         <td><?= $funcionarios->nome ?></td>
                                         <td><?= $funcionarios->ferramentas ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#modal-funcionarios"><i class="fas fa-plus"></i> Editar</button>
+                                            <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#modal-funcionarios"><i class="far fa-edit"></i> Editar</button>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-danger float-right" data-toggle="modal" data-target="#modal-funcionarios-excluir"><i class="fas fa-trash"></i> Excluir</button>
+                                            <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
+                                                <input type="hidden" name="_method" value="excluirFuncionario">
+                                                <input type="hidden" name="id" value="<?= $funcionarios->id ?>">
+                                                <input type="hidden" name="idChamado" value="<?= $chamado->id ?>">
+                                                <button type="submit" class="btn btn-sm btn-danger float-right"><i class="fas fa-trash"></i> Excluir</button>
+                                                <div class="resposta-ajax"></div>
+                                            </form>
                                         </td>
                                         <td>
-                                            <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>" class="btn btn-sm btn-primary float-right" target="_blank"><i class="fas fa-print"></i> Gerar O.S.</a>
+                                            <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&funcionario=<?= $chamadoObj->encryption($funcionarios->id) ?>" class="btn btn-sm btn-primary float-right" target="_blank"><i class="fas fa-print"></i> Gerar O.S.</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -145,6 +151,9 @@ $nota = $notaObj->listaNota($id);
 <div class="modal fade" id="modal-notas" aria-modal="true">
     <div class="modal-dialog modal-lg">
         <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/notaAjax.php" role="form" data-form="save">
+            <?php if ($funcionario): ?>
+                <input type="hidden" name="id" id="id" value="<?= $funcionario->id ?>">
+            <?php endif; ?>
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Adicionar nota</h4>
@@ -190,7 +199,7 @@ $nota = $notaObj->listaNota($id);
 <!-- modal funcionarios -->
 <div class="modal fade" id="modal-funcionarios" aria-modal="true">
     <div class="modal-dialog modal-lg">
-        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="save">
+        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($funcionario) ? "update" : "save" ?>">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Adicionar funcionário no chamado</h4>

@@ -207,6 +207,31 @@ class ChamadoController extends MainModel
         return MainModel::sweetAlert($alerta);
     }
 
+    public function excluiFuncionarioChamado()
+    {
+        $id = $_POST['id'];
+        $idChamado = $_POST['idChamado'];
+        $exclui = DbModel::deleteEspecial("chamado_funcionario","id",$id);
+        if ($exclui->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
+            $alerta = [
+                'alerta' => 'limpar',
+                'titulo' => 'Funcionário / Material',
+                'texto' => 'Funcionário removido com sucesso!',
+                'tipo' => 'success',
+                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($idChamado)
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($idChamado)
+            ];
+        }
+        return MainModel::sweetAlert($alerta);
+    }
+
     public function recuperaFuncionarioChamado($idChamado)
     {
         $idChamado = MainModel::decryption($idChamado);

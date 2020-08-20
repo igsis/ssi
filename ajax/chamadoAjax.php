@@ -14,6 +14,8 @@ if (isset($_POST['_method'])) {
         echo $chamadoObj->insereFuncionarioChamado();
     } elseif ($_POST['_method'] == "editarFuncionario"){
         echo $chamadoObj->editaFuncionarioChamado($_POST['id']);
+    } elseif ($_POST['_method'] == "excluirFuncionario"){
+        echo $chamadoObj->excluiFuncionarioChamado();
     }
 
 } else {
