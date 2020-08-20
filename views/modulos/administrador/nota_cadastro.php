@@ -115,7 +115,7 @@ $nota = $notaObj->listaNota($id);
                                 <?php foreach ($funcionario AS $funcionarios): ?>
                                     <tr>
                                         <td><?= $funcionarios->nome ?></td>
-                                        <td><?= $funcionarios->ferramentas ?></td>
+                                        <td><?= mb_strimwidth($funcionarios->ferramentas,0,60, "...") ?></td>
                                         <td>
                                             <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#modal-funcionarios"><i class="far fa-edit"></i> Editar</button>
                                         </td>
@@ -129,7 +129,7 @@ $nota = $notaObj->listaNota($id);
                                             </form>
                                         </td>
                                         <td>
-                                            <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&chfunc=<?= $chamadoObj->encryption($funcionarios->id) ?>" class="btn btn-sm btn-primary float-right" target="_blank"><i class="fas fa-print"></i> Gerar O.S.</a>
+                                            <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&chfunc=<?= $chamadoObj->encryption($funcionarios->id) ?>" class="btn btn-sm btn-primary float-right" target="_blank"><i class="fas fa-print"></i> O.S.</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

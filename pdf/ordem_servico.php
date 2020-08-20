@@ -72,29 +72,27 @@ $pdf->Cell(45,$l,utf8_decode(date('d/m/Y H:i:s', strtotime($chamado->data_abertu
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(16,$l,utf8_decode('Contato:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(45,$l,utf8_decode("$chamado->contato"),0,0,'L');
+$pdf->Cell(43,$l,utf8_decode("$chamado->contato"),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(15,$l,utf8_decode($chamado->telefone),0,0,'L');
-
-$pdf->Ln();
+$pdf->Cell(15,$l,utf8_decode($chamado->telefone),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(12,$l,utf8_decode('Local:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(50,$l,utf8_decode($chamado->local),0,0,'L');
+$pdf->Cell(74,$l,utf8_decode($chamado->local),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(18,$l,utf8_decode('Endereço:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(65,$l,utf8_decode($local->logradouro),0,1,'L');
+$pdf->Cell(65,$l,utf8_decode($local->logradouro.", ".$local->numero),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(28,$l,utf8_decode('Tipo de Serviço:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(60,$l,utf8_decode($chamado->categoria),0,0,'L');
+$pdf->Cell(58,$l,utf8_decode($chamado->categoria),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(22,$l,utf8_decode('Funcionário:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
@@ -102,9 +100,7 @@ $pdf->Cell(15,$l,utf8_decode($funcionario->nome),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
-$pdf->Cell(40,5,utf8_decode('Visto:'),0,0,'L');
-$pdf->SetFont('Arial','', 10);
-$pdf->MultiCell(140,$l,utf8_decode(""));
+$pdf->Cell(140,5,utf8_decode('Visto:'),0,1,'R');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
@@ -164,33 +160,35 @@ $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(16,$l,utf8_decode('Número:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(20,$l,utf8_decode("$chamado->id"),0,0,'L');
+$pdf->Cell(15,$l,utf8_decode("$chamado->id"),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(10,$l,utf8_decode('Data:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(5,$l,utf8_decode(date('d/m/Y H:i:s', strtotime($chamado->data_abertura))),0,0,'L');
-
-$pdf->Ln();
+$pdf->Cell(45,$l,utf8_decode(date('d/m/Y H:i:s', strtotime($chamado->data_abertura))),0,0,'L');
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(16,$l,utf8_decode('Contato:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(43,$l,utf8_decode("$chamado->contato"),0,0,'L');
+$pdf->SetFont('Arial','B', 10);
+$pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
+$pdf->SetFont('Arial','', 10);
+$pdf->Cell(15,$l,utf8_decode($chamado->telefone),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(12,$l,utf8_decode('Local:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(50,$l,utf8_decode($chamado->local),0,0,'L');
+$pdf->Cell(74,$l,utf8_decode($chamado->local),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(18,$l,utf8_decode('Endereço:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(65,$l,utf8_decode($local->logradouro),0,0,'L');
-$pdf->SetFont('Arial','B', 10);
-$pdf->Cell(17,$l,utf8_decode('Telefone:'),0,0,'L');
-$pdf->SetFont('Arial','', 10);
-$pdf->Cell(35,$l,utf8_decode($chamado->telefone),0,1,'L');
+$pdf->Cell(65,$l,utf8_decode($local->logradouro.", ".$local->numero),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(28,$l,utf8_decode('Tipo de Serviço:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
-$pdf->Cell(60,$l,utf8_decode($chamado->categoria),0,0,'L');
+$pdf->Cell(58,$l,utf8_decode($chamado->categoria),0,0,'L');
 $pdf->SetFont('Arial','B', 10);
 $pdf->Cell(22,$l,utf8_decode('Funcionário:'),0,0,'L');
 $pdf->SetFont('Arial','', 10);
@@ -198,9 +196,7 @@ $pdf->Cell(15,$l,utf8_decode($funcionario->nome),0,1,'L');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
-$pdf->Cell(40,$l,utf8_decode('Visto:'),0,0,'L');
-$pdf->SetFont('Arial','', 10);
-$pdf->MultiCell(140,5,utf8_decode(""));
+$pdf->Cell(140,5,utf8_decode('Visto:'),0,1,'R');
 
 $pdf->SetX($x);
 $pdf->SetFont('Arial','B', 10);
