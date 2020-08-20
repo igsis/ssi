@@ -2,7 +2,7 @@
 
 require_once "./controllers/FuncionarioController.php";
 
-$funcionarioObj =  new FuncionarioController();
+$funcionarioObj = new FuncionarioController();
 
 $funcionarios = $funcionarioObj->listarFuncionario();
 
@@ -28,7 +28,8 @@ $funcionarios = $funcionarioObj->listarFuncionario();
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">Lista de Funcionario</h3>
-                        <a href="<?= SERVERURL ?>administrador/funcionario_cadastro" class="btn btn-success float-right">
+                        <a href="<?= SERVERURL ?>administrador/funcionario_cadastro"
+                           class="btn btn-success float-right">
                             <i class="fas fa-plus"></i>
                             Adicionar
                         </a>
@@ -48,19 +49,32 @@ $funcionarios = $funcionarioObj->listarFuncionario();
                                     </thead>
                                     <tbody>
                                     <?php
-                                        foreach ($funcionarios as $funcionario){
-                                    ?>
-                                            <tr>
-                                                <td><?= $funcionario->id ?></td>
-                                                <td><?= $funcionario->nome ?></td>
-                                                <td><?= $funcionario->cargo ?></td>
-                                                <td>
-                                                    <a href="<?= SERVERURL ?>administrador/funcionario_cadastro&id=<?= $funcionario->id ?>" class="btn btn-primary">Editar</a>
-                                                    <a href="<?= SERVERURL ?>administrador/funcionario_apaga&id=<?= $funcionario->id ?>" class="btn btn-danger">Remover</a>
-                                                </td>
-                                            </tr>
-                                    <?php
-                                        }
+                                    foreach ($funcionarios as $funcionario) {
+                                        ?>
+                                        <tr>
+                                            <td><?= $funcionario->id ?></td>
+                                            <td><?= $funcionario->nome ?></td>
+                                            <td><?= $funcionario->cargo ?></td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <a href="<?= SERVERURL ?>administrador/funcionario_cadastro&id=<?= MainModel::encryption($funcionario->id) ?>"
+                                                           class="btn btn-primary">Editar</a>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <form class="formulario-ajax" method="POST"
+                                                              action="<?= SERVERURL ?>ajax/funcionarioAjax.php" role="form">
+                                                            <input type="hidden" name="id" value="<?= MainModel::encryption($funcionario->id) ?>">
+                                                            <input type="hidden" name="_method" value="remover">
+                                                            <button type="submit" class="btn btn-danger">Remover</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
                                     ?>
                                     </tbody>
                                     <tfoot>
@@ -75,6 +89,7 @@ $funcionarios = $funcionarioObj->listarFuncionario();
                             </div>
                         </div>
                     </div>
+                    <div class="resposta-ajax"></div>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->
