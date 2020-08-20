@@ -232,13 +232,23 @@ class ChamadoController extends MainModel
         return MainModel::sweetAlert($alerta);
     }
 
-    public function recuperaFuncionarioChamado($idChamado)
+    public function listaFuncionarioChamado($idChamado)
     {
         $idChamado = MainModel::decryption($idChamado);
         return DbModel::consultaSimples("
             SELECT f.nome, f.cargo, cf.ferramentas, cf.id FROM chamado_funcionario cf 
                 INNER JOIN funcionarios f on cf.funcionario_id = f.id
             WHERE cf.chamado_id = '$idChamado'
-        ");
+        ")->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function recuperaFuncionarioChamado($id)
+    {
+        $id = MainModel::decryption($id);
+        return DbModel::consultaSimples("
+            SELECT f.nome, f.cargo, cf.ferramentas, cf.id FROM chamado_funcionario cf 
+                INNER JOIN funcionarios f on cf.funcionario_id = f.id
+            WHERE cf.id = '$id'
+        ")->fetchObject();
     }
 }
