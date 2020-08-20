@@ -5,7 +5,7 @@ $nomeUser = explode(' ', $_SESSION['nome_s'])[0];
 $telaInicial = $_SESSION['nivel_acesso_s'] == 1 ? SERVERURL."chamado" : SERVERURL."administrador"
 ?>
 <!-- Brand Logo -->
-<a href="<?= $telaInicial ?>" class="brand-link navbar-success">
+<a href="<?= $telaInicial ?>" class="brand-link navbar-success text-white">
     <img src="<?= SERVERURL ?>views/dist/img/logo_ssi.png" alt="SSI Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light"><?= NOMESIS ?></span>
 </a>
