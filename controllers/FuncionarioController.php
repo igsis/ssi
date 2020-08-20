@@ -26,7 +26,7 @@ class FuncionarioController extends MainModel
                 'titulo' => 'Funcionario',
                 'texto' => 'Funcionario cadastrado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . 'administrador/funcionarios_cadastro&key='.MainModel::encryption($id)
+                'location' => SERVERURL . 'administrador/funcionarios_cadastro&id='.MainModel::encryption($id)
             ];
         } else {
             $alerta = [
