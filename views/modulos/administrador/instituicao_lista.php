@@ -45,12 +45,15 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                                     <tr>
                                         <td><?=$instituicao->instituicao?></td>
                                         <td>
-                                                <button type="button" class="form-control btn btn-sm bg-gradient-primary"
-                                                    data-id="<?=$instituicaoObj->encryption($instituicao->id)?>" data-instituicao="<?=$instituicao->instituicao?>"
-                                                    onclick="modalEdicao.bind(this)()">
-                                                    Editar
-                                                </button>
-                                            </form>
+                                            <button type="button" class="form-control btn btn-sm bg-gradient-primary"
+                                                data-id="<?=$instituicaoObj->encryption($instituicao->id)?>" data-instituicao="<?=$instituicao->instituicao?>"
+                                                onclick="modalEdicao.bind(this)()">
+                                                Editar
+                                            </button>
+                                            <button type="button" class="form-control btn btn-sm bg-gradient-warning">
+                                                Vincular Administrador
+                                                <!--@todo: tentar usar o plugin select2 pra selecionar multiplos-->
+                                            </button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

@@ -50,8 +50,9 @@ $locais = $localObj->listaLocais();
                                         <td><?=$local->telefone?></td>
                                         <td>Instituição Teste</td>
                                         <td>
-                                            <a href="<?=SERVERURL?>administrador/local_cadastro" class="btn bg-gradient-primary">
-                                                <i class="fas fa-plus"></i> Editar
+                                            <a href="<?=SERVERURL?>administrador/local_cadastro&id=<?=$local->id?>"
+                                               class="btn bg-gradient-primary">
+                                                Editar
                                             </a>
                                             <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
                                                 <input type="hidden" name="_method" value="removeLocal">

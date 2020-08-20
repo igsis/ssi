@@ -62,11 +62,6 @@ if ($id) {
                                            value="<?= $usuario->telefone ?? "" ?>" maxlength="15" required>
                                 </div>
                                 <div class="form-group col">
-                                    <label for="email">E-mail: *</label>
-                                    <input type="email" class="form-control" id="email" name="email" maxlength="120"
-                                           placeholder="Digite o E-mail" value="<?= $usuario->email ?? '' ?>" required>
-                                </div>
-                                <div class="form-group col">
                                     <label for="contato">Prédio histórico? *</label>
                                     <input type="radio" name="predio_historico" value="1" required>
                                     <input type="radio" name="predio_historico" value="0">
