@@ -4,12 +4,16 @@ require_once "../config/configGeral.php";
 
 if (isset($_POST['_method'])) {
     require_once "../controllers/ChamadoController.php";
-    $insChamado = new ChamadoController();
+    $chamadoObj = new ChamadoController();
 
     if ($_POST['_method'] == "cadastrar") {
-        echo $insChamado->insereChamado();
+        echo $chamadoObj->insereChamado();
     } elseif ($_POST['_method'] == "editar") {
-        echo $insChamado->editaChamado($_POST['id']);
+        echo $chamadoObj->editaChamado($_POST['id']);
+    } elseif ($_POST['_method'] == "cadastrarFuncionario"){
+        echo $chamadoObj->insereFuncionarioChamado();
+    } elseif ($_POST['_method'] == "editarFuncionario"){
+        echo $chamadoObj->editaFuncionarioChamado($_POST['id']);
     }
 
 } else {
