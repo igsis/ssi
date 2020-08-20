@@ -7,6 +7,9 @@ if ($pedidoAjax) {
 
 class InstituicaoController extends MainModel
 {
+    /** <p>Retorna um array com todas instituições cadastradas</p>
+     * @return array
+     */
     public function listaInstituicoes()
     {
         return DbModel::consultaSimples("SELECT * FROM instituicoes")->fetchAll(PDO::FETCH_OBJ);

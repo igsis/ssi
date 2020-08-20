@@ -40,7 +40,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?= SERVERURL ?>administrador" class="nav-link">
+            <a href="<?= SERVERURL ?>administrador/local_lista" class="nav-link" id="local_lista">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
                     Gerenciar Locais
