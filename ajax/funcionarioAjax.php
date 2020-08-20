@@ -10,6 +10,8 @@ if (isset($_POST['_method'])) {
         echo $insChamado->insereFuncionario();
     } elseif ($_POST['_method'] == "editar") {
         echo $insChamado->editaFuncionario($_POST['id']);
+    }elseif($_POST['_method'] == "remover"){
+        echo $insChamado->apagar($_POST['id']);
     }
 
 } else {
