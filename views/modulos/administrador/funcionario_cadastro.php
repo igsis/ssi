@@ -36,7 +36,7 @@ if ($id){
                     <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/funcionarioAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
                         <?php if ($id): ?>
-                            <input type="hidden" name="id" id="id" value="<?= $funcionarioObj->encryption($id) ?>">
+                            <input type="hidden" name="id" id="id" value="<?= $id ?>">
                         <?php endif; ?>
                         <div class="card-body">
                             <div class="row">
@@ -56,7 +56,6 @@ if ($id){
                             <button type="submit" class="btn btn-success float-right">Gravar</button>
                         </div>
                         <!-- /.card-footer -->
-                        <div class="resposta-ajax"></div>
                     </form>
                 </div>
                 <!-- /.card -->

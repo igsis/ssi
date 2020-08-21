@@ -67,7 +67,13 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label>Categorias: *</label>
+                                        <label>
+                                            Categorias: *
+                                            <button class="btn btn-default rounded-circle" type="button" data-toggle="modal"
+                                                    data-target="#infoCategorias">
+                                                <i class="fas fa-info-circle"></i>
+                                            </button>
+                                        </label>
                                         <select class="form-control select2bs4" style="width: 100%;" name="categoria_id">
                                             <option value="">Selecione uma opção...</option>
                                             <?php
@@ -102,3 +108,86 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
+<!-- Modal -->
+<div class="modal fade" id="infoCategorias" tabindex="-1" role="dialog" aria-labelledby="infoCategorias"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitulo">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Alvenaria</h5>
+                <ul>
+                    <li>Reboco em paredes, muros, etc.</li>
+                    <li>Assentamento de tijplos e blocos.</li>
+                    <li>Impermeabilzação em geral.</li>
+                </ul>
+                <h5>Carpintaria</h5>
+                <ul>
+                    <li>Madeiramento.</li>
+                </ul>
+                <h5>Elétrica</h5>
+                <ul>
+                    <li>Troca de lâmpadas.</li>
+                    <li>Instalação de interruptores.</li>
+                    <li>Iluminação de emergência.</li>
+                </ul>
+                <h5>Geral</h5>
+                <ul>
+                    <li>Pesquisa de materiais como preço, qualidade, tipo, quantidade e descrição.</li>
+                    <li>Compra dos materiais.</li>
+                    <li>Limpeza.</li>
+                    <li>Organização / Conservação.</li>
+                    <li>Itens que não entram em classificações anteriores.</li>
+                </ul>
+                <h5>Hidráulica</h5>
+                <ul>
+                    <li>Conserto de vazamentos em tubulações.</li>
+                    <li>Troca de reparo em válvulas de descarga.</li>
+                    <li>Troca de válvulas de descargas, torneiras, registro, etc.</li>
+                    <li>Calhas e rufos.</li>
+                </ul>
+                <h5>Jardinagem</h5>
+                <ul>
+                    <li>Corte de grama.</li>
+                </ul>
+                <h5>Manutenção de equipamentos</h5>
+                <ul>
+                    <li>Microondas.</li>
+                    <li>Geladeiras.</li>
+                </ul>
+                <h5>Marcenaria</h5>
+                <ul>
+                    <li>Troca de fechaduras e puxadores.</li>
+                    <li>Troca de folha de porta.</li>
+                    <li>Confecção de molduras.</li>
+                    <li>Colagem de folha de revestimento como fórmica, post formic e lâmina de madeira.</li>
+                    <li>Polimento com cera / verniz.</li>
+                    <li>Cordões de acabamento.</li>
+                </ul>
+                <h5>Pintura</h5>
+                <ul>
+                    <li>Aplicação de verniz.</li>
+                    <li>Aplicação de latex acrílico e a base d'agua.</li>
+                    <li>Esmalte e tinta à óleo em madeiras, portas, janelas, grades, etc.</li>
+                    <li>Criação a base de cal.</li>
+                </ul>
+                <h5>Serralheria</h5>
+                <ul>
+                    <li>Consertos gerais.</li>
+                </ul>
+                <h5>Telhado</h5>
+                <ul>
+                    <li>Vazamentos.</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

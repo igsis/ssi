@@ -11,9 +11,7 @@ class FuncionarioController extends MainModel
     {
         /* executa limpeza nos campos */
         $dados = [];
-        $pagina = $_POST['pagina'];
         unset($_POST['_method']);
-        unset($_POST['pagina']);
         foreach ($_POST as $campo => $post) {
             $dados[$campo] = MainModel::limparString($post);
         }
@@ -28,7 +26,7 @@ class FuncionarioController extends MainModel
                 'titulo' => 'Funcionario',
                 'texto' => 'Funcionario cadastrado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . $pagina . 'administrador/funcionarios'
+                'location' => SERVERURL . 'administrador/funcionarios_cadastro&id='.MainModel::encryption($id)
             ];
         } else {
             $alerta = [
@@ -36,7 +34,7 @@ class FuncionarioController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL . $pagina . 'administrador/funcionario_cadastro'
+                'location' => SERVERURL . '/funcionario_cadastro'
             ];
         }
         /* ./cadastro */
@@ -47,7 +45,6 @@ class FuncionarioController extends MainModel
     public function editaFuncionario($id)
     {
         $idDecryp = MainModel::decryption($id);
-
         unset($_POST['_method']);
         unset($_POST['id']);
 
@@ -63,7 +60,7 @@ class FuncionarioController extends MainModel
                 'titulo' => 'Funcionario',
                 'texto' => 'Funcionario editado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . 'administrador/funcionarios'
+                'location' => SERVERURL . 'administrador/funcionario_cadastro&id='.MainModel::encryption($idDecryp)
             ];
         } else {
             $alerta = [
@@ -71,9 +68,34 @@ class FuncionarioController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
+                'location' => SERVERURL . 'administrador/funcionario_cadastro&id='.MainModel::encryption($idDecryp)
+            ];
+        }
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function apagar($id)
+    {
+        $id = MainModel::decryption($id);
+        $apagar = DbModel::apaga('funcionarios', $id);
+        if ($apagar->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Funcionario',
+                'texto' => 'Funcionario apagado com sucesso!',
+                'tipo' => 'success',
+                'location' => SERVERURL .'administrador/funcionarios'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao Apagar funcionarios!',
+                'tipo' => 'error',
                 'location' => SERVERURL . 'administrador/funcionarios'
             ];
         }
+
         return MainModel::sweetAlert($alerta);
     }
 
@@ -83,8 +105,10 @@ class FuncionarioController extends MainModel
         return $funcionarios;
     }
 
-    public function recuperaFuncionario($id) {
-        $usuario = DbModel::getInfo('funcionarios',$id);
+    public function recuperaFuncionario($id)
+    {
+        $id = MainModel::decryption($id);
+        $usuario = DbModel::getInfo('funcionarios', $id);
         return $usuario->fetchObject();
     }
 }
