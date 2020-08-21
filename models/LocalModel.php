@@ -16,6 +16,18 @@ class LocalModel extends MainModel
         return $statement;
     }
 
+    protected function getInstituicaoLocal($local_id){
+        $pdo = parent::connection();
+        $sql = "SELECT ins.instituicao
+                FROM locais AS loc 
+                INNER JOIN instituicoes AS ins ON ins.id = loc.instituicao_id
+                WHERE loc.id = :id";
+        $statement = $pdo->prepare($sql);
+        $statement->bindParam(":id", $local_id);
+        $statement->execute();
+        return $statement;
+    }
+
     protected function getLocalInstituicao($dados) {
         $pdo = parent::connection();
         $sql = "SELECT *
