@@ -22,6 +22,10 @@ if (isset($_POST['_method'])) {
         case 'editaInstituicao':
             echo $administradorObj->editaInstituicao();
             break;
+
+        case 'vinculaAdm':
+            echo $administradorObj->vinculaAdm();
+            break;
     }
 } else {
     include_once "../config/destroySession.php";
