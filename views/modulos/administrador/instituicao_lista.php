@@ -1,8 +1,12 @@
 <?php
 require_once "./controllers/InstituicaoController.php";
+require_once "./controllers/AdministradorController.php";
+
 $instituicaoObj = new InstituicaoController();
+$administradorObj = new AdministradorController();
 
 $instituicoes = $instituicaoObj->listaInstituicoes();
+$administradores = $administradorObj->listaAdmins();
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -37,22 +41,26 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                             <thead>
                                 <tr>
                                     <th>Instituição</th>
-                                    <th width="15%">Ações</th>
+                                    <th width="20%">Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php foreach ($instituicoes as $instituicao): ?>
+                                    <?php $instituicaoAdmins = $instituicaoObj->recuperaAdmins($instituicao->id) ?>
                                     <tr>
                                         <td><?=$instituicao->instituicao?></td>
                                         <td>
-                                            <button type="button" class="form-control btn btn-sm bg-gradient-primary"
-                                                data-id="<?=$instituicaoObj->encryption($instituicao->id)?>" data-instituicao="<?=$instituicao->instituicao?>"
-                                                onclick="modalEdicao.bind(this)()">
+                                            <button type="button" class="btn btn-sm bg-gradient-primary"
+                                                    data-id="<?=$instituicaoObj->encryption($instituicao->id)?>"
+                                                    data-instituicao="<?=$instituicao->instituicao?>"
+                                                    onclick="modalEdicao.bind(this)()">
                                                 Editar
                                             </button>
-                                            <button type="button" class="form-control btn btn-sm bg-gradient-warning">
+                                            <button type="button" class="btn btn-sm bg-gradient-warning"
+                                                    data-id="<?=$instituicaoObj->encryption($instituicao->id)?>"
+                                                    data-instituicao="<?=$instituicao->instituicao?>"
+                                                    onclick="modalAddAdm.bind(this)()">
                                                 Vincular Administrador
-                                                <!--@todo: tentar usar o plugin select2 pra selecionar multiplos-->
                                             </button>
                                         </td>
                                     </tr>
@@ -62,7 +70,7 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                             <tfoot>
                                 <tr>
                                     <th>Instituição</th>
-                                    <th width="15%">Ações</th>
+                                    <th width="20%">Ações</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -137,6 +145,42 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
     <!-- /.modal-dialog -->
 </div>
 <!-- /.Modal Edição -->
+<!-- Modal Vincular Admin -->
+<div class="modal fade" id="vincular-adm" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                <input type="hidden" name="_method" id="_method" value="vinculaAdm">
+                <div class="modal-header">
+                    <h4 class="modal-title titulo-addAdm">Vincular administrador a instituição</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Selecione um ou mais Administradores:</label>
+                        <select class="select2bs4" name="administradores[]" multiple>
+                            <option>Selecione...</option>
+                            <?php foreach ($administradores as $administrador): ?>
+                                <option value="<?=$administrador->id?>"><?=$administrador->nome?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <input type="hidden" name="instituicao_id" id="instituicao-addAdm">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success" id="btnSalvar">Adicionar</button>
+                </div>
+                <div class="resposta-ajax"></div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.Modal Vincular Admin -->
 
 <?php
 $javascript = <<<JAVASCRIPT
@@ -152,6 +196,17 @@ $javascript = <<<JAVASCRIPT
         cpoInstituicao.val(nomeInstituicao);
         cpoInstituicaoId.val(instituicao_id);
         $('#edita-instituicao').modal('show');
+    }
+    
+    function modalAddAdm() {
+        let titulo = $('.titulo-addAdm');
+        let cpoInstituicaoId = $('#instituicao-addAdm');
+        let nomeInstituicao = $(this).data('instituicao');
+        let instituicao_id = $(this).data('id');
+        
+        titulo.text('Vincular administrador a instituição: ' + nomeInstituicao);
+        cpoInstituicaoId.val(instituicao_id);
+        $('#vincular-adm').modal('show');
     }
 </script>
 JAVASCRIPT;
