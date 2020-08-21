@@ -36,8 +36,7 @@ class AdministradorController extends UsuarioController
                 'tipo' => 'success',
                 'location' => SERVERURL.'administrador/administrador_lista'
             ];
-        }
-        else{
+        } else {
             $alerta = [
                 'alerta' => 'simples',
                 'titulo' => 'Erro!',
@@ -46,6 +45,88 @@ class AdministradorController extends UsuarioController
                 'location' => SERVERURL.'administrador/administrador_lista'
             ];
         }
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function insereInstituicao()
+    {
+        $dado['instituicao'] = MainModel::limparString($_POST['instituicao']);
+
+        $insert = DbModel::insert('instituicoes', $dado);
+        if ($insert) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Instituição Cadastrada!',
+                'texto' => "Instituição <b>{$dado['instituicao']}</b> cadastrada!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function editaInstituicao()
+    {
+        $dado['instituicao'] = MainModel::limparString($_POST['instituicao']);
+        $instituicao_id = MainModel::limparString($_POST['instituicao_id']);
+        $instituicao_id = MainModel::decryption($instituicao_id);
+
+        $update = DbModel::update('instituicoes', $dado, $instituicao_id);
+        if ($update) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Instituição Editada!',
+                'texto' => "Instituição <b>{$dado['instituicao']}</b> Editada!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function vinculaAdm()
+    {
+
+        $instituicao_id = MainModel::decryption($_POST['instituicao_id']);
+        $administradores = $_POST['administradores'];
+
+        $relacionamento = MainModel::atualizaRelacionamento('administrador_instituicao', 'instituicao_id', $instituicao_id, 'administrador_id', $administradores);
+        if ($relacionamento) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Administrador(es) vinculados!',
+                'texto' => "Administrador(es) viculado(s) a instituição",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/instituicao_lista'
+            ];
+        }
+
         return MainModel::sweetAlert($alerta);
     }
 }

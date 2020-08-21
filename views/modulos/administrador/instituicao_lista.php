@@ -1,14 +1,12 @@
 <?php
 require_once "./controllers/InstituicaoController.php";
-require_once "./controllers/UsuarioController.php";
+require_once "./controllers/AdministradorController.php";
 
-$instituicaoObj =  new InstituicaoController();
-$usuarioObj =  new UsuarioController();
+$instituicaoObj = new InstituicaoController();
+$administradorObj = new AdministradorController();
 
-$instituicoes =  $instituicaoObj->listaInstituicao();
-$usuarios = $usuarioObj->listaUsuarios();
-
-
+$instituicoes = $instituicaoObj->listaInstituicoes();
+$administradores = $administradorObj->listaAdmins();
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -30,40 +28,50 @@ $usuarios = $usuarioObj->listaUsuarios();
                 <!-- Horizontal Form -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Administradores</h3>
+                        <h3 class="card-title">Intituições</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-sm bg-gradient-info" data-toggle="modal" data-target="#add-instituicao">
+                                <i class="fas fa-plus"></i> Adicionar Intituição
+                            </button>
+                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="tabela" class="table table-bordered table-striped">
                             <thead>
-                            <tr>
-                                <th>Instituição</th>
-                                <th>Administrador</th>
-                                <th width="19%">Ações</th>
-                            </tr>
+                                <tr>
+                                    <th>Instituição</th>
+                                    <th width="20%">Ações</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                    foreach ($instituicoes as $instituicao):
-                                        $administrador = $instituicaoObj->recuperaAdministrador($instituicao->id)
-                                ?>
-
+                                <?php foreach ($instituicoes as $instituicao): ?>
+                                    <?php $instituicaoAdmins = $instituicaoObj->recuperaAdmins($instituicao->id) ?>
                                     <tr>
-                                        <td><?= $instituicao->instituicao ?></td>
-                                        <td><?= $administrador->nome ?></td>
+                                        <td><?=$instituicao->instituicao?></td>
                                         <td>
-                                            <button class="btn btn-warning" data-toggle="modal" data-target="#adicionar-adm">Alterar Administrador</button>
+                                            <button type="button" class="btn btn-sm bg-gradient-primary"
+                                                    data-id="<?=$instituicaoObj->encryption($instituicao->id)?>"
+                                                    data-instituicao="<?=$instituicao->instituicao?>"
+                                                    onclick="modalEdicao.bind(this)()">
+                                                Editar
+                                            </button>
+                                            <button type="button" class="btn btn-sm bg-gradient-warning"
+                                                    data-id="<?=$instituicaoObj->encryption($instituicao->id)?>"
+                                                    data-instituicao="<?=$instituicao->instituicao?>"
+                                                    onclick="modalAddAdm.bind(this)()">
+                                                Vincular Administrador
+                                            </button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
 
                             </tbody>
                             <tfoot>
-                            <tr>
-                                <th>Instituição</th>
-                                <th>Administrador</th>
-                                <th>Ações</th>
-                            </tr>
+                                <tr>
+                                    <th>Instituição</th>
+                                    <th width="20%">Ações</th>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -76,30 +84,27 @@ $usuarios = $usuarioObj->listaUsuarios();
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
-<div class="modal fade" id="adicionar-adm" style="display: none;" aria-hidden="true">
+<!-- Modal Cadastro -->
+<div class="modal fade" id="add-instituicao" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
-                <input type="hidden" name="_method" value="insereAdmin">
+                <input type="hidden" name="_method" id="_method" value="insereInstituicao">
                 <div class="modal-header">
-                    <h4 class="modal-title">Adicionar novo Administrador</h4>
+                    <h4 class="modal-title">Adicionar nova Instituicao</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <select class="form-control select2bs4" name="usuario_id" id="novoAdm">
-                            <option value="">Selecione...</option>
-                            <?php foreach ($usuarios as $usuario): ?>
-                                <option value="<?= $administradorObj->encryption($usuario->id) ?>"><?= $usuario->nome ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <label for="instituicao">Instituição: *</label>
+                        <input type="text" name="instituicao" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="submit" class="btn btn-success" id="btnSalvar">Adicionar</button>
                 </div>
                 <div class="resposta-ajax"></div>
             </form>
@@ -108,10 +113,101 @@ $usuarios = $usuarioObj->listaUsuarios();
     </div>
     <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
-<script type="application/javascript">
-    $(document).ready(function () {
-        $('.nav-link').removeClass('active');
-        $('#chamado_inicio').addClass('active');
-    })
+<!-- /.Modal Cadastro -->
+<!-- Modal Edição -->
+<div class="modal fade" id="edita-instituicao" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="formulario-ajax" data-form="update" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                <input type="hidden" name="_method" id="_method" value="editaInstituicao">
+                <div class="modal-header">
+                    <h4 class="modal-title titulo-edicao"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="instituicao">Instituição: *</label>
+                        <input type="text" name="instituicao" class="form-control" id="instituicao" required>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <input type="hidden" name="instituicao_id" id="instituicao_id">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success" id="btnSalvar">Editar</button>
+                </div>
+                <div class="resposta-ajax"></div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.Modal Edição -->
+<!-- Modal Vincular Admin -->
+<div class="modal fade" id="vincular-adm" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                <input type="hidden" name="_method" id="_method" value="vinculaAdm">
+                <div class="modal-header">
+                    <h4 class="modal-title titulo-addAdm">Vincular administrador a instituição</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Selecione um ou mais Administradores:</label>
+                        <select class="select2bs4" name="administradores[]" multiple>
+                            <option>Selecione...</option>
+                            <?php foreach ($administradores as $administrador): ?>
+                                <option value="<?=$administrador->id?>"><?=$administrador->nome?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <input type="hidden" name="instituicao_id" id="instituicao-addAdm">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success" id="btnSalvar">Adicionar</button>
+                </div>
+                <div class="resposta-ajax"></div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.Modal Vincular Admin -->
+
+<?php
+$javascript = <<<JAVASCRIPT
+<script>
+    function modalEdicao() {
+        let titulo = $('.titulo-edicao');
+        let cpoInstituicao = $('#instituicao');
+        let cpoInstituicaoId = $('#instituicao_id');
+        let nomeInstituicao = $(this).data('instituicao');
+        let instituicao_id = $(this).data('id');
+        
+        titulo.text('Editar instituição: ' + nomeInstituicao);
+        cpoInstituicao.val(nomeInstituicao);
+        cpoInstituicaoId.val(instituicao_id);
+        $('#edita-instituicao').modal('show');
+    }
+    
+    function modalAddAdm() {
+        let titulo = $('.titulo-addAdm');
+        let cpoInstituicaoId = $('#instituicao-addAdm');
+        let nomeInstituicao = $(this).data('instituicao');
+        let instituicao_id = $(this).data('id');
+        
+        titulo.text('Vincular administrador a instituição: ' + nomeInstituicao);
+        cpoInstituicaoId.val(instituicao_id);
+        $('#vincular-adm').modal('show');
+    }
 </script>
+JAVASCRIPT;
+?>

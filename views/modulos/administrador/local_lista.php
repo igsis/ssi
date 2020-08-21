@@ -1,9 +1,8 @@
 <?php
-require_once "./controllers/AdministradorController.php";
-$administradorObj = new AdministradorController();
+require_once "./controllers/LocalController.php";
+$localObj = new LocalController();
 
-$usuarios = $administradorObj->listaUsuarios();
-$admins = $administradorObj->listaAdmins();
+$locais = $localObj->listaLocais();
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -25,38 +24,41 @@ $admins = $administradorObj->listaAdmins();
                 <!-- Horizontal Form -->
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Administradores</h3>
+                        <h3 class="card-title">Locais</h3>
                         <div class="card-tools">
-                            <button type="button" class="btn btn-sm bg-gradient-info" data-toggle="modal" data-target="#adicionar-adm">
-                                Adicionar Administrador
-                            </button>
+                            <a href="<?=SERVERURL?>administrador/local_cadastro" class="btn btn-sm bg-gradient-info">
+                                <i class="fas fa-plus"></i> Adicionar Local
+                            </a>
                         </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="tabela" class="table table-bordered table-striped">
                             <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>E-mail</th>
-                                <th>Telefone</th>
-                                <th>Instituição(ões)</th>
-                                <th width="15%">Ações</th>
-                            </tr>
+                                <tr>
+                                    <th>Local</th>
+                                    <th>Instituição</th>
+                                    <th>Telefone</th>
+                                    <th width="15%">Ações</th>
+                                </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($admins as $admin): ?>
+                                <?php foreach ($locais as $local): ?>
                                     <tr>
-                                        <td><?=$admin->nome?></td>
-                                        <td><?=$admin->email?></td>
-                                        <td><?=$admin->telefone?></td>
+                                        <td><?=$local->local?></td>
+                                        <td><?=$localObj->recuperaInstituicaoLocal($local->id)?></td>
+                                        <td><?=$local->telefone?></td>
                                         <td>Instituição Teste</td>
                                         <td>
+                                            <a href="<?=SERVERURL?>administrador/local_cadastro&id=<?=$local->id?>"
+                                               class="btn bg-gradient-primary">
+                                                Editar
+                                            </a>
                                             <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
-                                                <input type="hidden" name="_method" value="removeAdmin">
-                                                <input type="hidden" name="usuario_id" value="<?= $administradorObj->encryption($admin->id) ?>">
-                                                <button type="submit" class="form-control btn btn-sm bg-gradient-danger">
-                                                    Remover Administrador
+                                                <input type="hidden" name="_method" value="removeLocal">
+                                                <input type="hidden" name="usuario_id" value="<?= $localObj->encryption($local->id) ?>">
+                                                <button type="submit" class="form-control btn bg-gradient-danger">
+                                                    Remover
                                                 </button>
                                                 <div class="resposta-ajax"></div>
                                             </form>
@@ -66,13 +68,12 @@ $admins = $administradorObj->listaAdmins();
 
                             </tbody>
                             <tfoot>
-                            <tr>
-                                <th>Nome</th>
-                                <th>E-mail</th>
-                                <th>Telefone</th>
-                                <th>Instituição(ões)</th>
-                                <th width="15%">Ações</th>
-                            </tr>
+                                <tr>
+                                    <th>Local</th>
+                                    <th>Instituição</th>
+                                    <th>Telefone</th>
+                                    <th width="15%">Ações</th>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -85,42 +86,3 @@ $admins = $administradorObj->listaAdmins();
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
-<div class="modal fade" id="adicionar-adm" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
-                <input type="hidden" name="_method" value="insereAdmin">
-                <div class="modal-header">
-                    <h4 class="modal-title">Adicionar novo Administrador</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <select class="form-control select2bs4" name="usuario_id" id="novoAdm">
-                            <option value="">Selecione...</option>
-                            <?php foreach ($usuarios as $usuario): ?>
-                                <option value="<?= $administradorObj->encryption($usuario->id) ?>"><?= $usuario->nome ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                </div>
-                <div class="resposta-ajax"></div>
-            </form>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
-<!-- /.modal -->
-<script type="application/javascript">
-    $(document).ready(function () {
-        $('.nav-link').removeClass('active');
-        $('#chamado_inicio').addClass('active');
-    })
-</script>

@@ -1,28 +1,25 @@
 <?php
-
 if ($pedidoAjax) {
-    require_once "../models/InstituicaoModel.php";
+    require_once "../models/MainModel.php";
 } else {
-    require_once "./models/InstituicaoModel.php";
+    require_once "./models/MainModel.php";
 }
 
-
-class InstituicaoController extends InstituicaoModel
+class InstituicaoController extends MainModel
 {
-    public function recuperaInstituicao($id)
-    {
-        $instituicao = DbModel::getInfo('intituicoes',$id);
-        return $instituicao;
-    }
-
-    public function recuperaAdministrador($instituicao)
-    {
-        $adm = InstituicaoModel::getAdministrador($instituicao);
-        return $adm->fetchObject();
-    }
-
-    public function listaInstituicao()
+    /** <p>Retorna um array com todas instituições cadastradas</p>
+     * @return array
+     */
+    public function listaInstituicoes()
     {
         return DbModel::consultaSimples("SELECT * FROM instituicoes")->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function recuperaAdmins($id)
+    {
+        $sql = "SELECT u.id, u.nome FROM administrador_instituicao AS ai
+                INNER JOIN usuarios AS u ON ai.administrador_id = u.id
+                WHERE instituicao_id = $id";
+        return DbModel::consultaSimples($sql)->fetchAll(PDO::FETCH_OBJ);
     }
 }

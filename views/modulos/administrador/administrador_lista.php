@@ -28,7 +28,7 @@ $admins = $administradorObj->listaAdmins();
                         <h3 class="card-title">Administradores</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-sm bg-gradient-info" data-toggle="modal" data-target="#adicionar-adm">
-                                Adicionar Administrador
+                                <i class="fas fa-plus"></i> Adicionar Administrador
                             </button>
                         </div>
                     </div>
@@ -98,7 +98,7 @@ $admins = $administradorObj->listaAdmins();
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <select class="form-control select2bs4" name="usuario_id" id="novoAdm">
+                        <select class="form-control select2bs4" name="usuario_id" id="novoAdm" required>
                             <option value="">Selecione...</option>
                             <?php foreach ($usuarios as $usuario): ?>
                                 <option value="<?= $administradorObj->encryption($usuario->id) ?>"><?= $usuario->nome ?></option>
@@ -108,7 +108,7 @@ $admins = $administradorObj->listaAdmins();
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="submit" class="btn btn-success">Adicionar</button>
                 </div>
                 <div class="resposta-ajax"></div>
             </form>
@@ -118,9 +118,3 @@ $admins = $administradorObj->listaAdmins();
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-<script type="application/javascript">
-    $(document).ready(function () {
-        $('.nav-link').removeClass('active');
-        $('#chamado_inicio').addClass('active');
-    })
-</script>

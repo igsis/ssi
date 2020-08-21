@@ -46,6 +46,7 @@ class ViewsModel
             'categoria_lista',
             'instituicao_lista',
             'local_lista',
+            'local_cadastro',
         ];
         if (self::verificaModulo($modulo)) {
             if (in_array($view, $whitelist)) {
