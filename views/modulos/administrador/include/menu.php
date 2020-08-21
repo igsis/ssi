@@ -55,15 +55,6 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
-            <a href="<?= SERVERURL ?>administrador/funcionarios" class="nav-link">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                    Gerenciar funcionarios
-                </p>
-            </a>
-        </li>
-
     </ul>
 </li>
 <li class="nav-item">

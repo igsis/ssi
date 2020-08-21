@@ -1,9 +1,14 @@
 <?php
-require_once "./controllers/AdministradorController.php";
-$administradorObj = new AdministradorController();
+require_once "./controllers/InstituicaoController.php";
+require_once "./controllers/UsuarioController.php";
 
-$usuarios = $administradorObj->listaUsuarios();
-$admins = $administradorObj->listaAdmins();
+$instituicaoObj =  new InstituicaoController();
+$usuarioObj =  new UsuarioController();
+
+$instituicoes =  $instituicaoObj->listaInstituicao();
+$usuarios = $usuarioObj->listaUsuarios();
+
+
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -26,40 +31,28 @@ $admins = $administradorObj->listaAdmins();
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Administradores</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-sm bg-gradient-info" data-toggle="modal" data-target="#adicionar-adm">
-                                Adicionar Administrador
-                            </button>
-                        </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="tabela" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Nome</th>
-                                <th>E-mail</th>
-                                <th>Telefone</th>
-                                <th>Instituição(ões)</th>
-                                <th width="15%">Ações</th>
+                                <th>Instituição</th>
+                                <th>Administrador</th>
+                                <th width="19%">Ações</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($admins as $admin): ?>
+                                <?php
+                                    foreach ($instituicoes as $instituicao):
+                                        $administrador = $instituicaoObj->recuperaAdministrador($instituicao->id)
+                                ?>
+
                                     <tr>
-                                        <td><?=$admin->nome?></td>
-                                        <td><?=$admin->email?></td>
-                                        <td><?=$admin->telefone?></td>
-                                        <td>Instituição Teste</td>
+                                        <td><?= $instituicao->instituicao ?></td>
+                                        <td><?= $administrador->nome ?></td>
                                         <td>
-                                            <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
-                                                <input type="hidden" name="_method" value="removeAdmin">
-                                                <input type="hidden" name="usuario_id" value="<?= $administradorObj->encryption($admin->id) ?>">
-                                                <button type="submit" class="form-control btn btn-sm bg-gradient-danger">
-                                                    Remover Administrador
-                                                </button>
-                                                <div class="resposta-ajax"></div>
-                                            </form>
+                                            <button class="btn btn-warning" data-toggle="modal" data-target="#adicionar-adm">Alterar Administrador</button>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -67,11 +60,9 @@ $admins = $administradorObj->listaAdmins();
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>Nome</th>
-                                <th>E-mail</th>
-                                <th>Telefone</th>
-                                <th>Instituição(ões)</th>
-                                <th width="15%">Ações</th>
+                                <th>Instituição</th>
+                                <th>Administrador</th>
+                                <th>Ações</th>
                             </tr>
                             </tfoot>
                         </table>
