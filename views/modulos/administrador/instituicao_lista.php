@@ -52,7 +52,11 @@ $administradores = $administradorObj->listaAdmins();
                                     ?>
                                     <tr>
                                         <td><?= $instituicao->instituicao ?></td>
-                                        <td><?= $instituicaoAdmins->nome ?></td>
+                                        <td>
+                                            <?php foreach ($instituicaoAdmins as $adm){
+                                                echo $adm->nome.'<br>';
+                                            } ?>
+                                        </td>
                                         <td>
                                             <button type="button" class="btn bg-gradient-primary"
                                                     data-id="<?= $instituicaoObj->encryption($instituicao->id) ?>"
