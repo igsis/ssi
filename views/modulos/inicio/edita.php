@@ -1,6 +1,6 @@
 <?php
-$url_local = SERVERURL.'api/locais_espacos.php';
 $id = $_SESSION['usuario_id_s'];
+$url_local = SERVERURL.'api/locais_espacos.php';
 require_once "./controllers/UsuarioController.php";
 $UsuarioObj = new UsuarioController();
 $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
@@ -57,7 +57,7 @@ $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
                                     <select class="form-control" name="instituicao" id="instituicao" required>
                                         <option value="">Selecione uma opção...</option>
                                         <?php
-                                        $UsuarioObj->geraOpcao("instituicoes");
+                                        $UsuarioObj->geraOpcao("instituicoes",$usuario['instituicao_id']);
                                         ?>
                                     </select>
                                 </div>
