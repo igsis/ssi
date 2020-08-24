@@ -144,6 +144,7 @@ class ChamadoController extends MainModel
         $dados = [];
         $idChamado = $_POST['chamado_id'];
         unset($_POST['_method']);
+        unset($_POST['id']);
         foreach ($_POST as $campo => $post) {
             $dados[$campo] = MainModel::limparString($post);
         }
@@ -214,7 +215,7 @@ class ChamadoController extends MainModel
         $exclui = DbModel::deleteEspecial("chamado_funcionario","id",$id);
         if ($exclui->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
             $alerta = [
-                'alerta' => 'limpar',
+                'alerta' => 'sucesso',
                 'titulo' => 'Funcionário / Material',
                 'texto' => 'Funcionário removido com sucesso!',
                 'tipo' => 'success',
@@ -236,7 +237,7 @@ class ChamadoController extends MainModel
     {
         $idChamado = MainModel::decryption($idChamado);
         return DbModel::consultaSimples("
-            SELECT f.nome, f.cargo, cf.ferramentas, cf.id FROM chamado_funcionario cf 
+            SELECT f.nome, f.cargo, cf.ferramentas, cf.id, f.id AS 'funcionario_id' FROM chamado_funcionario cf 
                 INNER JOIN funcionarios f on cf.funcionario_id = f.id
             WHERE cf.chamado_id = '$idChamado'
         ")->fetchAll(PDO::FETCH_OBJ);
