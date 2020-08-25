@@ -38,6 +38,18 @@ if (isset($_POST['_method'])) {
         case 'removeLocal':
             echo $administradorObj->removeLocal($_POST['local_id']);
             break;
+
+        case 'insereCategoria':
+            echo $administradorObj->insereCategoria();
+            break;
+
+        case 'editaCategoria':
+            echo $administradorObj->editaCategoria($_POST['categoria_id']);
+            break;
+
+        case 'removeCategoria':
+            echo $administradorObj->removeCategoria($_POST['categoria_id']);
+            break;
     }
 } else {
     include_once "../config/destroySession.php";

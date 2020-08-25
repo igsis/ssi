@@ -215,4 +215,94 @@ class AdministradorController extends UsuarioController
 
         return MainModel::sweetAlert($alerta);
     }
+
+    public function listaCategorias()
+    {
+        return DbModel::listaPublicado('categorias')->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function insereCategoria()
+    {
+        unset($_POST['_method']);
+
+        $dado['categoria'] = MainModel::limparString($_POST['categoria']);
+
+        $insert = DbModel::insert('categorias', $dado);
+        if ($insert) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Categoria Cadastrada!',
+                'texto' => "Categoria <b>{$dado['categoria']}</b> cadastrada!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/categoria_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/categoria_cadastro'
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function editaCategoria($id)
+    {
+        $id = MainModel::decryption($id);
+
+        unset($_POST['_method']);
+        unset($_POST['categoria_id']);
+
+        $dado['categoria'] = MainModel::limparString($_POST['categoria']);
+
+        $update = DbModel::update('categorias', $dado, $id);
+        if ($update->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Categoria Editada!',
+                'texto' => "Categoria editada com sucesso!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/categoria_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao editar local!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/categoria_lista'
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function removeCategoria($id)
+    {
+        $id = MainModel::decryption($id);
+        $delete = DbModel::apaga('categorias', $id);
+
+        if ($delete->rowCount() > 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Categoria Apagada!',
+                'texto' => "Categoria apagada com sucesso!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/categoria_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao remover local!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/categoria_lista'
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
 }

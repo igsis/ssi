@@ -1,8 +1,9 @@
 <?php
-require_once "./controllers/InstituicaoController.php";
-$instituicaoObj = new InstituicaoController();
+require_once "./controllers/AdministradorController.php";
 
-$instituicoes = $instituicaoObj->listaInstituicoes();
+$administradorObj = new AdministradorController();
+
+$categorias = $administradorObj->listaCategorias()
 ?>
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -24,10 +25,10 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                     <!-- Horizontal Form -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Intituições</h3>
+                            <h3 class="card-title">Categorias</h3>
                             <div class="card-tools">
-                                <button type="button" class="btn btn-sm bg-gradient-info" data-toggle="modal" data-target="#add-instituicao">
-                                    <i class="fas fa-plus"></i> Adicionar Intituição
+                                <button type="button" class="btn btn-sm bg-gradient-info" onclick="modalAddCategoria()">
+                                    <i class="fas fa-plus"></i> Adicionar Categoria
                                 </button>
                             </div>
                         </div>
@@ -36,20 +37,29 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                             <table id="tabela" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
-                                    <th>Instituição</th>
-                                    <th width="15%">Ações</th>
+                                    <th>Categoria</th>
+                                    <th>Ações</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php foreach ($instituicoes as $instituicao): ?>
+                                <?php foreach ($categorias as $categoria): ?>
                                     <tr>
-                                        <td><?=$instituicao->instituicao?></td>
+                                        <td><?= $categoria->categoria ?></td>
                                         <td>
-                                            <button type="button" class="form-control btn btn-sm bg-gradient-primary"
-                                                    data-id="<?=$instituicaoObj->encryption($instituicao->id)?>" data-instituicao="<?=$instituicao->instituicao?>"
-                                                    onclick="modalEdicao.bind(this)()">
+                                            <button type="button" class="btn bg-gradient-primary float-left mr-2"
+                                                    data-id="<?= $administradorObj->encryption($categoria->id) ?>"
+                                                    data-categoria="<?= $categoria->categoria ?>"
+                                                    onclick="modalEditaCategoria(this)">
                                                 Editar
                                             </button>
+                                            <form class="formulario-ajax" data-form="delete" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                                                <input type="hidden" name="_method" value="removeCategoria">
+                                                <input type="hidden" name="categoria_id" value="<?= $administradorObj->encryption($categoria->id) ?>">
+                                                <button type="submit" class="btn bg-gradient-danger">
+                                                    Remover
+                                                </button>
+                                                <div class="resposta-ajax"></div>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -57,8 +67,8 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <th>Instituição</th>
-                                    <th width="15%">Ações</th>
+                                    <th>Categoria</th>
+                                    <th>Ações</th>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -73,11 +83,13 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
     </div>
     <!-- /.content -->
     <!-- Modal Cadastro -->
-    <div class="modal fade" id="add-instituicao" style="display: none;" aria-hidden="true">
+    <div class="modal fade" id="add-categoria" style="display: none;" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
-                    <input type="hidden" name="_method" id="_method" value="insereInstituicao">
+                <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php"
+                      method="post">
+                    <input type="hidden" name="_method" id="method">
+                    <input type="hidden" name="categoria_id" id="categoria_id">
                     <div class="modal-header">
                         <h4 class="modal-title">Adicionar nova Instituicao</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -86,13 +98,13 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="instituicao">Instituição: *</label>
-                            <input type="text" name="instituicao" class="form-control" required>
+                            <label for="instituicao">Categoria: *</label>
+                            <input type="text" name="categoria" class="form-control" id="categoria" required>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-between">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-success" id="btnSalvar">Adicionar</button>
+                        <button type="submit" class="btn btn-success" id="btnSalvar">Salvar</button>
                     </div>
                     <div class="resposta-ajax"></div>
                 </form>
@@ -102,53 +114,36 @@ $instituicoes = $instituicaoObj->listaInstituicoes();
         <!-- /.modal-dialog -->
     </div>
     <!-- /.Modal Cadastro -->
-    <!-- Modal Edição -->
-    <div class="modal fade" id="edita-instituicao" style="display: none;" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form class="formulario-ajax" data-form="update" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
-                    <input type="hidden" name="_method" id="_method" value="editaInstituicao">
-                    <div class="modal-header">
-                        <h4 class="modal-title titulo-edicao"></h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="instituicao">Instituição: *</label>
-                            <input type="text" name="instituicao" class="form-control" id="instituicao" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-between">
-                        <input type="hidden" name="instituicao_id" id="instituicao_id">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-success" id="btnSalvar">Editar</button>
-                    </div>
-                    <div class="resposta-ajax"></div>
-                </form>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.Modal Edição -->
 
-<?php
-$javascript = <<<JAVASCRIPT
-<script>
-    function modalEdicao() {
-        let titulo = $('.titulo-edicao');
-        let cpoInstituicao = $('#instituicao');
-        let cpoInstituicaoId = $('#instituicao_id');
-        let nomeInstituicao = $(this).data('instituicao');
-        let instituicao_id = $(this).data('id');
-        
-        titulo.text('Editar instituição: ' + nomeInstituicao);
-        cpoInstituicao.val(nomeInstituicao);
-        cpoInstituicaoId.val(instituicao_id);
-        $('#edita-instituicao').modal('show');
+<script type="text/javascript">
+    function modalAddCategoria() {
+        let modal = $('#add-categoria');
+        let method = modal.find('#method');
+        let titulo = modal.find('.modal-title');
+        let cpoCategoria = modal.find('#categoria');
+        let cpoCategoriaId = modal.find('#categoria_id');
+
+        titulo.text('Adicionar Categoria');
+        method.val('insereCategoria');
+        cpoCategoria.val('');
+        cpoCategoriaId.attr('disabled', true)
+        modal.modal('show');
+    }
+
+    function modalEditaCategoria(e) {
+        let modal = $('#add-categoria');
+        let method = modal.find('#method');
+        let titulo = modal.find('.modal-title');
+        let cpoCategoria = modal.find('#categoria');
+        let cpoCategoriaId = modal.find('#categoria_id');
+        let categoria = $(e).data('categoria');
+        let categoria_id = $(e).data('id');
+
+        titulo.text('Editar Categoria ' + categoria);
+        method.val('editaCategoria');
+        cpoCategoria.val(categoria);
+        cpoCategoriaId.attr('disabled', false);
+        cpoCategoriaId.val(categoria_id);
+        modal.modal('show');
     }
 </script>
-JAVASCRIPT;
-?>
