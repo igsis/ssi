@@ -278,13 +278,11 @@ class ChamadoController extends MainModel
     {
         $dados = array();
         for ($x = 1; $x<4 ;$x++){
-            $query = "SELECT COUNT(ch.id) as `contador`
-                    FROM chamados AS ch 
-                    LEFT JOIN chamado_status AS cs ON ch.status_id = cs.id
-                    WHERE ch.status_id = {$x}";
+            $query = "SELECT COUNT(id) as `contador` FROM chamados WHERE status_id = {$x}";
             $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
             array_push($dados,$resultado);
         }
+        return $dados;
     }
 
     public function recuperaEstatisticaCategoria($id)

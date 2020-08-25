@@ -1,5 +1,11 @@
 <?php
 
+require_once "./controllers/ChamadoController.php";
+
+$chamadoObj = new  ChamadoController();
+
+$estatistica = $chamadoObj->recuperaEstatisticaGeral();
+
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -26,7 +32,7 @@
                             <div class="col">
                                 <div class="small-box bg-primary">
                                     <div class="inner">
-                                        <h3>000</h3>
+                                        <h3><?= $estatistica[0] ?></h3>
                                         <p>Abertos</p>
                                     </div>
                                     <div class="icon">
@@ -39,7 +45,7 @@
                             <div class="col">
                                 <div class="small-box bg-primary">
                                     <div class="inner">
-                                        <h3>000</h3>
+                                        <h3><?= $estatistica[1] ?></h3>
                                         <p>Em andamento</p>
                                     </div>
                                     <div class="icon">
@@ -52,7 +58,7 @@
                             <div class="col">
                                 <div class="small-box bg-primary">
                                     <div class="inner">
-                                        <h3>000</h3>
+                                        <h3><?= $estatistica[2] ?></h3>
                                         <p>Fechados</p>
                                     </div>
                                     <div class="icon">
