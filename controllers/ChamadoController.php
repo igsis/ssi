@@ -252,4 +252,65 @@ class ChamadoController extends MainModel
             WHERE cf.id = '$id'
         ")->fetchObject();
     }
+
+    public function relatorioChamadosMes()
+    {
+        $mes = date('m');
+        $ano = date('Y');
+        $ultimoDia = date("t", mktime(0,0,0,$mes,'01',$ano));
+        $dataInicio = "$ano-$mes-01";
+        $dataFim="$ano-$mes-$ultimoDia";
+
+        $query = "SELECT COUNT(ch.status_id) AS 'quantidade', cs.`status`
+                    FROM chamado_status AS cs
+                    INNER JOIN chamados AS ch ON cs.id = ch.status_id
+                    WHERE DATE(ch.data_abertura) BETWEEN '{$dataInicio}' AND '{$dataFim}'
+                    GROUP BY ch.status_id";
+        return DbModel::consultaSimples($query)->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function listaCategorias()
+    {
+        $query = "SELECT id, categoria FROM categorias WHERE publicado = 1";
+        return DbModel::consultaSimples($query)->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function recuperaEstatisticaAdm()
+    {
+        $dados = array();
+        for ($x = 1; $x<4 ;$x++){
+            $query = "SELECT COUNT(id) as `contador` FROM chamados WHERE status_id = {$x}";
+            $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
+            array_push($dados,$resultado);
+        }
+        return $dados;
+    }
+
+    public function recuperaEstatisticaUsuario($id)
+    {
+        $dados = array();
+        for ($x = 1; $x<4 ;$x++){
+            $query = "SELECT COUNT(id) as `contador` FROM chamados WHERE status_id = {$x} AND usuario_id = {$id}";
+            $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
+            array_push($dados,$resultado);
+        }
+        return $dados;
+    }
+
+    public function recuperaEstatisticaCategoria($id)
+    {
+        $dados = array();
+        array_push($dados,0);
+        for ($x = 1; $x<4 ;$x++){
+            $query = "SELECT COUNT(ch.id) as `contador`
+                    FROM chamados AS ch 
+                    LEFT JOIN chamado_status AS cs ON ch.status_id = cs.id
+                    WHERE ch.categoria_id = {$id} AND ch.status_id = {$x}";
+            $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
+             array_push($dados,$resultado);
+             $dados[0]=$dados[0]+$resultado;
+        }
+
+        return $dados;
+    }
 }
