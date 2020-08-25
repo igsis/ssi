@@ -139,18 +139,17 @@ class DbModel
     }
 
     // Lista publicados
-    protected function listaPublicado($table,$id = null) {
-        if(!empty($id)){
-            $filtro_id = "AND id = :id";
+    protected function listaPublicado($table,$id = false) {
+        $sql = "SELECT * FROM $table WHERE publicado = 1";
+
+        if($id){
+            $sql .= " AND id = $id";
         }
-        else{
-            $filtro_id = "";
-        }
+
         $pdo = self::connection();
-        $sql = "SELECT * FROM $table WHERE publicado = 1 $filtro_id ORDER BY 2";
         $statement = $pdo->query($sql);
         $statement->execute();
 
-        return $statement->fetchAll();
+        return $statement;
     }
 }

@@ -11,12 +11,12 @@ class LocalController extends LocalModel
 {
     public function listaLocais()
     {
-        return DbModel::consultaSimples("SELECT * FROM locais")->fetchAll(PDO::FETCH_OBJ);
+        return DbModel::listaPublicado('locais')->fetchAll(PDO::FETCH_OBJ);
     }
     public function recuperaLocal($id)
     {
-        $local = DbModel::getInfo('locais',$id);
-        return $local;
+        $id = MainModel::decryption($id);
+        return DbModel::getInfo('locais',$id);
     }
 
     public function recuperaInstituicaoLocal($local_id)

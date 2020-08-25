@@ -26,6 +26,18 @@ if (isset($_POST['_method'])) {
         case 'vinculaAdm':
             echo $administradorObj->vinculaAdm();
             break;
+
+        case 'insereLocal':
+            echo $administradorObj->insereLocal();
+            break;
+
+        case 'editaLocal':
+            echo $administradorObj->editaLocal($_POST['id']);
+            break;
+
+        case 'removeLocal':
+            echo $administradorObj->removeLocal($_POST['local_id']);
+            break;
     }
 } else {
     include_once "../config/destroySession.php";

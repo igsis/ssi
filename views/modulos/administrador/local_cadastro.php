@@ -34,7 +34,7 @@ if ($id) {
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
+                    <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/administradorAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editaLocal" : "insereLocal" ?>">
                         <?php if ($id): ?>
                             <input type="hidden" name="id" id="id" value="<?= $id ?>">
@@ -48,7 +48,7 @@ if ($id) {
                                 </div>
                                 <div class="form-group col">
                                     <label>Instituição: *</label>
-                                    <select name="instituicao_id" class="form-control" required>
+                                    <select name="instituicao_id" class="form-control select2bs4" required>
                                         <option value="">Selecione...</option>
                                         <?php $localObj->geraOpcao('instituicoes', $local->instituicao_id ?? ''); ?>
                                     </select>
@@ -59,31 +59,48 @@ if ($id) {
                                     <label for="telefone">Telefone: *</label>
                                     <input type="text" class="form-control" id="telefone" name="telefone"
                                            onkeyup="mascara( this, mtel );"  placeholder="Digite o telefone"
-                                           value="<?= $usuario->telefone ?? "" ?>" maxlength="15" required>
+                                           value="<?= $local->telefone ?? "" ?>" maxlength="15" required>
                                 </div>
                                 <div class="form-group col">
-                                    <label for="contato">Prédio histórico? *</label>
-                                    <input type="radio" name="predio_historico" value="1" required>
-                                    <input type="radio" name="predio_historico" value="0">
+                                    <div class="form-group">
+                                        <label for="telefone">Prédio Histórico?: *</label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="predio_historico" value="1"
+                                                <?= isset($local->predio_historico) ? $local->predio_historico == 1 ? "checked" : "" : ""?>>Sim
+                                        </label>
+                                    </div>
+                                    <div class="form-check-inline">
+                                        <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="predio_historico" value="0"
+                                                <?= isset($local->predio_historico) ? $local->predio_historico == 0 ? "checked" : "" : "checked"?>>Não
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-2">
                                     <div class="form-group">
                                         <label>CEP: *</label>
-                                        <input type="text" class="form-control" name="cep" id="cep" required>
+                                        <input type="text" class="form-control" name="cep" id="cep"
+                                               onkeypress="mask(this, '#####-###')" maxlength="9"
+                                               placeholder="Digite o CEP" required
+                                               value="<?= $local->cep ?? "" ?>">
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label>Endereço: *</label>
-                                        <input type="text" class="form-control" name="logradouro" id="logradouro" required>
+                                        <input type="text" class="form-control" name="logradouro" id="rua" required
+                                               value="<?= $local->logradouro ?? "" ?>">
                                     </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="form-group">
                                         <label>Número: *</label>
-                                        <input type="text" class="form-control" name="numero" id="numero" required>
+                                        <input type="text" class="form-control" name="numero" id="numero" required
+                                               value="<?= $local->numero ?? "" ?>">
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -100,13 +117,15 @@ if ($id) {
                                 <div class="form-group col">
                                     <label for="local">Funcionamento: *</label>
                                     <input type="text" class="form-control" id="funcionamento" name="funcionamento"
-                                           maxlength="100" placeholder="Digite sobre o funcionamento do local" value="<?= $usuario->email ?? '' ?>">
+                                           maxlength="100" placeholder="Digite sobre o funcionamento do local"
+                                           value="<?= $local->funcionamento ?? "" ?>">
                                 </div>
                             </div>
                         </div>
                         <div class="resposta-ajax"></div>
                         <!-- /.card-body -->
                         <div class="card-footer">
+                            <a href="<?=SERVERURL?>administrador/local_lista" class="btn btn-info float-left">Voltar</a>
                             <button type="submit" class="btn btn-success float-right">Gravar</button>
                         </div>
                         <!-- /.card-footer -->
