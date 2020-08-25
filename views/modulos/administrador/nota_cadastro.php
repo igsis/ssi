@@ -102,7 +102,7 @@ $nota = $notaObj->listaNota($id);
                 <div class="card card-outline card-green">
                     <div class="card-header">
                         <h3 class="card-title">Funcionários</h3>
-                        <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#modal-funcionarios">
+                        <button type="button" class="btn btn-sm btn-success float-right" onclick="cadastraChFunc()">
                             <i class="fas fa-plus"></i> Adicionar
                         </button>
                     </div>
@@ -112,14 +112,18 @@ $nota = $notaObj->listaNota($id);
                         <div class="row">
                             <div class="col-md">
                                 <table class="table table-striped">
-                                <?php foreach ($funcionario AS $funcionarios):
-                                    $chFun = $chamadoObj->recuperaFuncionarioChamado($funcionarios->id);
-                                    ?>
+                                <?php foreach ($funcionario AS $funcionarios): ?>
                                     <tr>
                                         <td><?= $funcionarios->nome ?></td>
                                         <td><?= mb_strimwidth($funcionarios->ferramentas,0,60, "...") ?></td>
                                         <td>
-                                            <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#modal-funcionarios" data-id="<?= $funcionarios->id ?>"><i class="far fa-edit"></i> Editar</button>
+                                            <button type="button" class="btn btn-sm btn-success float-right"
+                                                    data-id="<?= $chamadoObj->encryption($funcionarios->id) ?>"
+                                                    data-funcionario_id="<?= $funcionarios->funcionario_id ?>"
+                                                    data-ferramentas="<?= $funcionarios->ferramentas ?>"
+                                                    onclick="editaChFunc(this)">
+                                                <i class="far fa-edit"></i> Editar
+                                            </button>
                                         </td>
                                         <td>
                                             <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
@@ -199,9 +203,9 @@ $nota = $notaObj->listaNota($id);
 <!-- /.modal notas -->
 
 <!-- modal funcionarios -->
-<div id="edita" class="modal fade" id="modal-funcionarios" aria-modal="true">
+<div class="modal fade" id="modal-funcionarios" aria-modal="true">
     <div class="modal-dialog modal-lg">
-        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($funcionario) ? "update" : "save" ?>">
+        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Adicionar funcionário no chamado</h4>
@@ -210,10 +214,9 @@ $nota = $notaObj->listaNota($id);
                     </button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" name="_method" value="<?= ($chFun) ? "editarFuncionario" : "cadastrarFuncionario"
-                    ?>">
+                    <input type="hidden" name="_method" id="method">
                     <input type="hidden" name="chamado_id" value="<?= $chamado->id ?>">
-                    <input type="hidden" name="id" id="idChFun" value="">
+                    <input type="hidden" name="id" id="idChFun">
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md">
@@ -221,7 +224,7 @@ $nota = $notaObj->listaNota($id);
                                 <select class="form-control select2bs4" style="width: 100%;" name="funcionario_id" id="funcionario_id">
                                     <option value="">Selecione uma opção...</option>
                                     <?php
-                                    $chamadoObj->geraOpcao("funcionarios",$chFun->funcionario_id,true);
+                                    $chamadoObj->geraOpcao("funcionarios",'',true);
                                     ?>
                                 </select>
                             </div>
@@ -229,7 +232,7 @@ $nota = $notaObj->listaNota($id);
                         <div class="row">
                             <div class="form-group col-md">
                                 <label for="ferramentas">Materiais / Ferramentas: *</label>
-                                <textarea name="ferramentas" id="ferramentas" class="form-control" rows="5" required><?= $chFun->ferramentas ?? null ?></textarea>
+                                <textarea name="ferramentas" id="ferramentas" class="form-control" rows="5" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -248,9 +251,31 @@ $nota = $notaObj->listaNota($id);
 <!-- /.modal funcionarios -->
 
 <script type="text/javascript">
-    $('#edita').on('show.bs.modal', function (e) {
-        let id = $(e.relatedTarget).attr('data-id');
+    function cadastraChFunc() {
+        let modal = $('#modal-funcionarios');
+        let method = modal.find('#method');
+        let titulo = modal.find('.modal-title');
 
-        $(this).find('#idChFun').attr('value', `${id}`);
-    })
+        method.val('cadastrarFuncionario');
+        titulo.text('Adicionar funcionário ao chamado')
+        modal.find('#funcionario_id').val('').trigger('change')
+        modal.find('#ferramentas').text('');
+        modal.modal('show');
+    }
+
+    function editaChFunc(e) {
+        let modal = $('#modal-funcionarios');
+        let method = modal.find('#method');
+        let titulo = modal.find('.modal-title');
+        let id = $(e).data('id');
+        let funcionario_id = $(e).data('funcionario_id');
+        let ferramentas = $(e).data('ferramentas');
+
+        method.val('editarFuncionario');
+        titulo.text('Editar funcionário do chamado');
+        modal.find('#idChFun').val(id);
+        modal.find('#funcionario_id').val(funcionario_id).trigger('change')
+        modal.find('#ferramentas').text(ferramentas);
+        modal.modal('show');
+    }
 </script>
