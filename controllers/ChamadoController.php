@@ -274,6 +274,19 @@ class ChamadoController extends MainModel
         return DbModel::consultaSimples($query)->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function recuperaEstatisticaGeral()
+    {
+        $dados = array();
+        for ($x = 1; $x<4 ;$x++){
+            $query = "SELECT COUNT(ch.id) as `contador`
+                    FROM chamados AS ch 
+                    LEFT JOIN chamado_status AS cs ON ch.status_id = cs.id
+                    WHERE ch.status_id = {$x}";
+            $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
+            array_push($dados,$resultado);
+        }
+    }
+
     public function recuperaEstatisticaCategoria($id)
     {
         $dados = array();
