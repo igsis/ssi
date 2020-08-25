@@ -1,5 +1,18 @@
 <?php
+
+require_once "./controllers/ChamadoController.php";
+
+setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
+
 $viewObj = new ViewsController();
+
+$mes = strftime('%B', strtotime('today'));
+
+$chamadoObj = new ChamadoController();
+
+$relatorio = $chamadoObj->relatorioChamadosMes();
+$categorias = $chamadoObj->listaCategorias();
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -42,78 +55,20 @@ $viewObj = new ViewsController();
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th>Hidráulica</th>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>2</td>
-                                        <td>2</td>
-
-                                    </tr>
-                                    <tr>
-                                        <th>Alvenaria</th>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>1</td>
-
-                                    </tr>
-                                    <tr>
-                                        <th>Pintura</th>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Elétrica (lâmpada, tomada, etc.)</th>
-                                        <td>1</td>
-                                        <td>0</td>
-                                        <td>8</td>
-                                        <td>9</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Serralheria</th>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Carpintaria</th>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Marcenaria</th>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Manutenção de Equipamentos</th>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>1</td>
-                                        <td>1</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Telhado</th>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Jardinagem</th>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                    </tr>
+                                    <?php
+                                    foreach ($categorias as $categoria):
+                                        $estatistica = $chamadoObj->recuperaEstatisticaCategoria($categoria->id);
+                                        ?>
+                                        <tr>
+                                            <th><?= $categoria->categoria ?></th>
+                                            <td><?= $estatistica[1] ?></td>
+                                            <td><?= $estatistica[2] ?></td>
+                                            <td><?= $estatistica[3] ?></td>
+                                            <td><?= $estatistica[0] ?></td>
+                                        </tr>
+                                    <?php
+                                    endforeach;
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -123,25 +78,22 @@ $viewObj = new ViewsController();
                     <div class="col-12 col-md-6 col-sm-12">
                         <div class="card card-widget widget-user-2 shadow-sm">
                             <div class="widget-user-header bg-warning">
-                                <h3 class="widget-user-username">Relatório do {{Mes}}</h3>
+                                <h3 class="widget-user-username">Relatório de <?= $mes ?></h3>
                             </div>
                             <div class="card-footer p-0">
                                 <ul class="nav flex-column">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            Abertos <span class="float-right badge bg-primary">31</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            Em Andamento <span class="float-right badge bg-info">5</span>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            Fechado <span class="float-right badge bg-success">12</span>
-                                        </a>
-                                    </li>
+                                    <?php
+                                    foreach ($relatorio as $rel) {
+                                        ?>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <?= $rel->status ?> <span
+                                                        class="float-right badge bg-primary"><?= $rel->quantidade ?></span>
+                                            </a>
+                                        </li>
+                                        <?php
+                                    }
+                                    ?>
                                 </ul>
                             </div>
                         </div>
