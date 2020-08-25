@@ -274,11 +274,22 @@ class ChamadoController extends MainModel
         return DbModel::consultaSimples($query)->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function recuperaEstatisticaGeral()
+    public function recuperaEstatisticaAdm()
     {
         $dados = array();
         for ($x = 1; $x<4 ;$x++){
             $query = "SELECT COUNT(id) as `contador` FROM chamados WHERE status_id = {$x}";
+            $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
+            array_push($dados,$resultado);
+        }
+        return $dados;
+    }
+
+    public function recuperaEstatisticaUsuario($id)
+    {
+        $dados = array();
+        for ($x = 1; $x<4 ;$x++){
+            $query = "SELECT COUNT(id) as `contador` FROM chamados WHERE status_id = {$x} AND usuario_id = {$id}";
             $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
             array_push($dados,$resultado);
         }

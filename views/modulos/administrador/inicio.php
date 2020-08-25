@@ -4,7 +4,7 @@ require_once "./controllers/ChamadoController.php";
 
 $chamadoObj = new  ChamadoController();
 
-$estatistica = $chamadoObj->recuperaEstatisticaGeral();
+$estatistica = $chamadoObj->recuperaEstatisticaAdm();
 
 ?>
 <!-- Content Header (Page header) -->
