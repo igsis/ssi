@@ -18,7 +18,7 @@ $funcionario = $chamadoObj->recuperaFuncionarioChamado($idChFunc);
 
 require_once "../controllers/LocalController.php";
 $localObj = new LocalController();
-$local = $localObj->recuperaLocal($chamado->local_id)->fetchObject();
+$local = $localObj->recuperaLocal($localObj->encryption($chamado->local_id))->fetchObject();
 
 class PDF extends FPDF
 {

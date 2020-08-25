@@ -129,4 +129,90 @@ class AdministradorController extends UsuarioController
 
         return MainModel::sweetAlert($alerta);
     }
+
+    public function insereLocal()
+    {
+        unset($_POST['_method']);
+
+        $dados = MainModel::limpaPost($_POST);
+
+        $insert = DbModel::insert('locais', $dados);
+        if ($insert) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Local Cadastrado!',
+                'texto' => "Local <b>{$dados['local']}</b> cadastrado!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/local_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/local_cadastro'
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function editaLocal($id)
+    {
+        $id = MainModel::decryption($id);
+
+        unset($_POST['_method']);
+        unset($_POST['id']);
+
+        $dados = MainModel::limpaPost($_POST);
+
+        $update = DbModel::update('locais', $dados, $id);
+
+        if ($update->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Local Editado!',
+                'texto' => "Local editado com sucesso!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/local_cadastro&id='.MainModel::encryption($id)
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao editar local!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/local_cadastro&id='.MainModel::encryption($id)
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function removeLocal($id)
+    {
+        $id = MainModel::decryption($id);
+        $delete = DbModel::apaga('locais', $id);
+
+        if ($delete->rowCount() > 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Local Apagado!',
+                'texto' => "Local apagado com sucesso!",
+                'tipo' => 'success',
+                'location' => SERVERURL.'administrador/local_lista'
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao remover local!',
+                'tipo' => 'error',
+                'location' => SERVERURL.'administrador/local_lista'
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
 }

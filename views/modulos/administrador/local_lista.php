@@ -48,16 +48,15 @@ $locais = $localObj->listaLocais();
                                         <td><?=$local->local?></td>
                                         <td><?=$localObj->recuperaInstituicaoLocal($local->id)?></td>
                                         <td><?=$local->telefone?></td>
-                                        <td>Instituição Teste</td>
                                         <td>
-                                            <a href="<?=SERVERURL?>administrador/local_cadastro&id=<?=$local->id?>"
-                                               class="btn bg-gradient-primary">
+                                            <a href="<?=SERVERURL?>administrador/local_cadastro&id=<?= $localObj->encryption($local->id) ?>"
+                                               class="btn bg-gradient-primary float-left mr-2">
                                                 Editar
                                             </a>
-                                            <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                                            <form class="formulario-ajax" data-form="delete" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
                                                 <input type="hidden" name="_method" value="removeLocal">
-                                                <input type="hidden" name="usuario_id" value="<?= $localObj->encryption($local->id) ?>">
-                                                <button type="submit" class="form-control btn bg-gradient-danger">
+                                                <input type="hidden" name="local_id" value="<?= $localObj->encryption($local->id) ?>">
+                                                <button type="submit" class="btn bg-gradient-danger">
                                                     Remover
                                                 </button>
                                                 <div class="resposta-ajax"></div>

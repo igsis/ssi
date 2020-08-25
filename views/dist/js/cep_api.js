@@ -35,14 +35,14 @@ $(document).ready(function() {
                     if (!("erro" in dados)) {
                         //Atualiza os campos com os valores da consulta.
                         $("#rua").prop('readonly', true);
-                        $("#bairro").prop('readonly', true);
-                        $("#cidade").prop('readonly', true);
-                        $("#estado").prop('readonly', true);
+                        // $("#bairro").prop('readonly', true);
+                        // $("#cidade").prop('readonly', true);
+                        // $("#estado").prop('readonly', true);
 
-                        $("#rua").val(dados.logradouro);
-                        $("#bairro").val(dados.bairro);
-                        $("#cidade").val(dados.localidade);
-                        $("#estado").val(dados.uf);
+                        $("#rua").val(dados.logradouro + " - " + dados.bairro + ", " + dados.localidade + " - " + dados.uf);
+                        // $("#bairro").val(dados.bairro);
+                        // $("#cidade").val(dados.localidade);
+                        // $("#estado").val(dados.uf);
 
                         if(dados.logradouro == ""){
                             alert("Por favor preencha o formulário");
