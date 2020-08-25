@@ -24,7 +24,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?= SERVERURL ?>administrador/funcionarios" class="nav-link">
+            <a href="<?= SERVERURL ?>administrador/funcionarios" class="nav-link" id="funcionarios">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
                     Gerenciar Funcionarios
@@ -48,7 +48,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="<?= SERVERURL ?>administrador" class="nav-link">
+            <a href="<?= SERVERURL ?>administrador/categoria_lista" class="nav-link" id="categoria_lista">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
                     Gerenciar Categorias
