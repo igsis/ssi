@@ -129,7 +129,7 @@ $nivelAcesso = $usuario->nivel_acesso_id;
     </div>
 <?php
 $url = SERVERURL."chamado/chamado_lista&";
-$usuario = isset($usuarioId) ? "document.querySelector('#usuario').value" : $usuarioId;
+$usuario = isset($usuarioId) ? $usuarioId : "document.querySelector('#usuario').value";
 $javascript = '
 <script>    
     document.querySelector("#btnSubmit").addEventListener("click",function (event){
