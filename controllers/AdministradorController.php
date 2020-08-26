@@ -48,6 +48,15 @@ class AdministradorController extends UsuarioController
         return MainModel::sweetAlert($alerta);
     }
 
+    public function listaInstituicoesAdmin($usuario_id)
+    {
+
+        $sql = "SELECT i.instituicao FROM administrador_instituicao AS ai
+                INNER JOIN instituicoes AS i ON ai.instituicao_id = i.id
+                WHERE ai.administrador_id = '$usuario_id'";
+        return DbModel::consultaSimples($sql)->fetchAll(PDO::FETCH_COLUMN);
+    }
+
     public function insereInstituicao()
     {
         $dado['instituicao'] = MainModel::limparString($_POST['instituicao']);

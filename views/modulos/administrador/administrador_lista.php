@@ -40,17 +40,27 @@ $admins = $administradorObj->listaAdmins();
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Telefone</th>
-                                <th>Instituição(ões)</th>
+                                <th>Instituição(ões) que é Administrador</th>
                                 <th width="15%">Ações</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($admins as $admin): ?>
+                                <?php foreach ($admins as $admin):
+                                    $instituicoes = $administradorObj->listaInstituicoesAdmin($admin->id)
+                                    ?>
                                     <tr>
                                         <td><?=$admin->nome?></td>
                                         <td><?=$admin->email?></td>
                                         <td><?=$admin->telefone?></td>
-                                        <td>Instituição Teste</td>
+                                        <td>
+                                            <?php
+                                            if ($instituicoes) {
+                                                echo implode(", ", $instituicoes);
+                                            } else {
+                                                echo "Nenhuma instituição vinculada";
+                                            }
+                                            ?>
+                                        </td>
                                         <td>
                                             <form class="formulario-ajax" data-form="save" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
                                                 <input type="hidden" name="_method" value="removeAdmin">
@@ -70,7 +80,7 @@ $admins = $administradorObj->listaAdmins();
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Telefone</th>
-                                <th>Instituição(ões)</th>
+                                <th>Instituição(ões) que é Administrador</th>
                                 <th width="15%">Ações</th>
                             </tr>
                             </tfoot>
