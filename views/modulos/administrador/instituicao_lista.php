@@ -53,9 +53,13 @@ $administradores = $administradorObj->listaAdmins();
                                     <tr>
                                         <td><?= $instituicao->instituicao ?></td>
                                         <td>
-                                            <?php foreach ($instituicaoAdmins as $adm) {
-                                                echo $adm->nome . '<br>';
-                                            } ?>
+                                            <?php
+                                            if ($instituicaoAdmins) {
+                                                echo implode("<br>", $instituicaoAdmins);
+                                            } else {
+                                                echo "Nenhum administrador vinculado";
+                                            }
+                                            ?>
                                         </td>
                                         <td>
                                             <button type="button" class="btn bg-gradient-primary"
@@ -237,8 +241,8 @@ $javascript = '
         })
         .done(function (resultado){
             let admins = JSON.parse(resultado);
+            let select = $("#admins");
             if (admins.length > 0){
-                let select = $("#admins");
                 for (let admin of admins){
                     select.children().each(function (){
                         if (admin.id == $(this).val()){
@@ -247,8 +251,7 @@ $javascript = '
                             select.append(option);
                         }
                     })
-                }
-                                
+                }                                
             }
         });
     }
