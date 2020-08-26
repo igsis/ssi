@@ -65,11 +65,35 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-12 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="status_id">Status: *</label>
+                                        <select name="status_id" class="form-control" required>
+                                            <option>Selecione uma opção</option>
+                                            <?php
+                                                $usuarioObj->geraOpcao("chamado_status","");
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="prioridade_id">Prioridade: *</label>
+                                        <select name="prioridade_id" class="form-control" required>
+                                            <option value="">Selecione uma opção...</option>
+                                            <?php
+                                            $usuarioObj->geraOpcao("prioridades","");
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>
                                             Categorias: *
-                                            <button class="btn btn-default rounded-circle" type="button" data-toggle="modal"
+                                            <button class="btn btn-default btn-sm rounded-circle" type="button" data-toggle="modal"
                                                     data-target="#infoCategorias">
                                                 <i class="fas fa-info-circle"></i>
                                             </button>
