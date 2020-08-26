@@ -8,7 +8,9 @@ $chamadoObj = new ChamadoController();
 $usuarioObj = new UsuarioController();
 
 $usuario = $usuarioObj->recuperaUsuario($_SESSION['usuario_id_s'])->fetchObject();
+$usuarioId = $_SESSION['usuario_id_s'];
 $nivelAcesso = $usuario->nivel_acesso_id;
+
 
 ?>
     <!-- Content Header (Page header) -->
