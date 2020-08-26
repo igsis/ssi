@@ -53,8 +53,8 @@ $administradores = $administradorObj->listaAdmins();
                                     <tr>
                                         <td><?= $instituicao->instituicao ?></td>
                                         <td>
-                                            <?php foreach ($instituicaoAdmins as $adm){
-                                                echo $adm->nome.'<br>';
+                                            <?php foreach ($instituicaoAdmins as $adm) {
+                                                echo $adm->nome . '<br>';
                                             } ?>
                                         </td>
                                         <td>
@@ -172,7 +172,7 @@ $administradores = $administradorObj->listaAdmins();
                     <div class="modal-body">
                         <div class="form-group">
                             <label>Selecione um ou mais Administradores:</label>
-                            <select class="select2bs4" name="administradores[]" multiple>
+                            <select class="select2bs4" name="administradores[]" multiple id="admins">
                                 <option>Selecione...</option>
                                 <?php foreach ($administradores as $administrador): ?>
                                     <option value="<?= $administrador->id ?>"><?= $administrador->nome ?></option>
@@ -195,31 +195,62 @@ $administradores = $administradorObj->listaAdmins();
     <!-- /.Modal Vincular Admin -->
 
 <?php
-$javascript = <<<JAVASCRIPT
+$javascript = '
 <script>
     function modalEdicao() {
-        let titulo = $('.titulo-edicao');
-        let cpoInstituicao = $('#instituicao');
-        let cpoInstituicaoId = $('#instituicao_id');
-        let nomeInstituicao = $(this).data('instituicao');
-        let instituicao_id = $(this).data('id');
+        let titulo = $(".titulo-edicao");
+        let cpoInstituicao = $("#instituicao");
+        let cpoInstituicaoId = $("#instituicao_id");
+        let nomeInstituicao = $(this).data("instituicao");
+        let instituicao_id = $(this).data("id");
         
-        titulo.text('Editar instituição: ' + nomeInstituicao);
+        titulo.text("Editar instituição: " + nomeInstituicao);
         cpoInstituicao.val(nomeInstituicao);
         cpoInstituicaoId.val(instituicao_id);
-        $('#edita-instituicao').modal('show');
+        $("#edita-instituicao").modal("show");
     }
     
     function modalAddAdm() {
-        let titulo = $('.titulo-addAdm');
-        let cpoInstituicaoId = $('#instituicao-addAdm');
-        let nomeInstituicao = $(this).data('instituicao');
-        let instituicao_id = $(this).data('id');
+        let titulo = $(".titulo-addAdm");
+        let cpoInstituicaoId = $("#instituicao-addAdm");
+        let nomeInstituicao = $(this).data("instituicao");
+        let instituicao_id = $(this).data("id");
         
-        titulo.text('Vincular administrador a instituição: ' + nomeInstituicao);
+        selectionar(instituicao_id);
+                
+        titulo.text("Vincular administrador a instituição: " + nomeInstituicao);
         cpoInstituicaoId.val(instituicao_id);
-        $('#vincular-adm').modal('show');
+        $("#vincular-adm").modal("show");
     }
-</script>
-JAVASCRIPT;
+    
+    function selectionar(instituicao){
+        
+        let dados = {
+          _method: "recuperaAdministrador",
+          id: instituicao  
+        };
+        
+        let  resultado = $.ajax({
+            url:"'.SERVERURL.'ajax/instituicaoAjax.php",
+            type: "POST",
+            data: dados
+        })
+        .done(function (resultado){
+            let admins = JSON.parse(resultado);
+            if (admins.length > 0){
+                let select = $("#admins");
+                for (let admin of admins){
+                    select.children().each(function (){
+                        if (admin.id == $(this).val()){
+                            $(this).remove();
+                            let option = `<option value=${admin.id} selected>${admin.nome}</option>`;
+                            select.append(option);
+                        }
+                    })
+                }
+                                
+            }
+        });
+    }
+</script>';
 ?>
