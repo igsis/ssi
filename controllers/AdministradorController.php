@@ -34,7 +34,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Administrador',
                 'texto' => $texto,
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/administrador_lista'
+                'location' => SERVERURL . 'administrador/administrador_lista'
             ];
         } else {
             $alerta = [
@@ -42,7 +42,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/administrador_lista'
+                'location' => SERVERURL . 'administrador/administrador_lista'
             ];
         }
         return MainModel::sweetAlert($alerta);
@@ -68,7 +68,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Instituição Cadastrada!',
                 'texto' => "Instituição <b>{$dado['instituicao']}</b> cadastrada!",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/instituicao_lista'
+                'location' => SERVERURL . 'administrador/instituicao_lista'
             ];
         } else {
             $alerta = [
@@ -76,7 +76,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/instituicao_lista'
+                'location' => SERVERURL . 'administrador/instituicao_lista'
             ];
         }
 
@@ -96,7 +96,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Instituição Editada!',
                 'texto' => "Instituição <b>{$dado['instituicao']}</b> Editada!",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/instituicao_lista'
+                'location' => SERVERURL . 'administrador/instituicao_lista'
             ];
         } else {
             $alerta = [
@@ -104,7 +104,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/instituicao_lista'
+                'location' => SERVERURL . 'administrador/instituicao_lista'
             ];
         }
 
@@ -117,14 +117,19 @@ class AdministradorController extends UsuarioController
         $instituicao_id = MainModel::decryption($_POST['instituicao_id']);
         $administradores = $_POST['administradores'];
 
-        $relacionamento = MainModel::atualizaRelacionamento('administrador_instituicao', 'instituicao_id', $instituicao_id, 'administrador_id', $administradores);
+        if ($administradores === null) {
+            $relacionamento = DbModel::deleteEspecial('administrador_instituicao','instituicao_id',$instituicao_id);
+        } else {
+            $relacionamento = MainModel::atualizaRelacionamento('administrador_instituicao', 'instituicao_id', $instituicao_id, 'administrador_id', $administradores);
+        }
+
         if ($relacionamento) {
             $alerta = [
                 'alerta' => 'sucesso',
                 'titulo' => 'Administrador(es) vinculados!',
                 'texto' => "Administrador(es) viculado(s) a instituição",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/instituicao_lista'
+                'location' => SERVERURL . 'administrador/instituicao_lista'
             ];
         } else {
             $alerta = [
@@ -132,7 +137,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/instituicao_lista'
+                'location' => SERVERURL . 'administrador/instituicao_lista'
             ];
         }
 
@@ -152,7 +157,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Local Cadastrado!',
                 'texto' => "Local <b>{$dados['local']}</b> cadastrado!",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/local_lista'
+                'location' => SERVERURL . 'administrador/local_lista'
             ];
         } else {
             $alerta = [
@@ -160,7 +165,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/local_cadastro'
+                'location' => SERVERURL . 'administrador/local_cadastro'
             ];
         }
 
@@ -184,7 +189,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Local Editado!',
                 'texto' => "Local editado com sucesso!",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/local_cadastro&id='.MainModel::encryption($id)
+                'location' => SERVERURL . 'administrador/local_cadastro&id=' . MainModel::encryption($id)
             ];
         } else {
             $alerta = [
@@ -192,7 +197,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao editar local!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/local_cadastro&id='.MainModel::encryption($id)
+                'location' => SERVERURL . 'administrador/local_cadastro&id=' . MainModel::encryption($id)
             ];
         }
 
@@ -210,7 +215,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Local Apagado!',
                 'texto' => "Local apagado com sucesso!",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/local_lista'
+                'location' => SERVERURL . 'administrador/local_lista'
             ];
         } else {
             $alerta = [
@@ -218,7 +223,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao remover local!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/local_lista'
+                'location' => SERVERURL . 'administrador/local_lista'
             ];
         }
 
@@ -243,7 +248,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Categoria Cadastrada!',
                 'texto' => "Categoria <b>{$dado['categoria']}</b> cadastrada!",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/categoria_lista'
+                'location' => SERVERURL . 'administrador/categoria_lista'
             ];
         } else {
             $alerta = [
@@ -251,7 +256,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/categoria_cadastro'
+                'location' => SERVERURL . 'administrador/categoria_cadastro'
             ];
         }
 
@@ -274,7 +279,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Categoria Editada!',
                 'texto' => "Categoria editada com sucesso!",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/categoria_lista'
+                'location' => SERVERURL . 'administrador/categoria_lista'
             ];
         } else {
             $alerta = [
@@ -282,7 +287,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao editar local!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/categoria_lista'
+                'location' => SERVERURL . 'administrador/categoria_lista'
             ];
         }
 
@@ -300,7 +305,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Categoria Apagada!',
                 'texto' => "Categoria apagada com sucesso!",
                 'tipo' => 'success',
-                'location' => SERVERURL.'administrador/categoria_lista'
+                'location' => SERVERURL . 'administrador/categoria_lista'
             ];
         } else {
             $alerta = [
@@ -308,7 +313,7 @@ class AdministradorController extends UsuarioController
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao remover local!',
                 'tipo' => 'error',
-                'location' => SERVERURL.'administrador/categoria_lista'
+                'location' => SERVERURL . 'administrador/categoria_lista'
             ];
         }
 
