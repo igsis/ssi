@@ -49,18 +49,24 @@ $locais = $localObj->listaLocais();
                                         <td><?=$localObj->recuperaInstituicaoLocal($local->id)?></td>
                                         <td><?=$local->telefone?></td>
                                         <td>
-                                            <a href="<?=SERVERURL?>administrador/local_cadastro&id=<?= $localObj->encryption($local->id) ?>"
-                                               class="btn bg-gradient-primary float-left mr-2">
-                                                Editar
-                                            </a>
-                                            <form class="formulario-ajax" data-form="delete" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
-                                                <input type="hidden" name="_method" value="removeLocal">
-                                                <input type="hidden" name="local_id" value="<?= $localObj->encryption($local->id) ?>">
-                                                <button type="submit" class="btn bg-gradient-danger">
-                                                    Remover
-                                                </button>
-                                                <div class="resposta-ajax"></div>
-                                            </form>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <a href="<?=SERVERURL?>administrador/local_cadastro&id=<?= $localObj->encryption($local->id) ?>"
+                                                       class="btn bg-gradient-primary float-left">
+                                                        Editar
+                                                    </a>
+                                                </div>
+                                                <div class="col-6">
+                                                    <form class="formulario-ajax" data-form="delete" action="<?= SERVERURL ?>ajax/administradorAjax.php" method="post">
+                                                        <input type="hidden" name="_method" value="removeLocal">
+                                                        <input type="hidden" name="local_id" value="<?= $localObj->encryption($local->id) ?>">
+                                                        <button type="submit" class="btn bg-gradient-danger float-left">
+                                                            Remover
+                                                        </button>
+                                                        <div class="resposta-ajax"></div>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
