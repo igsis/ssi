@@ -6,12 +6,10 @@ class ViewsController extends ViewsModel
     private function recuperaViewAtiva(){
         $url = explode("/", $_GET['views']);
 
-        $rota = [
+        return [
             "view" => $url[1] ?? "",
             "modulo" => $url[0] ?? ""
         ];
-
-        return $rota;
     }
 
     public function exibirTemplate() {
@@ -41,8 +39,6 @@ class ViewsController extends ViewsModel
     }
 
     public function exibirMenuController() {
-        $nivelAcesso = $_SESSION['nivel_acesso_s'];
-
         if (isset($_GET['views'])) {
             $rota = self::recuperaViewAtiva();
             $resposta = ViewsModel::exibirMenuModel($rota['modulo']);
@@ -60,13 +56,11 @@ class ViewsController extends ViewsModel
             $ativo = $rota['view'];
         }
 
-        $script = "<script type='application/javascript'>
+        return "<script type='application/javascript'>
                         $(document).ready(function () {
                         $('.nav-link').removeClass('active');
                         $('#$ativo').addClass('active');
                     });
                     </script>";
-
-        return $script;
     }
 }

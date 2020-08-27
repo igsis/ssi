@@ -29,14 +29,16 @@
         </p>
     </a>
 </li>
-<li class="nav-item">
-    <a href="<?= SERVERURL ?>administrador" class="nav-link">
-        <i class="nav-icon fas fa-home"></i>
-        <p>
-            Ambiente Administrador
-        </p>
-    </a>
-</li>
+<?php if ($_SESSION['nivel_acesso_s'] == 2): ?>
+    <li class="nav-item">
+        <a href="<?= SERVERURL ?>administrador" class="nav-link">
+            <i class="nav-icon fas fa-home"></i>
+            <p>
+                Ambiente Administrador
+            </p>
+        </a>
+    </li>
+<?php endif ?>
 <li class="nav-item">
     <a href="<?= SERVERURL ?>chamado" class="nav-link">
         <i class="nav-icon fas fa-home"></i>

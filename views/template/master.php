@@ -46,11 +46,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <body class="hold-transition sidebar-mini accent-success">
 <?php
 
+session_start(['name' => 'ssi']);
 $view = $template->exibirViewController();
 if ($view == 'index'):
     require_once "./views/modulos/inicio/index.php";
-elseif ($view == 'login'):
-    require_once "./views/modulos/inicio/login.php";
 elseif ($view == 'cadastro'):
     require_once "./views/modulos/inicio/cadastro.php";
 elseif ($view == 'recupera_senha'):
@@ -58,7 +57,6 @@ elseif ($view == 'recupera_senha'):
 elseif($view == 'resete_senha'):
     require_once "./views/modulos/inicio/resete_senha.php";
 else:
-    session_start(['name' => 'ssi']);
     require_once "./controllers/UsuarioController.php";
     $usuario = new UsuarioController();
 
