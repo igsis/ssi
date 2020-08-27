@@ -201,6 +201,7 @@ $administradores = $administradorObj->listaAdmins();
 <?php
 $javascript = '
 <script>
+
     function modalEdicao() {
         let titulo = $(".titulo-edicao");
         let cpoInstituicao = $("#instituicao");
