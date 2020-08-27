@@ -23,10 +23,10 @@ class FuncionarioController extends MainModel
             $id = DbModel::connection()->lastInsertId();
             $alerta = [
                 'alerta' => 'sucesso',
-                'titulo' => 'Funcionario',
-                'texto' => 'Funcionario cadastrado com sucesso!',
+                'titulo' => 'Funcionário',
+                'texto' => 'Funcionário cadastrado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . 'administrador/funcionarios_cadastro&id='.MainModel::encryption($id)
+                'location' => SERVERURL . 'administrador/funcionario_cadastro&id='.MainModel::encryption($id)
             ];
         } else {
             $alerta = [
@@ -57,8 +57,8 @@ class FuncionarioController extends MainModel
         if ($edita->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
             $alerta = [
                 'alerta' => 'sucesso',
-                'titulo' => 'Funcionario',
-                'texto' => 'Funcionario editado com sucesso!',
+                'titulo' => 'Funcionário',
+                'texto' => 'Funcionário editado com sucesso!',
                 'tipo' => 'success',
                 'location' => SERVERURL . 'administrador/funcionario_cadastro&id='.MainModel::encryption($idDecryp)
             ];
@@ -81,8 +81,8 @@ class FuncionarioController extends MainModel
         if ($apagar->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
             $alerta = [
                 'alerta' => 'sucesso',
-                'titulo' => 'Funcionario',
-                'texto' => 'Funcionario apagado com sucesso!',
+                'titulo' => 'Funcionário',
+                'texto' => 'Funcionário apagado com sucesso!',
                 'tipo' => 'success',
                 'location' => SERVERURL .'administrador/funcionarios'
             ];
@@ -90,7 +90,7 @@ class FuncionarioController extends MainModel
             $alerta = [
                 'alerta' => 'simples',
                 'titulo' => 'Erro!',
-                'texto' => 'Erro ao Apagar funcionarios!',
+                'texto' => 'Erro ao apagar funcionário!',
                 'tipo' => 'error',
                 'location' => SERVERURL . 'administrador/funcionarios'
             ];
