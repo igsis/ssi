@@ -66,7 +66,7 @@ $admins = $administradorObj->listaAdmins();
                                                 <input type="hidden" name="_method" value="removeAdmin">
                                                 <input type="hidden" name="usuario_id" value="<?= $administradorObj->encryption($admin->id) ?>">
                                                 <button type="submit" class="form-control btn btn-sm bg-gradient-danger">
-                                                    Remover Administrador
+                                                    Remover Admin.
                                                 </button>
                                                 <div class="resposta-ajax"></div>
                                             </form>
