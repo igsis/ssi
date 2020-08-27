@@ -12,7 +12,7 @@ $funcionarios = $funcionarioObj->listarFuncionario();
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-12">
-                <h1 class="m-0 text-dark">Funcionarios</h1>
+                <h1 class="m-0 text-dark">Funcionários</h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -27,7 +27,7 @@ $funcionarios = $funcionarioObj->listarFuncionario();
                 <!-- Horizontal Form -->
                 <div class="card card-default">
                     <div class="card-header">
-                        <h3 class="card-title">Lista de Funcionario</h3>
+                        <h3 class="card-title">Lista de Funcionário</h3>
                         <a href="<?= SERVERURL ?>administrador/funcionario_cadastro"
                            class="btn btn-success float-right">
                             <i class="fas fa-plus"></i>
