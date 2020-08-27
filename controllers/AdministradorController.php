@@ -29,6 +29,9 @@ class AdministradorController extends UsuarioController
 
         $update = DbModel::update('usuarios', ['nivel_acesso_id' => $nvlAcesso], $usuario_id);
         if ($update) {
+            if ($nvlAcesso == 1) {
+                DbModel::deleteEspecial('administrador_instituicao', 'administrador_id', $usuario_id);
+            }
             $alerta = [
                 'alerta' => 'sucesso',
                 'titulo' => 'Administrador',
