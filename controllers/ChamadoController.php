@@ -106,10 +106,16 @@ class ChamadoController extends MainModel
             $where = 'WHERE ';
             foreach ($dados as $key => $dado) {
                 if ($key != 'descricao' && $key != 'solucao') {
-                    $where .= " ch.{$key} = '{$dado}'";
+                    if ($where != 'WHERE '){
+                        $where .= "AND ";
+                    }
+                    $where .= " ch.{$key} = '{$dado}' ";
                 }
                 else{
-                    $where .= " ch.{$key} LIKE '%{$dado}%'";
+                    if ($where != ''){
+                        $where .= "AND ";
+                    }
+                    $where .= " ch.{$key} LIKE '%{$dado}%' ";
                 }
             }
         }

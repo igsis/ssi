@@ -6,11 +6,11 @@
         </p>
     </a>
 </li>
-<li class="nav-item has-treeview menu-open">
+<li class="nav-item has-treeview">
     <a href="#" class="nav-link active">
         <i class="nav-icon fas fa-tachometer-alt"></i>
         <p>
-            Acesso Administrativo
+            Gerenciar sistema
             <i class="right fas fa-angle-left"></i>
         </p>
     </a>
@@ -19,31 +19,7 @@
             <a href="<?= SERVERURL ?>administrador/administrador_lista" class="nav-link" id="administrador_lista">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
-                    Gerenciar Administradores
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= SERVERURL ?>administrador/funcionarios" class="nav-link" id="funcionarios">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                    Gerenciar Funcionarios
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= SERVERURL ?>administrador/instituicao_lista" class="nav-link" id="instituicao_lista">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                    Gerenciar Instituições
-                </p>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="<?= SERVERURL ?>administrador/local_lista" class="nav-link" id="local_lista">
-                <i class="nav-icon fas fa-circle"></i>
-                <p>
-                    Gerenciar Locais
+                    Gerenciar administradores
                 </p>
             </a>
         </li>
@@ -51,7 +27,31 @@
             <a href="<?= SERVERURL ?>administrador/categoria_lista" class="nav-link" id="categoria_lista">
                 <i class="nav-icon fas fa-circle"></i>
                 <p>
-                    Gerenciar Categorias
+                    Gerenciar categorias
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= SERVERURL ?>administrador/funcionarios" class="nav-link" id="funcionarios">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                    Gerenciar funcionários
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= SERVERURL ?>administrador/instituicao_lista" class="nav-link" id="instituicao_lista">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                    Gerenciar instituições
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="<?= SERVERURL ?>administrador/local_lista" class="nav-link" id="local_lista">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                    Gerenciar locais
                 </p>
             </a>
         </li>

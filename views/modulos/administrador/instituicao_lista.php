@@ -28,11 +28,11 @@ $administradores = $administradorObj->listaAdmins();
                     <!-- Horizontal Form -->
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Intituições</h3>
+                            <h3 class="card-title">Instituições</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-sm bg-gradient-info" data-toggle="modal"
                                         data-target="#add-instituicao">
-                                    <i class="fas fa-plus"></i> Adicionar Intituição
+                                    <i class="fas fa-plus"></i> Adicionar Instituição
                                 </button>
                             </div>
                         </div>
