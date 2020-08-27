@@ -3,6 +3,16 @@
 
 class ViewsModel
 {
+    protected function verificaAcesso($nivel_acesso_id, $modulo)
+    {
+        if ($nivel_acesso_id == 2) {
+            return true;
+        } elseif ($modulo == "administrador") {
+            return false;
+        } else {
+            return true;
+        }
+    }
     protected function verificaModulo ($mod) {
         $modulos = [
             "administrador",
@@ -50,14 +60,20 @@ class ViewsModel
             'categoria_lista',
         ];
         if (self::verificaModulo($modulo)) {
-            if (in_array($view, $whitelist)) {
-                if (is_file("./views/modulos/$modulo/$view.php")) {
-                    $conteudo = "./views/modulos/$modulo/$view.php";
+            $nivel_acesso_id = $_SESSION['nivel_acesso_s'] ?? 1;
+            $acesso = self::verificaAcesso($nivel_acesso_id, $modulo);
+            if ($acesso) {
+                if (in_array($view, $whitelist)) {
+                    if (is_file("./views/modulos/$modulo/$view.php")) {
+                        $conteudo = "./views/modulos/$modulo/$view.php";
+                    } else {
+                        $conteudo = "./views/modulos/$modulo/inicio.php";
+                    }
                 } else {
                     $conteudo = "./views/modulos/$modulo/inicio.php";
                 }
             } else {
-                $conteudo = "./views/modulos/$modulo/inicio.php";
+                $conteudo = "./views/modulos/chamado/inicio.php";
             }
         } elseif ($modulo == "login") {
             $conteudo = "login";
@@ -65,8 +81,6 @@ class ViewsModel
             $conteudo = "cadastro";
         } elseif ($modulo == "index") {
             $conteudo = "login";
-        } elseif ($modulo == "fomento_edital") {
-            $conteudo = "fomento_edital";
         } elseif ($modulo == "recupera_senha") {
             $conteudo = "recupera_senha";
         } elseif ($modulo == "resete_senha") {
@@ -81,10 +95,16 @@ class ViewsModel
 
     protected function exibirMenuModel ($modulo) {
         if (self::verificaModulo($modulo)) {
-            if (is_file("./views/modulos/$modulo/include/menu.php")) {
-                $menu = "./views/modulos/$modulo/include/menu.php";
+            $nivel_acesso_id = $_SESSION['nivel_acesso_s'] ?? 1;
+            $acesso = self::verificaAcesso($nivel_acesso_id, $modulo);
+            if ($acesso) {
+                if (is_file("./views/modulos/$modulo/include/menu.php")) {
+                    $menu = "./views/modulos/$modulo/include/menu.php";
+                } else {
+                    $menu = "./views/template/menuExemplo.php";
+                }
             } else {
-                $menu = "./views/template/menuExemplo.php";
+                $menu = "./views/modulos/chamado/include/menu.php";
             }
         } else {
             $menu = "./views/template/menuExemplo.php";
