@@ -43,7 +43,7 @@ $telaInicial = $_SESSION['nivel_acesso_s'] == 1 ? SERVERURL."chamado" : SERVERUR
                 </a>
             </li>
             <li class="nav-item">
-                <a href="http://smcsistemas.prefeitura.sp.gov.br/manual/capac" target="_blank" class="nav-link">
+                <a href="http://smcsistemas.prefeitura.sp.gov.br/manual/ssi" target="_blank" class="nav-link">
                     <i class="fa fa-question"></i>&nbsp;
                     <p>Ajuda</p>
                 </a>

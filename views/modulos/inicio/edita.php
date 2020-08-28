@@ -23,7 +23,7 @@ $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
         <div class="row">
             <div class="col-md-6">
                 <!-- Horizontal Form -->
-                <div class="card card-info">
+                <div class="card card-outline card-green">
                     <div class="card-header">
                         <h3 class="card-title">Dados pessoais</h3>
                     </div>
@@ -70,7 +70,7 @@ $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
                             </div>
 
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-info btn-block btn-flat">Gravar</button>
+                                <button type="submit" class="btn btn-success btn-block btn-flat">Gravar</button>
                             </div>
                             <div class="resposta-ajax">
 
@@ -83,7 +83,7 @@ $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
             <!-- /.col -->
             <div class="col-md-6">
                 <!-- Horizontal Form -->
-                <div class="card card-info">
+                <div class="card card-outline card-green">
                     <div class="card-header">
                         <h3 class="card-title">Trocar senha</h3>
                     </div>
@@ -109,7 +109,7 @@ $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
                             </div>
 
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-info btn-block btn-flat">Trocar</button>
+                                <button type="submit" class="btn btn-success btn-block btn-flat">Trocar</button>
                             </div>
                             <div class="resposta-ajax">
 
