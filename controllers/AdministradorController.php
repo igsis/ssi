@@ -118,9 +118,9 @@ class AdministradorController extends UsuarioController
     {
 
         $instituicao_id = MainModel::decryption($_POST['instituicao_id']);
-        $administradores = $_POST['administradores'];
+        $administradores = $_POST['administradores'] ?? false;
 
-        if ($administradores === null) {
+        if (!$administradores) {
             $relacionamento = DbModel::deleteEspecial('administrador_instituicao','instituicao_id',$instituicao_id);
         } else {
             $relacionamento = MainModel::atualizaRelacionamento('administrador_instituicao', 'instituicao_id', $instituicao_id, 'administrador_id', $administradores);
