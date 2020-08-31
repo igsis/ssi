@@ -12,7 +12,6 @@ $notaObj = new NotaController();
 $nota = $notaObj->listaNota($id);
 
 ?>
-<?= $responsavel ?>
 
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -82,7 +81,10 @@ $nota = $notaObj->listaNota($id);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action="">
+                    <form class="formulario-ajax" method="POST"
+                          action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="save">
+                        <input type="hidden" name="_method" value="atualizarDetalhes">
+                        <input type="hidden" name="chamado_id" value="<?= $id ?>">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
@@ -96,12 +98,18 @@ $nota = $notaObj->listaNota($id);
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <label for="prioridade_id">Responsavel:</label>
-                                    <select class="form-control" name="prioridade_id">
+                                    <label for="funcionario_id">Responsavel:</label>
+                                    <select class="form-control" name="funcionario_id">
                                         <?php
-                                        $chamadoObj->geraOpcao('funcionarios', '', true)
+                                        $chamadoObj->geraOpcao('funcionarios', $responsavel->funcionario_id, true)
                                         ?>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="ferramentas"> Ferramentas:</label>
+                                    <textarea name="ferramentas" class="form-control" > <?= $responsavel->ferramentas ?></textarea>
                                 </div>
                             </div>
                         </div>
@@ -109,6 +117,7 @@ $nota = $notaObj->listaNota($id);
                             <button class="btn btn-primary float-left" type="button"> Alterar Status</button>
                             <button class="btn btn-success float-right" type="submit"> Atualizar</button>
                         </div>
+                        <div class="resposta-ajax"></div>
                     </form>
                 </div>
             </div>
@@ -123,10 +132,49 @@ $nota = $notaObj->listaNota($id);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form class="form-horizontal formulario-ajax" method="POST"
+                    <form class="formulario-ajax" method="POST"
                           action="<?= SERVERURL ?>ajax/notaAjax.php" role="form" data-form="save">
                         <input type="hidden" name="_method" value="cadastrar">
-                        <input type="hidden" name="pagina" value="chamado">
+                        <input type="hidden" name="pagina" value="administrador">
+                        <input type="hidden" name="chamado_id" value="<?= $chamado->id ?>">
+                        <input type="hidden" name="usuario_id" value="<?= $_SESSION['usuario_id_s'] ?>">
+                        <input type="hidden" name="privada" value="0">
+                        <input type="hidden" name="data" value="<?= date('Y-m-d H:i:s') ?>">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="form-group col-md">
+                                    <label for="nota">Nota: *</label>
+                                    <textarea name="nota" id="nota" class="form-control" rows="3" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="resposta-ajax"></div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success float-right">Gravar</button>
+                        </div>
+                        <!-- /.card-footer -->
+                        <div class="resposta-ajax"></div>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Horizontal Form -->
+                <div class="card card-green">
+                    <div class="card-header">
+                        <h3 class="card-title">Adicionar Solução</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form class="formulario-ajax" method="POST"
+                          action="<?= SERVERURL ?>ajax/notaAjax.php" role="form" data-form="save">
+                        <input type="hidden" name="_method" value="cadastrar">
+                        <input type="hidden" name="pagina" value="administrador">
                         <input type="hidden" name="chamado_id" value="<?= $chamado->id ?>">
                         <input type="hidden" name="usuario_id" value="<?= $_SESSION['usuario_id_s'] ?>">
                         <input type="hidden" name="privada" value="0">

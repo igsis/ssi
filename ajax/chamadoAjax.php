@@ -16,7 +16,10 @@ if (isset($_POST['_method'])) {
         echo $chamadoObj->editaFuncionarioChamado($_POST['id']);
     } elseif ($_POST['_method'] == "excluirFuncionario"){
         echo $chamadoObj->excluiFuncionarioChamado();
+    } elseif ($_POST['_method'] == "atualizarDetalhes"){
+        echo $chamadoObj->atualizaDetalhesChamado();
     }
+
 
 } else {
     include_once "../config/destroySession.php";
