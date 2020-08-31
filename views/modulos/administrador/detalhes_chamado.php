@@ -6,11 +6,14 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
 
 $chamadoObj = new ChamadoController();
 $chamado = $chamadoObj->recuperaChamado($id);
+$responsavel = $chamadoObj->recuperaChamadoFuncionario($id);
 
 $notaObj = new NotaController();
 $nota = $notaObj->listaNota($id);
 
 ?>
+<?= $responsavel ?>
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
@@ -79,14 +82,14 @@ $nota = $notaObj->listaNota($id);
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <div class="card-body">
-                        <form action="">
+                    <form action="">
+                        <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
                                     <label for="prioridade_id">Prioridade:</label>
                                     <select class="form-control" name="prioridade_id">
                                         <?php
-                                            $chamadoObj->geraOpcao('prioridades',$chamado->prioridade_id)
+                                        $chamadoObj->geraOpcao('prioridades', $chamado->prioridade_id)
                                         ?>
                                     </select>
                                 </div>
@@ -96,13 +99,17 @@ $nota = $notaObj->listaNota($id);
                                     <label for="prioridade_id">Responsavel:</label>
                                     <select class="form-control" name="prioridade_id">
                                         <?php
-                                            $chamadoObj->geraOpcao('funcionarios','',true)
+                                        $chamadoObj->geraOpcao('funcionarios', '', true)
                                         ?>
                                     </select>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary float-left" type="button"> Alterar Status</button>
+                            <button class="btn btn-success float-right" type="submit"> Atualizar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

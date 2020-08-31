@@ -319,4 +319,13 @@ class ChamadoController extends MainModel
 
         return $dados;
     }
+
+    public function recuperaChamadoFuncionario($id)
+    {
+        $id = MainModel::decryption($id);
+        $query = "SELECT * FROM chamado_funcionarios WHERE chamado_id = {$id}";
+        $resultado = DbModel::consultaSimples($query)->fetchAll(PDO::FETCH_ASSOC);
+
+        return $resultado;
+    }
 }
