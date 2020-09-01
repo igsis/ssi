@@ -69,7 +69,7 @@ else{
                                 <td><?= date('d/m/Y', strtotime($chamados->data_abertura)) ?></td>
                                 <td><?= $chamados->status ?></td>
                                 <td>
-                                    <a href="detalhes_chamado&id=<?= MainModel::encryption($chamados->id) ?>" class="btn btn-sm bg-primary">
+                                    <a href="nota_cadastro&id=<?= MainModel::encryption($chamados->id) ?>" class="btn btn-sm bg-primary">
                                         <i class="fas fa-folder-open"></i> Carregar
                                     </a>
                                 </td>

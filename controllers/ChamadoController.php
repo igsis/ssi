@@ -102,17 +102,16 @@ class ChamadoController extends MainModel
     public function buscaChamadoAdministrador($dados)
     {
         $where = '';
-        if (count($dados)){
+        if (count($dados)) {
             $where = 'WHERE ';
             foreach ($dados as $key => $dado) {
                 if ($key != 'descricao' && $key != 'solucao') {
-                    if ($where != 'WHERE '){
+                    if ($where != 'WHERE ') {
                         $where .= "AND ";
                     }
                     $where .= " ch.{$key} = '{$dado}' ";
-                }
-                else{
-                    if ($where != ''){
+                } else {
+                    if ($where != '') {
                         $where .= "AND ";
                     }
                     $where .= " ch.{$key} LIKE '%{$dado}%' ";
@@ -218,7 +217,7 @@ class ChamadoController extends MainModel
     {
         $id = $_POST['id'];
         $idChamado = $_POST['idChamado'];
-        $exclui = DbModel::deleteEspecial("chamado_funcionario","id",$id);
+        $exclui = DbModel::deleteEspecial("chamado_funcionario", "id", $id);
         if ($exclui->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
             $alerta = [
                 'alerta' => 'sucesso',
@@ -263,9 +262,9 @@ class ChamadoController extends MainModel
     {
         $mes = date('m');
         $ano = date('Y');
-        $ultimoDia = date("t", mktime(0,0,0,$mes,'01',$ano));
+        $ultimoDia = date("t", mktime(0, 0, 0, $mes, '01', $ano));
         $dataInicio = "$ano-$mes-01";
-        $dataFim="$ano-$mes-$ultimoDia";
+        $dataFim = "$ano-$mes-$ultimoDia";
 
         $query = "SELECT COUNT(ch.status_id) AS 'quantidade', cs.`status`
                     FROM chamado_status AS cs
@@ -284,10 +283,10 @@ class ChamadoController extends MainModel
     public function recuperaEstatisticaAdm()
     {
         $dados = array();
-        for ($x = 1; $x<4 ;$x++){
+        for ($x = 1; $x < 4; $x++) {
             $query = "SELECT COUNT(id) as `contador` FROM chamados WHERE status_id = {$x}";
             $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
-            array_push($dados,$resultado);
+            array_push($dados, $resultado);
         }
         return $dados;
     }
@@ -295,10 +294,10 @@ class ChamadoController extends MainModel
     public function recuperaEstatisticaUsuario($id)
     {
         $dados = array();
-        for ($x = 1; $x<4 ;$x++){
+        for ($x = 1; $x < 4; $x++) {
             $query = "SELECT COUNT(id) as `contador` FROM chamados WHERE status_id = {$x} AND usuario_id = {$id}";
             $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
-            array_push($dados,$resultado);
+            array_push($dados, $resultado);
         }
         return $dados;
     }
@@ -306,15 +305,15 @@ class ChamadoController extends MainModel
     public function recuperaEstatisticaCategoria($id)
     {
         $dados = array();
-        array_push($dados,0);
-        for ($x = 1; $x<4 ;$x++){
+        array_push($dados, 0);
+        for ($x = 1; $x < 4; $x++) {
             $query = "SELECT COUNT(ch.id) as `contador`
                     FROM chamados AS ch 
                     LEFT JOIN chamado_status AS cs ON ch.status_id = cs.id
                     WHERE ch.categoria_id = {$id} AND ch.status_id = {$x}";
             $resultado = DbModel::consultaSimples($query)->fetchObject()->contador;
-             array_push($dados,$resultado);
-             $dados[0]=$dados[0]+$resultado;
+            array_push($dados, $resultado);
+            $dados[0] = $dados[0] + $resultado;
         }
 
         return $dados;
@@ -337,7 +336,7 @@ class ChamadoController extends MainModel
         $idChamado = MainModel::decryption($_POST['chamado_id']);
 
         $dados1['prioridade_id'] = $_POST['prioridade_id'];
-        $chamado = DbModel::update('chamados',$dados1,$idChamado);
+        $chamado = DbModel::update('chamados', $dados1, $idChamado);
 
         unset($_POST['_method']);
         unset($_POST['chamado_id']);
@@ -347,12 +346,12 @@ class ChamadoController extends MainModel
             $dados[$campo] = MainModel::limparString($post);
         }
 
-        $chamadoFuncionario = DbModel::updateEspecial('chamado_funcionarios',$dados,'chamado_id',$idChamado);
+        $chamadoFuncionario = DbModel::updateEspecial('chamado_funcionarios', $dados, 'chamado_id', $idChamado);
 
         if (($chamado->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) && ($chamadoFuncionario->rowCount() >= 1 || DbModel::connection()->errorCode() == 0)) {
             $alerta = [
                 'alerta' => 'sucesso',
-                'titulo' => 'Detalhes do chamaod',
+                'titulo' => 'Detalhes do chamado',
                 'texto' => 'Informações editadas com sucesso!',
                 'tipo' => 'success',
                 'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($idChamado)
@@ -364,6 +363,70 @@ class ChamadoController extends MainModel
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
                 'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($idChamado)
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function atualizarSolucao()
+    {
+        $id = $_POST['chamado_id'];
+
+        unset($_POST['_method']);
+        unset($_POST['chamado_id']);
+
+        $dados = [];
+        $dados['solucao'] = $_POST['solucao'];
+        $dados['data_progresso'] = $_POST['data'];
+
+        $chamado = DbModel::update("chamados", $dados, $id);
+
+        if ($chamado->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Solução atualizada',
+                'texto' => 'Informações salvas com sucesso!',
+                'tipo' => 'success',
+                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($id)
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($id)
+            ];
+        }
+
+        return MainModel::sweetAlert($alerta);
+    }
+
+    public function atualizarStatus()
+    {
+        $dados = [];
+        $dados['status_id'] = $_POST['status_id'];
+
+        $id = $_POST['chamado_id'];
+
+        $chamado = DbModel::update('chamados',$dados,$id);
+
+        if ($chamado->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
+            $alerta = [
+                'alerta' => 'sucesso',
+                'titulo' => 'Status atualizado',
+                'texto' => 'Informações salvas com sucesso!',
+                'tipo' => 'success',
+                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($id)
+            ];
+        } else {
+            $alerta = [
+                'alerta' => 'simples',
+                'titulo' => 'Erro!',
+                'texto' => 'Erro ao salvar!',
+                'tipo' => 'error',
+                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($id)
             ];
         }
 
