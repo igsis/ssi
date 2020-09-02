@@ -32,6 +32,13 @@ $nota = $notaObj->listaNota($id);
                 <div class="card card-outline card-green">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
+                        <?php if ($chamado->status_id != 3): ?>
+                            <div class="float-right">
+                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#alterarStatus">
+                                    Alterar status
+                                </button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -78,7 +85,8 @@ $nota = $notaObj->listaNota($id);
                 <div class="card card-outline card-green">
                     <div class="card-header">
                         <h3 class="card-title">Notas</h3>
-                        <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#modal-notas">
+                        <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal"
+                                data-target="#modal-notas">
                             <i class="fas fa-plus"></i> Adicionar
                         </button>
                     </div>
@@ -87,8 +95,9 @@ $nota = $notaObj->listaNota($id);
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md">
-                                <?php foreach ($nota AS $notas): ?>
-                                    <b><?= date('d/m/Y H:i:s', strtotime($notas->data))." - ".strstr($notas->nome,' ', true)?>:</b> <?= $notas->nota ?><br>
+                                <?php foreach ($nota as $notas): ?>
+                                    <b><?= date('d/m/Y H:i:s', strtotime($notas->data)) . " - " . strstr($notas->nome, ' ', true) ?>
+                                        :</b> <?= $notas->nota ?><br>
                                 <?php endforeach; ?>
                             </div>
                         </div>
@@ -112,10 +121,10 @@ $nota = $notaObj->listaNota($id);
                         <div class="row">
                             <div class="col-md">
                                 <table class="table table-striped">
-                                    <?php foreach ($funcionario AS $funcionarios): ?>
+                                    <?php foreach ($funcionario as $funcionarios): ?>
                                         <tr>
                                             <td><?= $funcionarios->nome ?></td>
-                                            <td><?= mb_strimwidth($funcionarios->ferramentas,0,60, "...") ?></td>
+                                            <td><?= mb_strimwidth($funcionarios->ferramentas, 0, 60, "...") ?></td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-success float-right"
                                                         data-id="<?= $chamadoObj->encryption($funcionarios->id) ?>"
@@ -126,16 +135,22 @@ $nota = $notaObj->listaNota($id);
                                                 </button>
                                             </td>
                                             <td>
-                                                <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
+                                                <form class="form-horizontal formulario-ajax" method="POST"
+                                                      action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form"
+                                                      data-form="update">
                                                     <input type="hidden" name="_method" value="excluirFuncionario">
                                                     <input type="hidden" name="id" value="<?= $funcionarios->id ?>">
                                                     <input type="hidden" name="idChamado" value="<?= $chamado->id ?>">
-                                                    <button type="submit" class="btn btn-sm btn-danger float-right"><i class="fas fa-trash"></i> Excluir</button>
+                                                    <button type="submit" class="btn btn-sm btn-danger float-right"><i
+                                                                class="fas fa-trash"></i> Excluir
+                                                    </button>
                                                     <div class="resposta-ajax"></div>
                                                 </form>
                                             </td>
                                             <td>
-                                                <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&chfunc=<?= $chamadoObj->encryption($funcionarios->id) ?>" class="btn btn-sm btn-primary float-right" target="_blank"><i class="fas fa-print"></i> O.S.</a>
+                                                <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&chfunc=<?= $chamadoObj->encryption($funcionarios->id) ?>"
+                                                   class="btn btn-sm btn-primary float-right" target="_blank"><i
+                                                            class="fas fa-print"></i> O.S.</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -149,6 +164,49 @@ $nota = $notaObj->listaNota($id);
             <!-- /.col -->
         </div>
         <!-- /.row -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Horizontal Form -->
+                <div class="card card-outline card-green">
+                    <div class="card-header">
+                        <h3 class="card-title">Solução</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form action="<?= SERVERURL ?>ajax/chamadoAjax.php" method="post"
+                          class="formulario-ajax">
+                    <div class="card-body">
+                        <div class="row">
+                            <?php if ($chamado->status_id == 3) {
+                                echo "<p>{$chamado->solucao}</p>";
+                            } else {
+                                ?>
+                                    <input type="hidden" name="_method" value="atualizarSolucao">
+                                    <input type="hidden" name="chamado_id" value="<?= $chamado->id ?>">
+                                    <input type="hidden" name="data" value="<?= date('Y-m-d H:i:s') ?>">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label for="solucao">Solução: *</label>
+                                            <textarea name="solucao" id="nota" class="form-control" cols="250" rows="5"
+                                                      required><?= $chamado->solucao ?></textarea>
+                                        </div>
+                                    </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+                        <?php if ($chamado->status_id != 3):?>
+                    <div class="card-footer">
+                        <button class="btn btn-success btn-sm" type="submit">Gravar</button>
+                    </div>
+                    <div class="resposta-ajax"></div>
+                        <?php endif; ?>
+                    </form>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
@@ -156,7 +214,8 @@ $nota = $notaObj->listaNota($id);
 <!-- modal notas -->
 <div class="modal fade" id="modal-notas" aria-modal="true">
     <div class="modal-dialog modal-lg">
-        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/notaAjax.php" role="form" data-form="save">
+        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/notaAjax.php"
+              role="form" data-form="save">
             <?php if ($funcionario): ?>
                 <input type="hidden" name="id" id="id" value="<?= $funcionario->id ?>">
             <?php endif; ?>
@@ -205,7 +264,8 @@ $nota = $notaObj->listaNota($id);
 <!-- modal funcionarios -->
 <div class="modal fade" id="modal-funcionarios" aria-modal="true">
     <div class="modal-dialog modal-lg">
-        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
+        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php"
+              role="form" data-form="update">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Adicionar funcionário no chamado</h4>
@@ -221,10 +281,11 @@ $nota = $notaObj->listaNota($id);
                         <div class="row">
                             <div class="form-group col-md">
                                 <label for="funcionario_id">Funcionário: *</label>
-                                <select class="form-control select2bs4" style="width: 100%;" name="funcionario_id" id="funcionario_id">
+                                <select class="form-control select2bs4" style="width: 100%;" name="funcionario_id"
+                                        id="funcionario_id">
                                     <option value="">Selecione uma opção...</option>
                                     <?php
-                                    $chamadoObj->geraOpcao("funcionarios",'',true);
+                                    $chamadoObj->geraOpcao("funcionarios", '', true);
                                     ?>
                                 </select>
                             </div>
@@ -232,7 +293,8 @@ $nota = $notaObj->listaNota($id);
                         <div class="row">
                             <div class="form-group col-md">
                                 <label for="ferramentas">Materiais / Ferramentas: *</label>
-                                <textarea name="ferramentas" id="ferramentas" class="form-control" rows="5" required></textarea>
+                                <textarea name="ferramentas" id="ferramentas" class="form-control" rows="5"
+                                          required></textarea>
                             </div>
                         </div>
                     </div>
@@ -249,6 +311,35 @@ $nota = $notaObj->listaNota($id);
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal funcionarios -->
+
+<!-- Modal -->
+<div class="modal fade" id="alterarStatus" tabindex="-1" role="dialog" aria-labelledby="statusModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alterar Staus</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Você deseja alterar o chamado para <?= $chamado->status_id == 1 ? "'Em andamento'" : "'Fechado'" ?>
+                    ?</p>
+            </div>
+            <div class="modal-footer">
+                <form class="formulario-ajax" action="<?= SERVERURL ?>ajax/chamadoAjax.php" method="post">
+                    <input type="hidden" name="_method" value="atualizarStatus">
+                    <input type="hidden" name="status_id" value="<?= $chamado->status_id + 1 ?>">
+                    <input type="hidden" name="chamado_id" value="<?= $chamado->id ?>">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                    <button type="submit" class="btn btn-primary">Sim</button>
+                    <div class="resposta-ajax"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.modal Status -->
 
 <script type="text/javascript">
     function cadastraChFunc() {
