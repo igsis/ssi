@@ -54,7 +54,7 @@ $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
                             <div class="row">
                                 <div class="form-group col">
                                     <label for="instituicao">Instituição *</label>
-                                    <select class="form-control" name="instituicao" id="instituicao" required>
+                                    <select class="form-control" name="instituicao_id" id="instituicao" required>
                                         <option value="">Selecione uma opção...</option>
                                         <?php
                                         $UsuarioObj->geraOpcao("instituicoes",$usuario['instituicao_id']);
@@ -63,7 +63,7 @@ $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
                                 </div>
                                 <div class="form-group col">
                                     <label for="local">Local *</label>
-                                    <select class="form-control" id="local" name="local">
+                                    <select class="form-control" id="local" name="local_id">
                                         <!-- Populando pelo js -->
                                     </select>
                                 </div>
@@ -126,34 +126,45 @@ $usuario = $UsuarioObj->recuperaUsuario($id)->fetch();
 <!-- /.content -->
 
 <script>
-    const url_local = '<?= $url_local ?>';
+    const url = `<?=$url_local?>`;
 
-    let instituicao = document.querySelector('#instituicao');
+    let instituicao = document.querySelector("#instituicao");
+
+    if(instituicao.value != ''){
+        let local_id = <?=$usuario['local_id']?>;
+        getSublinguagem(instituicao.value, local_id)
+    }
 
     instituicao.addEventListener('change', async e => {
         let idInstituicao = $('#instituicao option:checked').val();
-        fetch(`${url_local}?instituicao_id=${idInstituicao}`)
+        getSublinguagem(idInstituicao, '')
+
+        fetch(`${url}?instituicao_id=${idInstituicao}`)
             .then(response => response.json())
             .then(locais => {
                 $('#local option').remove();
-                $('#local').append('<option value="">Selecione uma opção...</option>');
+                $('#local').append('<option value="">Selecione... </option>');
 
                 for (const local of locais) {
                     $('#local').append(`<option value='${local.id}'>${local.local}</option>`).focus();
-
-                }
-
-                if (idInstituicao == 1){
-                    let locais = document.querySelector('#local');
-                    locais.value = 2;
-                    $('#local').attr('readonly', true);
-                    $('#local').on('mousedown', function(e) {
-                        e.preventDefault();
-                    });
-                } else {
-                    $('#local').unbind('mousedown');
-                    $('#local').removeAttr('readonly');
                 }
             })
-    });
+    })
+
+    function getSublinguagem(idInstituicao, selectedId){
+        fetch(`${url}?instituicao_id=${idInstituicao}`)
+            .then(response => response.json())
+            .then(locais => {
+                $('#local option').remove();
+
+                for (const local of locais) {
+                    if(selectedId == local.id){
+                        $('#local').append(`<option value='${local.id}' selected>${local.local}</option>`).focus();
+                    }else{
+                        $('#sublinguagem').append(`<option value='${local.id}'>${local.local}</option>`).focus();
+                    }
+                }
+            })
+    }
+
 </script>
