@@ -156,7 +156,7 @@ class ChamadoController extends MainModel
         /* ./limpeza */
 
         /* cadastro */
-        $insere = DbModel::insert('chamado_funcionario', $dados);
+        $insere = DbModel::insert('chamado_funcionarios', $dados);
         if ($insere->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
             $id = DbModel::connection()->lastInsertId();
             $alerta = [
@@ -192,7 +192,7 @@ class ChamadoController extends MainModel
             $dados[$campo] = MainModel::limparString($post);
         }
 
-        $edita = DbModel::update('chamado_funcionario', $dados, $idDecryp);
+        $edita = DbModel::update('chamado_funcionarios', $dados, $idDecryp);
         if ($edita->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
             $alerta = [
                 'alerta' => 'sucesso',
@@ -217,7 +217,7 @@ class ChamadoController extends MainModel
     {
         $id = $_POST['id'];
         $idChamado = $_POST['idChamado'];
-        $exclui = DbModel::deleteEspecial("chamado_funcionario", "id", $id);
+        $exclui = DbModel::deleteEspecial("chamado_funcionarios", "id", $id);
         if ($exclui->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) {
             $alerta = [
                 'alerta' => 'sucesso',
@@ -252,7 +252,7 @@ class ChamadoController extends MainModel
     {
         $id = MainModel::decryption($id);
         return DbModel::consultaSimples("
-            SELECT f.nome, f.cargo, cf.ferramentas, cf.id FROM chamado_funcionario cf 
+            SELECT f.nome, f.cargo, cf.ferramentas, cf.id FROM chamado_funcionarios cf 
                 INNER JOIN funcionarios f on cf.funcionario_id = f.id
             WHERE cf.id = '$id'
         ")->fetchObject();
@@ -322,7 +322,7 @@ class ChamadoController extends MainModel
     public function recuperaChamadoFuncionario($id)
     {
         $id = MainModel::decryption($id);
-        $query = "SELECT * FROM chamado_funcionario WHERE chamado_id = {$id}";
+        $query = "SELECT * FROM chamado_funcionarios WHERE chamado_id = {$id}";
         $resultado = DbModel::consultaSimples($query)->fetchObject();
 
         return $resultado;
@@ -346,7 +346,7 @@ class ChamadoController extends MainModel
             $dados[$campo] = MainModel::limparString($post);
         }
 
-        $chamadoFuncionario = DbModel::updateEspecial('chamado_funcionario', $dados, 'chamado_id', $idChamado);
+        $chamadoFuncionario = DbModel::updateEspecial('chamado_funcionarios', $dados, 'chamado_id', $idChamado);
 
         if (($chamado->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) && ($chamadoFuncionario->rowCount() >= 1 || DbModel::connection()->errorCode() == 0)) {
             $alerta = [
