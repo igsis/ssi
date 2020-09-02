@@ -242,7 +242,7 @@ class ChamadoController extends MainModel
     {
         $idChamado = MainModel::decryption($idChamado);
         return DbModel::consultaSimples("
-            SELECT f.nome, f.cargo, cf.ferramentas, cf.id, f.id AS 'funcionario_id' FROM chamado_funcionario cf 
+            SELECT f.nome, f.cargo, cf.ferramentas, cf.id, f.id AS 'funcionario_id' FROM chamado_funcionarios cf 
                 INNER JOIN funcionarios f on cf.funcionario_id = f.id
             WHERE cf.chamado_id = '$idChamado'
         ")->fetchAll(PDO::FETCH_OBJ);
