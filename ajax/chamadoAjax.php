@@ -10,13 +10,20 @@ if (isset($_POST['_method'])) {
         echo $chamadoObj->insereChamado();
     } elseif ($_POST['_method'] == "editar") {
         echo $chamadoObj->editaChamado($_POST['id']);
-    } elseif ($_POST['_method'] == "cadastrarFuncionario"){
+    } elseif ($_POST['_method'] == "cadastrarFuncionario") {
         echo $chamadoObj->insereFuncionarioChamado();
-    } elseif ($_POST['_method'] == "editarFuncionario"){
+    } elseif ($_POST['_method'] == "editarFuncionario") {
         echo $chamadoObj->editaFuncionarioChamado($_POST['id']);
-    } elseif ($_POST['_method'] == "excluirFuncionario"){
+    } elseif ($_POST['_method'] == "excluirFuncionario") {
         echo $chamadoObj->excluiFuncionarioChamado();
+    } elseif ($_POST['_method'] == "atualizarDetalhes") {
+        echo $chamadoObj->atualizaDetalhesChamado();
+    } elseif ($_POST['_method'] == "atualizarSolucao") {
+        echo $chamadoObj->atualizarSolucao();
+    } elseif ($_POST['_method'] == "atualizarStatus") {
+        echo $chamadoObj->atualizarStatus();
     }
+
 
 } else {
     include_once "../config/destroySession.php";

@@ -129,7 +129,7 @@ $nivelAcesso = $usuario->nivel_acesso_id;
         </div><!-- /.container-fluid -->
     </div>
 <?php
-$url = SERVERURL."chamado/chamado_lista";
+$url = SERVERURL."administrador/chamado_lista";
 $usuario = !empty($usuarioId) ? " ".$usuarioId : " document.querySelector('#usuario').value";
 $javascript = '
 <script>    
