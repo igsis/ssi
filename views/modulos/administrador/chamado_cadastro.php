@@ -37,7 +37,7 @@ $admin = $localObj->recuperaAdministrador('',$usuario->local_id)->fetchObject();
                     <!-- form start -->
                     <form class="formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="<?= ($id) ? "update" : "save" ?>">
                         <input type="hidden" name="_method" value="<?= ($id) ? "editar" : "cadastrar" ?>">
-                        <input type="hidden" name="pagina" value="chamado">
+                        <input type="hidden" name="pagina" value="administrador">
                         <input type="hidden" name="usuario_id" value="<?= $usuario->id ?>">
                         <input type="hidden" name="administrador_id" value="<?= $admin->administrador_id ?>">
                         <input type="hidden" name="prioridade_id" value="1">
