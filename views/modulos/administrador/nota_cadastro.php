@@ -10,6 +10,12 @@ $funcionario = $chamadoObj->listaFuncionarioChamado($id);
 
 $notaObj = new NotaController();
 $nota = $notaObj->listaNota($id);
+
+if ($chamado->status_id == 3){
+    $disabled = "disabled";
+} else{
+    $disabled = "";
+}
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -42,6 +48,17 @@ $nota = $notaObj->listaNota($id);
                     <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#alterarStatus">
                         Fechado
                     </button>
+                </div>
+            <?php else: ?>
+                <div class="offset-4 col-sm-2 float-right">
+                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
+                        <input type="hidden" name="_method" value="editar">
+                        <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
+                        <input type="hidden" name="data_encerramento" value="NULL">
+                        <input type="hidden" name="status_id" value="2">
+                        <button type="submit" class="btn btn-primary btn-sm btn-block">Reabrir</button>
+                        <div class="resposta-ajax"></div>
+                    </form>
                 </div>
             <?php endif; ?>
             <!-- /.col -->
@@ -106,8 +123,7 @@ $nota = $notaObj->listaNota($id);
                 <div class="card card-outline card-green">
                     <div class="card-header">
                         <h3 class="card-title">Notas</h3>
-                        <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal"
-                                data-target="#modal-notas">
+                        <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#modal-notas" <?=$disabled?>>
                             <i class="fas fa-plus"></i> Adicionar
                         </button>
                     </div>
@@ -131,7 +147,7 @@ $nota = $notaObj->listaNota($id);
                 <div class="card card-outline card-green">
                     <div class="card-header">
                         <h3 class="card-title">Funcionários</h3>
-                        <button type="button" class="btn btn-sm btn-success float-right" onclick="cadastraChFunc()">
+                        <button type="button" class="btn btn-sm btn-success float-right" onclick="cadastraChFunc()" <?=$disabled?>>
                             <i class="fas fa-plus"></i> Adicionar
                         </button>
                     </div>
@@ -146,31 +162,19 @@ $nota = $notaObj->listaNota($id);
                                             <td><?= $funcionarios->nome ?></td>
                                             <td><?= mb_strimwidth($funcionarios->ferramentas, 0, 60, "...") ?></td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-success float-right"
-                                                        data-id="<?= $chamadoObj->encryption($funcionarios->id) ?>"
-                                                        data-funcionario_id="<?= $funcionarios->funcionario_id ?>"
-                                                        data-ferramentas="<?= $funcionarios->ferramentas ?>"
-                                                        onclick="editaChFunc(this)">
-                                                    <i class="far fa-edit"></i> Editar
-                                                </button>
+                                                <button type="button" class="btn btn-sm btn-success float-right" data-id="<?= $chamadoObj->encryption($funcionarios->id) ?>" data-funcionario_id="<?= $funcionarios->funcionario_id ?>" data-ferramentas="<?= $funcionarios->ferramentas ?>" onclick="editaChFunc(this)" <?=$disabled?>><i class="far fa-edit"></i> Editar</button>
                                             </td>
                                             <td>
-                                                <form class="form-horizontal formulario-ajax" method="POST"
-                                                      action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form"
-                                                      data-form="update">
+                                                <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
                                                     <input type="hidden" name="_method" value="excluirFuncionario">
                                                     <input type="hidden" name="id" value="<?= $funcionarios->id ?>">
                                                     <input type="hidden" name="idChamado" value="<?= $chamado->id ?>">
-                                                    <button type="submit" class="btn btn-sm btn-danger float-right"><i
-                                                                class="fas fa-trash"></i> Excluir
-                                                    </button>
+                                                    <button type="submit" class="btn btn-sm btn-danger float-right" <?=$disabled?>><i class="fas fa-trash"></i>    Excluir</button>
                                                     <div class="resposta-ajax"></div>
                                                 </form>
                                             </td>
                                             <td>
-                                                <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&chfunc=<?= $chamadoObj->encryption($funcionarios->id) ?>"
-                                                   class="btn btn-sm btn-primary float-right" target="_blank"><i
-                                                            class="fas fa-print"></i> O.S.</a>
+                                                <a href="<?= SERVERURL ?>pdf/ordem_servico.php?id=<?= $chamadoObj->encryption($chamado->id) ?>&chfunc=<?= $chamadoObj->encryption($funcionarios->id) ?>" class="btn btn-sm btn-primary float-right" <?=$disabled?> target="_blank"><i class="fas fa-print"></i> O.S.</a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -184,49 +188,25 @@ $nota = $notaObj->listaNota($id);
             <!-- /.col -->
         </div>
         <!-- /.row -->
-        <div class="row">
-            <div class="col-md-12">
-                <!-- Horizontal Form -->
-                <div class="card card-outline card-green">
-                    <div class="card-header">
-                        <h3 class="card-title">Solução</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <!-- form start -->
-                    <form action="<?= SERVERURL ?>ajax/chamadoAjax.php" method="post"
-                          class="formulario-ajax">
-                    <div class="card-body">
-                        <div class="row">
-                            <?php if ($chamado->status_id == 3) {
-                                echo "<p>{$chamado->solucao}</p>";
-                            } else {
-                                ?>
-                                    <input type="hidden" name="_method" value="atualizarSolucao">
-                                    <input type="hidden" name="chamado_id" value="<?= $chamado->id ?>">
-                                    <input type="hidden" name="data" value="<?= date('Y-m-d H:i:s') ?>">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <label for="solucao">Solução: *</label>
-                                            <textarea name="solucao" id="nota" class="form-control" cols="250" rows="5"
-                                                      required><?= $chamado->solucao ?></textarea>
-                                        </div>
-                                    </div>
-                                <?php
-                            }
-                            ?>
+        <?php if ($chamado->status_id == 3) :?>
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Horizontal Form -->
+                    <div class="card card-outline card-green">
+                        <div class="card-header">
+                            <h3 class="card-title">Solução</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <?= $chamado->solucao ?>
+                            </div>
                         </div>
                     </div>
-                        <?php if ($chamado->status_id != 3):?>
-                    <div class="card-footer">
-                        <button class="btn btn-success btn-sm" type="submit">Gravar</button>
-                    </div>
-                    <div class="resposta-ajax"></div>
-                        <?php endif; ?>
-                    </form>
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
             </div>
-        </div>
+        <?php endif; ?>
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
@@ -333,24 +313,27 @@ $nota = $notaObj->listaNota($id);
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Alterar Staus</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Fechar o chamado</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p>Você deseja alterar o chamado para Fechado?</p>
-            </div>
-            <div class="modal-footer">
-                <form class="formulario-ajax" action="<?= SERVERURL ?>ajax/chamadoAjax.php" method="post">
-                    <input type="hidden" name="_method" value="atualizarStatus">
-                    <input type="hidden" name="status_id" value="<?= $chamado->status_id + 1 ?>">
-                    <input type="hidden" name="chamado_id" value="<?= $chamado->id ?>">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                    <button type="submit" class="btn btn-primary">Sim</button>
-                    <div class="resposta-ajax"></div>
-                </form>
-            </div>
+            <form class="formulario-ajax" action="<?= SERVERURL ?>ajax/chamadoAjax.php" method="post">
+                <input type="hidden" name="_method" value="editar">
+                <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
+                <input type="hidden" name="data_encerramento" value="<?= date('Y-m-d H:-i:s') ?>">
+                <input type="hidden" name="status_id" value="3">
+                <div class="modal-body">
+                    <p>Para encerrar um chamado é necessário inserir a solução.</p>
+                    <label for="solucao">Solução: *</label>
+                    <textarea name="solucao" id="solucao" class="form-control" rows="5" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Gravar</button>
+                </div>
+                <div class="resposta-ajax"></div>
+            </form>
         </div>
     </div>
 </div>

@@ -18,13 +18,7 @@ if (isset($_POST['_method'])) {
         echo $chamadoObj->excluiFuncionarioChamado();
     } elseif ($_POST['_method'] == "atualizarDetalhes") {
         echo $chamadoObj->atualizaDetalhesChamado();
-    } elseif ($_POST['_method'] == "atualizarSolucao") {
-        echo $chamadoObj->atualizarSolucao();
-    } elseif ($_POST['_method'] == "atualizarStatus") {
-        echo $chamadoObj->atualizarStatus();
     }
-
-
 } else {
     include_once "../config/destroySession.php";
 }
