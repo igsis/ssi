@@ -18,6 +18,33 @@ $nota = $notaObj->listaNota($id);
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Chamado nº <?= $chamado->id ?></h1>
             </div><!-- /.col -->
+            <?php if ($chamado->status_id != 3): ?>
+                <div class="col-sm-2">
+                    <p class="text-sm-right">Alterar status para:</p>
+                </div>
+                <?php if ($chamado->status_id == 1): ?>
+                <div class="col-sm-2 float-right">
+                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
+                        <input type="hidden" name="_method" value="editar">
+                        <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
+                        <input type="hidden" name="data_progresso" value="<?= date('Y-m-d H:i:s') ?>">
+                        <input type="hidden" name="status_id" value="2">
+                        <button type="submit" class="btn btn-primary btn-sm btn-block">Em andamento</button>
+                        <div class="resposta-ajax"></div>
+                    </form>
+                </div>
+                <?php else: ?>
+                <div class="col-sm-2 float-right">
+                    <button class="btn btn-outline-primary btn-sm btn-block" disabled>Andamento em <?= date("d/m/Y", strtotime($chamado->data_progresso)) ?></button>
+                </div>
+                <?php endif;?>
+                <div class="col-sm-2 float-right">
+                    <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#alterarStatus">
+                        Fechado
+                    </button>
+                </div>
+            <?php endif; ?>
+            <!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
@@ -32,13 +59,7 @@ $nota = $notaObj->listaNota($id);
                 <div class="card card-outline card-green">
                     <div class="card-header">
                         <h3 class="card-title">Dados</h3>
-                        <?php if ($chamado->status_id != 3): ?>
-                            <div class="float-right">
-                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#alterarStatus">
-                                    Alterar status
-                                </button>
-                            </div>
-                        <?php endif; ?>
+
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -96,8 +117,7 @@ $nota = $notaObj->listaNota($id);
                         <div class="row">
                             <div class="col-md">
                                 <?php foreach ($nota as $notas): ?>
-                                    <b><?= date('d/m/Y H:i:s', strtotime($notas->data)) . " - " . strstr($notas->nome, ' ', true) ?>
-                                        :</b> <?= $notas->nota ?><br>
+                                    <b><?= date('d/m/Y H:i:s', strtotime($notas->data)) . " - " . strstr($notas->nome, ' ', true) ?><?php if ($notas->privada == 1) echo "(Privada)" ?>:</b> <?= $notas->nota ?><br>
                                 <?php endforeach; ?>
                             </div>
                         </div>
@@ -216,9 +236,6 @@ $nota = $notaObj->listaNota($id);
     <div class="modal-dialog modal-lg">
         <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/notaAjax.php"
               role="form" data-form="save">
-            <?php if ($funcionario): ?>
-                <input type="hidden" name="id" id="id" value="<?= $funcionario->id ?>">
-            <?php endif; ?>
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Adicionar nota</h4>
@@ -293,8 +310,7 @@ $nota = $notaObj->listaNota($id);
                         <div class="row">
                             <div class="form-group col-md">
                                 <label for="ferramentas">Materiais / Ferramentas: *</label>
-                                <textarea name="ferramentas" id="ferramentas" class="form-control" rows="5"
-                                          required></textarea>
+                                <textarea name="ferramentas" id="ferramentas" class="form-control" rows="5" required></textarea>
                             </div>
                         </div>
                     </div>
@@ -314,7 +330,7 @@ $nota = $notaObj->listaNota($id);
 
 <!-- Modal -->
 <div class="modal fade" id="alterarStatus" tabindex="-1" role="dialog" aria-labelledby="statusModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Alterar Staus</h5>
@@ -323,8 +339,7 @@ $nota = $notaObj->listaNota($id);
                 </button>
             </div>
             <div class="modal-body">
-                <p>Você deseja alterar o chamado para <?= $chamado->status_id == 1 ? "'Em andamento'" : "'Fechado'" ?>
-                    ?</p>
+                <p>Você deseja alterar o chamado para Fechado?</p>
             </div>
             <div class="modal-footer">
                 <form class="formulario-ajax" action="<?= SERVERURL ?>ajax/chamadoAjax.php" method="post">

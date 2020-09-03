@@ -63,7 +63,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Chamado',
                 'texto' => 'Chamado editado com sucesso!',
                 'tipo' => 'success',
-                'location' => SERVERURL . 'administrador/chamado_cadastro&id=' . $id
+                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . $id
             ];
         } else {
             $alerta = [
@@ -71,7 +71,7 @@ class ChamadoController extends MainModel
                 'titulo' => 'Erro!',
                 'texto' => 'Erro ao salvar!',
                 'tipo' => 'error',
-                'location' => SERVERURL . 'administrador/chamado_cadastro&id=' . $id
+                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . $id
             ];
         }
         return MainModel::sweetAlert($alerta);
