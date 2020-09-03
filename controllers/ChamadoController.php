@@ -327,45 +327,4 @@ class ChamadoController extends MainModel
 
         return $resultado;
     }
-
-    public function atualizaDetalhesChamado()
-    {
-        $dados1 = [];
-        $dados = [];
-
-        $idChamado = MainModel::decryption($_POST['chamado_id']);
-
-        $dados1['prioridade_id'] = $_POST['prioridade_id'];
-        $chamado = DbModel::update('chamados', $dados1, $idChamado);
-
-        unset($_POST['_method']);
-        unset($_POST['chamado_id']);
-        unset($_POST['prioridade_id']);
-
-        foreach ($_POST as $campo => $post) {
-            $dados[$campo] = MainModel::limparString($post);
-        }
-
-        $chamadoFuncionario = DbModel::updateEspecial('chamado_funcionarios', $dados, 'chamado_id', $idChamado);
-
-        if (($chamado->rowCount() >= 1 || DbModel::connection()->errorCode() == 0) && ($chamadoFuncionario->rowCount() >= 1 || DbModel::connection()->errorCode() == 0)) {
-            $alerta = [
-                'alerta' => 'sucesso',
-                'titulo' => 'Detalhes do chamado',
-                'texto' => 'Informações editadas com sucesso!',
-                'tipo' => 'success',
-                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($idChamado)
-            ];
-        } else {
-            $alerta = [
-                'alerta' => 'simples',
-                'titulo' => 'Erro!',
-                'texto' => 'Erro ao salvar!',
-                'tipo' => 'error',
-                'location' => SERVERURL . 'administrador/nota_cadastro&id=' . MainModel::encryption($idChamado)
-            ];
-        }
-
-        return MainModel::sweetAlert($alerta);
-    }
 }
