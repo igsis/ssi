@@ -81,7 +81,8 @@ $nota = $notaObj->listaNota($id);
             </div>
         </div>
         <!-- /.row -->
-        <div class="row">
+        <?php if ($chamado->status_id != 3): ?>
+            <div class="row">
             <div class="col-md-12">
                 <!-- Horizontal Form -->
                 <div class="card card-green">
@@ -117,7 +118,8 @@ $nota = $notaObj->listaNota($id);
                 <!-- /.card -->
             </div>
         </div>
-        <!-- /.row -->
+            <!-- /.row -->
+        <?php endif; ?>
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content -->
