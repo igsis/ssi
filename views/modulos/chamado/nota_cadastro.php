@@ -8,7 +8,7 @@ $chamadoObj = new ChamadoController();
 $chamado = $chamadoObj->recuperaChamado($id);
 
 $notaObj = new NotaController();
-$nota = $notaObj->listaNota($id);
+$nota = $notaObj->listaNota($id, false);
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
