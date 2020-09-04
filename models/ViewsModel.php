@@ -58,6 +58,7 @@ class ViewsModel
             'local_lista',
             'local_cadastro',
             'categoria_lista',
+            'chamado_fechado_lista',
         ];
         if (self::verificaModulo($modulo)) {
             $nivel_acesso_id = $_SESSION['nivel_acesso_s'] ?? 1;

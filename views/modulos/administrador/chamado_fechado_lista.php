@@ -12,7 +12,7 @@ if (isset($_GET['busca'])){
     $chamado = $chamadoObj->buscaChamadoAdministrador($filtros);
 }
 else{
-    $chamado = $chamadoObj->listaChamadoAdministrador($_SESSION['usuario_id_s'],"1,2");
+    $chamado = $chamadoObj->listaChamadoAdministrador($_SESSION['usuario_id_s'],"3");
 }
 ?>
 
@@ -21,7 +21,7 @@ else{
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Lista Chamados</h1>
+                <h1 class="m-0 text-dark">Lista Chamados Fechados</h1>
             </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
