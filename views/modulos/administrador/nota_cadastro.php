@@ -24,44 +24,6 @@ if ($chamado->status_id == 3){
             <div class="col-sm-6">
                 <h1 class="m-0 text-dark">Chamado nº <?= $chamado->id ?></h1>
             </div><!-- /.col -->
-            <?php if ($chamado->status_id != 3): ?>
-                <div class="col-sm-2">
-                    <p class="text-sm-right">Alterar status para:</p>
-                </div>
-                <?php if ($chamado->status_id == 1): ?>
-                <div class="col-sm-2 float-right">
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
-                        <input type="hidden" name="_method" value="editar">
-                        <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
-                        <input type="hidden" name="data_progresso" value="<?= date('Y-m-d H:i:s') ?>">
-                        <input type="hidden" name="status_id" value="2">
-                        <button type="submit" class="btn btn-primary btn-sm btn-block">Em andamento</button>
-                        <div class="resposta-ajax"></div>
-                    </form>
-                </div>
-                <?php else: ?>
-                <div class="col-sm-2 float-right">
-                    <button class="btn btn-outline-primary btn-sm btn-block" disabled>Andamento em <?= date("d/m/Y", strtotime($chamado->data_progresso)) ?></button>
-                </div>
-                <?php endif;?>
-                <div class="col-sm-2 float-right">
-                    <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#alterarStatus">
-                        Fechado
-                    </button>
-                </div>
-            <?php else: ?>
-                <div class="offset-4 col-sm-2 float-right">
-                    <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
-                        <input type="hidden" name="_method" value="editar">
-                        <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
-                        <input type="hidden" name="data_encerramento" value="NULL">
-                        <input type="hidden" name="status_id" value="2">
-                        <button type="submit" class="btn btn-primary btn-sm btn-block">Reabrir</button>
-                        <div class="resposta-ajax"></div>
-                    </form>
-                </div>
-            <?php endif; ?>
-            <!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </div>
@@ -121,74 +83,80 @@ if ($chamado->status_id == 3){
                 <!-- /.card -->
             </div>
             <div class="col-md-3">
-                <div class="row col-md">
-                    <div class="card card-outline card-green">
-                        <form class="formulario-ajax" action="<?= SERVERURL ?>ajax/chamadoAjax.php" method="post">
-                            <input type="hidden" name="_method" value="editar">
-                            <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="card card-outline card-green">
+                            <form class="formulario-ajax" action="<?= SERVERURL ?>ajax/chamadoAjax.php" method="post">
+                                <input type="hidden" name="_method" value="editar">
+                                <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
+                                <!-- form start -->
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-m">
+                                            <label for="prioridade_id">Prioridade</label>
+                                            <select class="form-control" name="prioridade_id" id="prioridade_id" <?=$disabled?>>
+                                                <option value="">Selecione uma opção...</option>
+                                                <?php
+                                                $chamadoObj->geraOpcao("prioridades", $chamado->prioridade_id);
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label>&nbsp;</label>
+                                            <button type="submit" class="btn btn-success" <?=$disabled?>>Gravar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="resposta-ajax"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md">
+                        <div class="card card-outline card-green">
+                            <div class="card-header"><h3 class="card-title">Alterar status para:</h3></div>
                             <!-- form start -->
                             <div class="card-body">
                                 <div class="row">
-                                    <label for="prioridade_id">Prioridade</label>
-                                    <select class="form-control select2bs4" name="prioridade_id" id="prioridade_id" <?=$disabled?>>
-                                        <option value="">Selecione uma opção...</option>
-                                        <?php
-                                        $chamadoObj->geraOpcao("prioridades", $chamado->prioridade_id);
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <!-- /.card-body -->
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-sm btn-success float-right" <?=$disabled?>>Gravar</button>
-                            </div>
-                            <div class="resposta-ajax"></div>
-                        </form>
-                    </div>
-                </div>
-                <div class="row col-md-12">
-                    <div class="card card-outline card-green">
-                        <!-- form start -->
-                        <div class="card-body">
-                            <div class="row">
-                                <?php if ($chamado->status_id != 3): ?>
-                                    <div class="row col-md">
-                                        <p class="text-sm-right">Alterar status para:</p>
-                                    </div>
-                                    <?php if ($chamado->status_id == 1): ?>
-                                        <div class="row col-md">
+                                    <?php if ($chamado->status_id != 3): ?>
+                                        <?php if ($chamado->status_id == 1): ?>
+                                            <div class="col-md">
+                                                <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
+                                                    <input type="hidden" name="_method" value="editar">
+                                                    <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
+                                                    <input type="hidden" name="data_progresso" value="<?= date('Y-m-d H:i:s') ?>">
+                                                    <input type="hidden" name="status_id" value="2">
+                                                    <button type="submit" class="btn btn-primary btn-sm btn-block">Em andamento</button>
+                                                    <div class="resposta-ajax"></div>
+                                                </form>
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="col-md">
+                                                <button class="btn btn-outline-primary btn-sm btn-block" disabled>Andamento em <?= date("d/m/Y", strtotime($chamado->data_progresso)) ?></button>
+                                            </div>
+                                        <?php endif;?>
+                                        <div class="col-md">
+                                            <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#alterarStatus">
+                                                Fechado
+                                            </button>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="col-md">
                                             <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
                                                 <input type="hidden" name="_method" value="editar">
                                                 <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
-                                                <input type="hidden" name="data_progresso" value="<?= date('Y-m-d H:i:s') ?>">
+                                                <input type="hidden" name="data_encerramento" value="NULL">
                                                 <input type="hidden" name="status_id" value="2">
-                                                <button type="submit" class="btn btn-primary btn-sm btn-block">Em andamento</button>
+                                                <button type="submit" class="btn btn-primary btn-sm btn-block">Reabrir</button>
                                                 <div class="resposta-ajax"></div>
                                             </form>
                                         </div>
-                                    <?php else: ?>
-                                        <div class="row col-md">
-                                            <button class="btn btn-outline-primary btn-sm btn-block" disabled>Andamento em <?= date("d/m/Y", strtotime($chamado->data_progresso)) ?></button>
-                                        </div>
-                                    <?php endif;?>
-                                    <div class="row col-md">
-                                        <button class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#alterarStatus">
-                                            Fechado
-                                        </button>
-                                    </div>
-                                <?php else: ?>
-                                    <div class="row col-md-12">
-                                        <form class="form-horizontal formulario-ajax" method="POST" action="<?= SERVERURL ?>ajax/chamadoAjax.php" role="form" data-form="update">
-                                            <input type="hidden" name="_method" value="editar">
-                                            <input type="hidden" name="id" value="<?= $chamadoObj->encryption($chamado->id) ?>">
-                                            <input type="hidden" name="data_encerramento" value="NULL">
-                                            <input type="hidden" name="status_id" value="2">
-                                            <button type="submit" class="btn btn-primary btn-sm btn-block">Reabrir</button>
-                                            <div class="resposta-ajax"></div>
-                                        </form>
-                                    </div>
-                                <?php endif; ?>
-                                <!-- /.col -->
+                                    <?php endif; ?>
+                                    <!-- /.col -->
+                                </div>
                             </div>
                         </div>
                     </div>
