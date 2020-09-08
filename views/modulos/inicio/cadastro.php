@@ -47,7 +47,7 @@ $objUsuario = new UsuarioController();
                 <div class="row">
                     <div class="form-group col">
                         <label for="instituicao">Instituição *</label>
-                        <select class="form-control" name="instituicao" id="instituicao" required>
+                        <select class="form-control" name="instituicao_id" id="instituicao" required>
                             <option value="">Selecione uma opção...</option>
                             <?php
                             $objUsuario->geraOpcao("instituicoes");
@@ -178,6 +178,9 @@ $objUsuario = new UsuarioController();
     $( document ).ready(function() {
         $('#rgrf_usuario').mask('000.000.0');
         $('#rgrf_usuario').keypress(function (event) {
+            geraUsuarioRf();
+        });
+        $('#rgrf_usuario').blur(function (event) {
             geraUsuarioRf();
         });
     });

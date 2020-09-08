@@ -60,7 +60,7 @@ class UsuarioController extends UsuarioModel
     public function insereUsuario() {
         $erro = false;
         $dados = [];
-        $camposIgnorados = ["senha2", "_method", "rf_rg", "instituicao"];
+        $camposIgnorados = ["senha2", "_method", "rf_rg"];
         foreach ($_POST as $campo => $post) {
             if (!in_array($campo, $camposIgnorados)) {
                 $dados[$campo] = MainModel::limparString($post);
