@@ -33,14 +33,12 @@ class UsuarioController extends UsuarioModel
 
             MainModel::gravarLog('Fez Login');
 
-            if (!$modulo) {
-                return $urlLocation = "<script> window.location='inicio/inicio' </script>";
+            if ($usuario['nivel_acesso_id'] == 1) {
+                return $urlLocation = "<script> window.location='chamado/inicio' </script>";
             } else {
-                if ($modulo == 8) {
-                    $_SESSION['edital_s'] = $edital;
-                    return $urlLocation = "<script> window.location='fomentos/inicio&modulo=$modulo' </script>";
-                }
+                return $urlLocation = "<script> window.location='administrador/inicio' </script>";
             }
+
         } else {
             $alerta = [
                 'alerta' => 'simples',
