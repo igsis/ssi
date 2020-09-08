@@ -1,5 +1,6 @@
 <?php
 $pedidoAjax = true;
+date_default_timezone_set('America/Sao_Paulo');
 session_start();
 
 // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
