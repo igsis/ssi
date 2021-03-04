@@ -29,6 +29,9 @@ class AdministradorController extends UsuarioController
 
         $update = DbModel::update('usuarios', ['nivel_acesso_id' => $nvlAcesso], $usuario_id);
         if ($update) {
+            if ($nvlAcesso == 1) {
+                DbModel::deleteEspecial('administrador_instituicao', 'administrador_id', $usuario_id);
+            }
             $alerta = [
                 'alerta' => 'sucesso',
                 'titulo' => 'Administrador',
@@ -115,9 +118,9 @@ class AdministradorController extends UsuarioController
     {
 
         $instituicao_id = MainModel::decryption($_POST['instituicao_id']);
-        $administradores = $_POST['administradores'];
+        $administradores = $_POST['administradores'] ?? false;
 
-        if ($administradores === null) {
+        if (!$administradores) {
             $relacionamento = DbModel::deleteEspecial('administrador_instituicao','instituicao_id',$instituicao_id);
         } else {
             $relacionamento = MainModel::atualizaRelacionamento('administrador_instituicao', 'instituicao_id', $instituicao_id, 'administrador_id', $administradores);

@@ -243,16 +243,24 @@ $javascript = '
         .done(function (resultado){
             let admins = JSON.parse(resultado);
             let select = $("#admins");
+            let ids = [];
             if (admins.length > 0){
                 for (let admin of admins){
-                    select.children().each(function (){
-                        if (admin.id == $(this).val()){
-                            $(this).remove();
-                            let option = `<option value=${admin.id} selected>${admin.nome}</option>`;
-                            select.append(option);
-                        }
-                    })
-                }                                
+                    ids.push(admin.id);
+                }
+                select.children().each(function (){
+                    if(jQuery.inArray($(this).val(), ids) !== -1) {
+                        $(this).attr("selected", true);
+                    } else {
+                        $(this).removeAttr("selected");
+                    }
+                });
+                select.val(ids).trigger("change");
+            } else {
+                select.children().each(function (){
+                    $(this).removeAttr("selected");
+                })
+                select.val(null).trigger("change");
             }
         });
     }

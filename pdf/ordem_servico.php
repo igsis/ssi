@@ -1,6 +1,6 @@
 <?php
 $pedidoAjax = true;
-setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+date_default_timezone_set('America/Sao_Paulo');
 session_start();
 
 // INSTALAÇÃO DA CLASSE NA PASTA FPDF.
@@ -32,9 +32,6 @@ class PDF extends FPDF
        $this->Ln(20);
     }
 }
-
-$ano=date('Y');
-
 
 // GERANDO O PDF:
 $pdf = new PDF('P','mm','A4'); //CRIA UM NOVO ARQUIVO PDF NO TAMANHO A4

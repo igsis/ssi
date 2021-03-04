@@ -55,6 +55,14 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="<?= SERVERURL ?>administrador/chamado_fechado_lista" class="nav-link" id="local_lista">
+                <i class="nav-icon fas fa-circle"></i>
+                <p>
+                    Chamados fechados
+                </p>
+            </a>
+        </li>
     </ul>
 </li>
 <li class="nav-item">

@@ -45,9 +45,21 @@ class NotaController extends MainModel
         return MainModel::sweetAlert($alerta);
     }
 
-    public function listaNota($idChamado)
+    /**
+     * <p>Exibe as notas registradas no chamado</p>
+     * @param integer $idChamado
+     * <p>ID encriptado do chamando a listar os chamados</p>
+     * @param bool $privada [opcional]
+     * <p><i>TRUE</i> por padrão, quando <i>FALSE</i>, exibe tambem as notas marcadas como privada</p>
+     * @return array
+     */
+    public function listaNota($idChamado, $privada = true)
     {
         $idChamado = MainModel::decryption($idChamado);
-        return MainModel::consultaSimples("SELECT n.*, u.nome FROM notas n INNER JOIN usuarios u on n.usuario_id = u.id WHERE chamado_id = '$idChamado'")->fetchAll(PDO::FETCH_OBJ);
+        $sql = "SELECT n.*, u.nome FROM notas n INNER JOIN usuarios u on n.usuario_id = u.id WHERE chamado_id = '$idChamado'";
+        if (!$privada) {
+            $sql .= " AND privada = 0";
+        }
+        return MainModel::consultaSimples($sql)->fetchAll(PDO::FETCH_OBJ);
     }
 }

@@ -25,7 +25,7 @@ class UsuarioController extends UsuarioModel
         if ($consultaUsuario->rowCount() == 1) {
             $usuario = $consultaUsuario->fetch();
 
-            session_start(['name' => 'ssi']);
+            @session_start(['name' => 'ssi']);
             $_SESSION['login_s'] = $usuario['usuario'];
             $_SESSION['usuario_id_s'] = $usuario['id'];
             $_SESSION['nome_s'] = $usuario['nome'];
@@ -33,14 +33,12 @@ class UsuarioController extends UsuarioModel
 
             MainModel::gravarLog('Fez Login');
 
-            if (!$modulo) {
-                return $urlLocation = "<script> window.location='inicio/inicio' </script>";
+            if ($usuario['nivel_acesso_id'] == 1) {
+                return $urlLocation = "<script> window.location='chamado/inicio' </script>";
             } else {
-                if ($modulo == 8) {
-                    $_SESSION['edital_s'] = $edital;
-                    return $urlLocation = "<script> window.location='fomentos/inicio&modulo=$modulo' </script>";
-                }
+                return $urlLocation = "<script> window.location='administrador/inicio' </script>";
             }
+
         } else {
             $alerta = [
                 'alerta' => 'simples',
@@ -60,7 +58,7 @@ class UsuarioController extends UsuarioModel
     public function insereUsuario() {
         $erro = false;
         $dados = [];
-        $camposIgnorados = ["senha2", "_method", "rf_rg", "instituicao"];
+        $camposIgnorados = ["senha2", "_method", "rf_rg"];
         foreach ($_POST as $campo => $post) {
             if (!in_array($campo, $camposIgnorados)) {
                 $dados[$campo] = MainModel::limparString($post);
